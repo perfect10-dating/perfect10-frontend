@@ -8,8 +8,8 @@ import {useCreateUserMutation, useFormRoomMutation} from '../services/api'
 const testUserCreator = (userNumber: number, longitude: number, latitude: number): User => {
     // 1 degree of latitude or longitude = ~60 miles
     // so to distribute users in a 30-mile circle around me...
-    let newLong = longitude + (Math.random() - 0.5)
-    let newLat = latitude + (Math.random() - 0.5)
+    let newLong = longitude + (Math.random() - 0.5)*0.5
+    let newLat = latitude + (Math.random() - 0.5)*0.5
 
     let identity = (Math.random() > 0.5) ? "man" : "woman"
     let lookingFor = (identity === "man") ? "woman" : "man"
@@ -46,14 +46,14 @@ export function Home() {
             let long = position.coords.longitude;
 
             // console.log("================ CREATING NEW USERS ================")
-            // for (let i = 0; i < 40; i++) {
+            // for (let i = 40; i < 80; i++) {
             //     let user = testUserCreator(i, long, lat);
             //     await createUser(user)
             // }
             // console.log("================ FINISHED NEW USERS ================")
 
             console.log("============= CREATING ROOM FOR USERS ================")
-            await formRoom("64c5760335084a0226dcd3f6")
+            await formRoom("64c598cab3500712b6e8d2dd")
             console.log("============= FINISHED ROOM FOR USERS ================")
 
             passthrough += 1
