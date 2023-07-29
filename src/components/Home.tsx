@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { useParams } from 'react-router-dom'
 import { setSurveyData, setViewed, setStarted, setCompleted, setQuestionIndex } from '../services/surveySlice'
 import { useAppSelector, useAppDispatch } from '../app/hooks'
-import {useCreateUserMutation} from '../services/api'
+import {useCreateUserMutation, useFormRoomMutation} from '../services/api'
 
 const testUserCreator = (userNumber: number, longitude: number, latitude: number): User => {
     // 1 degree of latitude or longitude = ~60 miles
@@ -20,32 +20,48 @@ const testUserCreator = (userNumber: number, longitude: number, latitude: number
         cognitoId: `${Math.floor(Math.random() * 1000000)}`,
         phoneNumber: `${Math.floor(Math.random() * 1000000)}`,
         firstName: `${userNumber}`,
+        emailAddress: `${Math.floor(Math.random() * 1000000)}`,
         identity,
         dateOfBirth: 0,
         age: 20,
         lookingFor: [lookingFor],
-        locationCoords: [newLat, newLong],
-        ageRange: {minAge: 18, maxAge: 30}
+        locationCoords: [newLong, newLat],
+        ageRange: {min: 18, max: 30}
     })
 }
 
+var passthrough = 0
+
 export function Home() {
     const [ createUser ] = useCreateUserMutation()
+    const [ formRoom ] = useFormRoomMutation()
 
-    navigator.geolocation.getCurrentPosition(async (position) => {
-        let lat = position.coords.latitude;
-        let long = position.coords.longitude;
+    if (passthrough > 0) {
+        return (<div />)
+    }
+    else {
+        navigator.geolocation.getCurrentPosition(async (position) => {
 
-        console.log("================ CREATING NEW USERS ================")
-        for (let i = 0; i < 1; i++) {
-            let user = testUserCreator(i, long, lat);
-            await createUser(user)
-        }
-        console.log("================ FINISHED NEW USERS ================")
-    })
+            let lat = position.coords.latitude;
+            let long = position.coords.longitude;
 
-    return (
-        <div>Hello, world!</div>
-    )
+            // console.log("================ CREATING NEW USERS ================")
+            // for (let i = 0; i < 40; i++) {
+            //     let user = testUserCreator(i, long, lat);
+            //     await createUser(user)
+            // }
+            // console.log("================ FINISHED NEW USERS ================")
+
+            console.log("============= CREATING ROOM FOR USERS ================")
+            await formRoom("64c5760335084a0226dcd3f6")
+            console.log("============= FINISHED ROOM FOR USERS ================")
+
+            passthrough += 1
+        })
+
+        return (
+            <div>Hello, world!</div>
+        )
+    }
 }
 

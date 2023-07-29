@@ -28,7 +28,7 @@
   },
   "scripts": {
     "start": "node production.js",
-    "dev": "react-scripts start",
+    "dev": "react-scripts --openssl-legacy-provider start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

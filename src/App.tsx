@@ -1,7 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
-import { SurveyNavbar } from './components/SurveyNavbar'
-import { Survey } from './components/Survey'
 import { Home } from './components/Home'
 
 export default function App() {

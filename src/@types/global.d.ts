@@ -11,7 +11,7 @@ declare interface User {
   dateOfBirth: number  // time since 1970 (SIGNED)
   locationCoords: [number, number]  // longitude, latitude
   lookingFor: [string]
-  ageRange: {minAge: number, maxAge: number}
+  ageRange: {min: number, max: number}
 }
 
 declare interface Image {

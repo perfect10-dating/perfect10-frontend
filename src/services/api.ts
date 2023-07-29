@@ -5,7 +5,7 @@ export const api = createApi({
   baseQuery: fetchBaseQuery({
     // baseUrl: 'https://api.bellwetherinsight.com',
     // baseUrl: 'http://10.0.0.197:3001'
-    baseUrl: 'http://localhost:3001',
+    baseUrl: 'http://localhost:3001/api',
   }),
   endpoints: (builder) => ({
     createUser: builder.mutation<any, User>({
@@ -13,6 +13,14 @@ export const api = createApi({
         url: `create-user`,
         method: 'POST',
         body: user
+      })
+    }),
+
+    formRoom: builder.mutation<any, string>({
+      query: (userId: string) => ({
+        url: 'form-room',
+        method: 'POST',
+        body: {userId: userId}
       })
     }),
 
@@ -51,8 +59,5 @@ export const api = createApi({
 
 export const {
   useCreateUserMutation,
-  useGetSurveyQuery,
-  usePostVoteMutation,
-  usePostSurveyInteractionMutation,
-  usePutSurveyMaskMutation,
+  useFormRoomMutation,
 } = api
