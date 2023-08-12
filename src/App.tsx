@@ -14,13 +14,7 @@ export default function App() {
     <Router>
       <Routes>
           <Route path="/" element={<Home />} />
-          <Route path={"/landing"} element={<LandingPage />} />
-          <Route path={"/create"} element={<Create />} />
-          <Route path={"/waiting-date"} element={<WaitingForDate />} />
-          <Route path={"/date-review"} element={<DateReview />} />
-          <Route path={"/join-room-query"} element={<JoinNewRoom />} />
-          <Route path={"/waiting-room"} element={<WaitingForRoom />} />
-          <Route path={"/waiting-time"} element={<WaitingForTime />} />
+          // TODO -- edit profile
       </Routes>
     </Router>
   )

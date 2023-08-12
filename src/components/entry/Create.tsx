@@ -1,3 +1,7 @@
 export function Create() {
-    return <div />
+    return (
+        <div>
+            Fill out your account
+        </div>
+    )
 }

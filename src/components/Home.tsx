@@ -46,7 +46,7 @@ export function Home() {
     // isDisplayingCompetitors -- otherwise, displaying dates (always false in one-sided room)
     const [isDisplayingCompetitors, setIsDisplayingCompetitors] = useState(false)
 
-    const nav = useNavigate()
+    // const nav = useNavigate()
 
     if (isLoading) {
         // TODO -- loading spinner
@@ -108,6 +108,8 @@ export function Home() {
             setDates({dates})
 
             /* ==================== END NAVIGATION LOGIC =================== */
+
+            /* ==================== BEGIN RENDER LOGIC =================== */
 
             let potentialPartners, competitors
             if (room.sideOneIdentity === user?.identity) {
