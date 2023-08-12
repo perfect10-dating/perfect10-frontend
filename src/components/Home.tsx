@@ -99,6 +99,9 @@ export function Home() {
 
         return (
             <div>
+                <div>
+                    {isDisplayingCompetitors ? "Your Competitors" : "Your Potential Matches"}
+                </div>
                 <RoomDisplay
                     isDisplayingCompetitors={isDisplayingCompetitors}
                     potentialPartners={potentialPartners || []}

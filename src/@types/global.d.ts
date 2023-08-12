@@ -12,10 +12,10 @@ declare interface User {
   age: number
   dateOfBirth: number  // time since 1970 (SIGNED)
   locationCoords: [number, number]  // longitude, latitude
-  photoLinks: [string]
+  photoLinks: string[]
 
   // preferences
-  lookingFor: [string]
+  lookingFor: string[]
   shortTerm: boolean
   ageRange: {min: number, max: number}
 
@@ -38,9 +38,9 @@ declare interface UserMini {
 }
 
 declare interface Room {
-  sideOne: [UserMini]
+  sideOne: UserMini[]
   sideOneIdentity: string
-  sideTwo: [UserMini]
+  sideTwo: UserMini[]
   sideTwoIdentity: string
 }
 
@@ -48,7 +48,7 @@ declare interface Date {
   isSetup: boolean
   proposer: string
   isAccepted: boolean
-  users: [string]
+  users: string[]
   setupResponsibleUser: string
   time: number
 }
