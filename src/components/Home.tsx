@@ -22,7 +22,7 @@ function loading() {
 }
 
 export function Home() {
-    const cognitoId = "foo"
+    const cognitoId = "890233"
 
     // set up API listeners for user, room, dates
     const {
