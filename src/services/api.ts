@@ -24,7 +24,7 @@ export const api = createApi({
       })
     }),
 
-    getUser: builder.query<any, string>({
+    getUser: builder.query<User, string>({
       // TODO -- will get this from AWS data
       query: (cognitoId: string)=> ({
         url: 'get-user',
@@ -33,36 +33,13 @@ export const api = createApi({
       })
     }),
 
-    getSurvey: builder.query<any, string>({
-      query: (mask) => ({
-        url: `survey/${mask}`,
+    getRoom: builder.query<{room: Room, dates: [Date]}, string>({
+      query: (cognitoId: string)=> ({
+        url: 'display-room',
         method: 'GET',
-      }),
-    }),
-
-    postVote: builder.mutation<void, Vote>({
-      query: (vote) => ({
-        url: `vote/`,
-        method: 'POST',
-        body: vote,
-      }),
-    }),
-
-    postSurveyInteraction: builder.mutation<void, SurveyInteraction>({
-      query: (surveyInteraction) => ({
-        url: `surveyInteraction/`,
-        method: 'POST',
-        body: surveyInteraction,
-      }),
-    }),
-
-    putSurveyMask: builder.mutation({
-      query: ({ _id, delta }) => ({
-        url: `surveyMask/${_id}`,
-        method: 'PUT',
-        body: delta,
-      }),
-    }),
+        body: {cognitoId}
+      })
+    })
   }),
 })
 
@@ -70,4 +47,5 @@ export const {
   useCreateUserMutation,
   useFormRoomMutation,
   useGetUserQuery,
+  useGetRoomQuery
 } = api

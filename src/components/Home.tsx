@@ -1,13 +1,15 @@
 import {useEffect, useState} from 'react'
 import styled from 'styled-components'
 import {BrowserRouter, useNavigate, useParams} from 'react-router-dom'
-import { setSurveyData, setViewed, setStarted, setCompleted, setQuestionIndex } from '../services/surveySlice'
 import { useAppSelector, useAppDispatch } from '../app/hooks'
-import {useGetUserQuery} from '../services/api'
+import {useGetRoomQuery, useGetUserQuery} from '../services/api'
 import {RoomDisplay} from "./interacting/RoomDisplay";
+import {setDates, setRoom, setUser, UserState} from "../services/userSlice";
+import {useSelector} from "react-redux";
 
 export function Home() {
     const [ getUser ] = useGetUserQuery()
+    const [ getRoom ] = useGetRoomQuery()
 
     // isLoading -- whether to display the spinner instead of the room
     const [isLoading, setIsLoading] = useState(true)
@@ -28,10 +30,14 @@ export function Home() {
          */
 
         const loadingFunction = async() => {
-            const user = getUser("TODO")
+            let cognitoId = "foo"
+            const user = await getUser(cognitoId)
             if (!user) {
                 return nav("/landing")
             }
+
+            // set the user that we retrieved
+            setUser(user)
 
             // the user is being blocked by a date
             if (user.mustReviewDate) {
@@ -61,6 +67,11 @@ export function Home() {
             }
 
             // otherwise, we're in the right spot (and we can display the room)
+            // load the room
+            let {room, dates} = getRoom(cognitoId)
+            setRoom(room)
+            setDates(dates)
+
             setIsLoading(false)
         }
         loadingFunction()
@@ -79,11 +90,20 @@ export function Home() {
         )
     }
     else {
+        const {user, currentRoom, dates} = useSelector((state: UserState) => state)
+        let potentialPartners, competitors
+        if (currentRoom?.sideOneIdentity === user?.identity) {
+            potentialPartners = currentRoom?.sideTwo
+            competitors = currentRoom?.sideOne
+        }
+
         return (
             <div>
                 <RoomDisplay
                     isDisplayingCompetitors={isDisplayingCompetitors}
-
+                    potentialPartners={potentialPartners || []}
+                    competitors={competitors || []}
+                    dates={dates || []}
                 />
             </div>
         )
