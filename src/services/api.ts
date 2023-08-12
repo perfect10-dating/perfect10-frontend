@@ -24,6 +24,15 @@ export const api = createApi({
       })
     }),
 
+    getUser: builder.query<any, string>({
+      // TODO -- will get this from AWS data
+      query: (cognitoId: string)=> ({
+        url: 'get-user',
+        method: 'GET',
+        body: {cognitoId}
+      })
+    }),
+
     getSurvey: builder.query<any, string>({
       query: (mask) => ({
         url: `survey/${mask}`,
@@ -60,4 +69,5 @@ export const api = createApi({
 export const {
   useCreateUserMutation,
   useFormRoomMutation,
+  useGetUserQuery,
 } = api
