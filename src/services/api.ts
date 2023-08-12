@@ -27,17 +27,15 @@ export const api = createApi({
     getUser: builder.query<User, string>({
       // TODO -- will get this from AWS data
       query: (cognitoId: string)=> ({
-        url: 'get-user',
+        url: `get-user/${cognitoId}`,
         method: 'GET',
-        body: {cognitoId}
       })
     }),
 
     getRoom: builder.query<{room: Room, dates: Date[]}, string>({
       query: (cognitoId: string)=> ({
-        url: 'display-room',
+        url: `display-room/${cognitoId}`,
         method: 'GET',
-        body: {cognitoId}
       })
     })
   }),

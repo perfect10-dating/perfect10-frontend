@@ -2,6 +2,7 @@ import {useCreateUserMutation, useFormRoomMutation} from "../../services/api";
 import {useState} from "react";
 import {ProfileInformation} from "./ProfileInformation";
 import {ProfileMessages} from "./ProfileMessages";
+import {ProfileInteractions} from "./ProfileInteractions";
 
 interface PropTypes {
     isCompetitor: boolean

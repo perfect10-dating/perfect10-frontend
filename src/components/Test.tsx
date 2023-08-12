@@ -1,7 +1,6 @@
 import { useEffect } from 'react'
 import styled from 'styled-components'
 import { useParams } from 'react-router-dom'
-import { setSurveyData, setViewed, setStarted, setCompleted, setQuestionIndex } from '../services/surveySlice'
 import { useAppSelector, useAppDispatch } from '../app/hooks'
 import {useCreateUserMutation, useFormRoomMutation} from '../services/api'
 
@@ -26,7 +25,14 @@ const testUserCreator = (userNumber: number, longitude: number, latitude: number
         age: 20,
         lookingFor: [lookingFor],
         locationCoords: [newLong, newLat],
-        ageRange: {min: 18, max: 30}
+        ageRange: {min: 18, max: 30},
+
+        shortTerm: false,
+        waitingForRoom: false,
+        photoLinks: [],
+        temporarilyLocked: false,
+        mustReviewDate: false,
+        _id: ""
     })
 }
 

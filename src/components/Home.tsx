@@ -58,7 +58,8 @@ export function Home() {
          */
 
         if (!user) {
-            return nav("/landing")
+            console.log("No user detected ... please log in")
+            nav("/landing")
         }
 
         // set the user that we retrieved
@@ -68,27 +69,27 @@ export function Home() {
         if (user.mustReviewDate) {
             // the user needs to wait
             if (user.lockingDate && user.lockingDate.time > Date.now()) {
-                return nav("/waiting-date")
+                nav("/waiting-date")
             }
             // the user needs to review the date
             else {
-                return nav("/date-review")
+                nav("/date-review")
             }
         }
 
         // the user is being blocked by time
         if (user.temporarilyLocked && user.unlockTime && user.unlockTime > Date.now()) {
-            return nav("/waiting-time")
+            nav("/waiting-time")
         }
 
         // the user is waiting to join a room
         if (user.waitingForRoom) {
-            return nav("/waiting-room")
+            nav("/waiting-room")
         }
 
         // the user is otherwise not in a room (but there is no reason they aren't)
         if (user.currentRoom === null) {
-            return nav("/join-room-query")
+            nav("/join-room-query")
         }
 
         // otherwise, we're in the right spot (and we can display the room)
