@@ -4,11 +4,16 @@ import {BrowserRouter, useNavigate, useParams} from 'react-router-dom'
 import { setSurveyData, setViewed, setStarted, setCompleted, setQuestionIndex } from '../services/surveySlice'
 import { useAppSelector, useAppDispatch } from '../app/hooks'
 import {useGetUserQuery} from '../services/api'
+import {RoomDisplay} from "./interacting/RoomDisplay";
 
 export function Home() {
     const [ getUser ] = useGetUserQuery()
 
+    // isLoading -- whether to display the spinner instead of the room
     const [isLoading, setIsLoading] = useState(true)
+    // isDisplayingCompetitors -- otherwise, displaying dates (always false in one-sided room)
+    const [isDisplayingCompetitors, setIsDisplayingCompetitors] = useState(false)
+
     const nav = useNavigate()
 
     useEffect(() => {
@@ -65,5 +70,23 @@ export function Home() {
             })
     })
 
+    if (isLoading) {
+        // TODO -- loading spinner
+        return (
+            <div>
+                Loading...
+            </div>
+        )
+    }
+    else {
+        return (
+            <div>
+                <RoomDisplay
+                    isDisplayingCompetitors={isDisplayingCompetitors}
+
+                />
+            </div>
+        )
+    }
 }
 
