@@ -8,17 +8,45 @@ import {setDates, setRoom, setUser, UserState} from "../services/userSlice";
 import {useSelector} from "react-redux";
 
 export function Home() {
-    const [ getUser ] = useGetUserQuery()
-    const [ getRoom ] = useGetRoomQuery()
+    const cognitoId = "foo"
 
-    // isLoading -- whether to display the spinner instead of the room
-    const [isLoading, setIsLoading] = useState(true)
+    // set up API listeners for user, room, dates
+    const {
+        data: user,
+        isLoading: userIsLoading,
+        isSuccess: userReqSuccessful,
+        isError: userReqFailed,
+        error: userReqError
+    } = useGetUserQuery(cognitoId)
+    const {
+        data: roomRetrievalObj,
+        isLoading: roomIsLoading,
+        isSuccess: roomReqSuccessful,
+        isError: roomReqFailed,
+        error: roomReqError
+    } = useGetRoomQuery(cognitoId)
+
+    // OR the isLoading
+    const isLoading = roomIsLoading || userIsLoading
+
     // isDisplayingCompetitors -- otherwise, displaying dates (always false in one-sided room)
     const [isDisplayingCompetitors, setIsDisplayingCompetitors] = useState(false)
 
     const nav = useNavigate()
 
-    useEffect(() => {
+    if (isLoading || !user || !roomRetrievalObj) {
+        // TODO -- loading spinner
+        return (
+            <div>
+                Loading...
+            </div>
+        )
+    }
+    else {
+        /* ==================== BEGIN NAVIGATION LOGIC =================== */
+
+        const {room, dates} = roomRetrievalObj
+
         /** Logical Navigation:
          * 1. If the user is not logged in --> navigate to /landing
          * 2. If the user is waiting to complete a date and NOT passed that time --> navigate to /waiting-date
@@ -29,72 +57,50 @@ export function Home() {
          * 7. Otherwise, display the room the user is in
          */
 
-        const loadingFunction = async() => {
-            let cognitoId = "foo"
-            const user = await getUser(cognitoId)
-            if (!user) {
-                return nav("/landing")
-            }
-
-            // set the user that we retrieved
-            setUser(user)
-
-            // the user is being blocked by a date
-            if (user.mustReviewDate) {
-                // the user needs to wait
-                if (user.lockingDate.time > Date.now()) {
-                    return nav("/waiting-date")
-                }
-                // the user needs to review the date
-                else {
-                    return nav("/date-review")
-                }
-            }
-
-            // the user is being blocked by time
-            if (user.temporarilyLocked && user.unlockTime > Date.now()) {
-                return nav("/waiting-time")
-            }
-
-            // the user is waiting to join a room
-            if (user.waitingForRoom) {
-                return nav("/waiting-room")
-            }
-
-            // the user is otherwise not in a room (but there is no reason they aren't)
-            if (user.currentRoom === null) {
-                return nav("/join-room-query")
-            }
-
-            // otherwise, we're in the right spot (and we can display the room)
-            // load the room
-            let {room, dates} = getRoom(cognitoId)
-            setRoom(room)
-            setDates(dates)
-
-            setIsLoading(false)
+        if (!user) {
+            return nav("/landing")
         }
-        loadingFunction()
-            .catch(err => {
-                console.error(err)
-                // TODO -- show the user something
-            })
-    })
 
-    if (isLoading) {
-        // TODO -- loading spinner
-        return (
-            <div>
-                Loading...
-            </div>
-        )
-    }
-    else {
-        const {user, currentRoom, dates} = useSelector((state: UserState) => state)
+        // set the user that we retrieved
+        setUser({user})
+
+        // the user is being blocked by a date
+        if (user.mustReviewDate) {
+            // the user needs to wait
+            if (user.lockingDate && user.lockingDate.time > Date.now()) {
+                return nav("/waiting-date")
+            }
+            // the user needs to review the date
+            else {
+                return nav("/date-review")
+            }
+        }
+
+        // the user is being blocked by time
+        if (user.temporarilyLocked && user.unlockTime && user.unlockTime > Date.now()) {
+            return nav("/waiting-time")
+        }
+
+        // the user is waiting to join a room
+        if (user.waitingForRoom) {
+            return nav("/waiting-room")
+        }
+
+        // the user is otherwise not in a room (but there is no reason they aren't)
+        if (user.currentRoom === null) {
+            return nav("/join-room-query")
+        }
+
+        // otherwise, we're in the right spot (and we can display the room)
+        setRoom({currentRoom: room})
+        setDates({dates})
+
+        /* ==================== END NAVIGATION LOGIC =================== */
+
         let potentialPartners, competitors
-        if (currentRoom?.sideOneIdentity === user?.identity) {
-            potentialPartners = currentRoom?.sideTwo
-            competitors = currentRoom?.sideOne
+        if (room?.sideOneIdentity === user?.identity) {
+            potentialPartners = room?.sideTwo
+            competitors = room?.sideOne
         }
 
         return (

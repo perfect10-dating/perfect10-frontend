@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 export interface UserState {
   user?: User
   currentRoom?: Room
-  dates: [Date?]
+  dates: Date[]
 }
 
 const initialState: UserState = {
@@ -38,7 +38,7 @@ export const userSlice = createSlice({
     setDates: (
         state,
         action: PayloadAction<{
-          dates: [Date]
+          dates: Date[]
         }>
     ) => {
       state.dates = action.payload.dates

@@ -1,10 +1,10 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
-import surveyReducer from '../services/surveySlice'
+import userReducer from '../services/userSlice'
 import { api } from '../services/api'
 
 export const store = configureStore({
   reducer: {
-    survey: surveyReducer,
+    user: userReducer,
     [api.reducerPath]: api.reducer 
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(api.middleware),

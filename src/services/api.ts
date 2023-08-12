@@ -33,7 +33,7 @@ export const api = createApi({
       })
     }),
 
-    getRoom: builder.query<{room: Room, dates: [Date]}, string>({
+    getRoom: builder.query<{room: Room, dates: Date[]}, string>({
       query: (cognitoId: string)=> ({
         url: 'display-room',
         method: 'GET',
