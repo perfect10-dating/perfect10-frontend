@@ -7,6 +7,14 @@ import {RoomDisplay} from "./interacting/RoomDisplay";
 import {setDates, setRoom, setUser, UserState} from "../services/userSlice";
 import {useSelector} from "react-redux";
 
+function loading() {
+    return (
+        <div>
+            Loading...
+        </div>
+    )
+}
+
 export function Home() {
     const cognitoId = "foo"
 
@@ -34,18 +42,12 @@ export function Home() {
 
     const nav = useNavigate()
 
-    if (isLoading || !user || !roomRetrievalObj) {
+    if (isLoading) {
         // TODO -- loading spinner
-        return (
-            <div>
-                Loading...
-            </div>
-        )
+        return loading()
     }
     else {
         /* ==================== BEGIN NAVIGATION LOGIC =================== */
-
-        const {room, dates} = roomRetrievalObj
 
         /** Logical Navigation:
          * 1. If the user is not logged in --> navigate to /landing
@@ -60,63 +62,76 @@ export function Home() {
         if (!user) {
             console.log("No user detected ... please log in")
             nav("/landing")
+            return loading()
         }
 
-        // set the user that we retrieved
-        setUser({user})
+        else {
+            // set the user that we retrieved
+            setUser({user})
 
-        // the user is being blocked by a date
-        if (user.mustReviewDate) {
-            // the user needs to wait
-            if (user.lockingDate && user.lockingDate.time > Date.now()) {
-                nav("/waiting-date")
+            // the user is being blocked by a date
+            if (user.mustReviewDate) {
+                // the user needs to wait
+                if (user.lockingDate && user.lockingDate.time > Date.now()) {
+                    nav("/waiting-date")
+                    return loading()
+                }
+                // the user needs to review the date
+                else {
+                    nav("/date-review")
+                    return loading()
+                }
             }
-            // the user needs to review the date
-            else {
-                nav("/date-review")
+
+            // the user is being blocked by time
+            if (user.temporarilyLocked && user.unlockTime && user.unlockTime > Date.now()) {
+                nav("/waiting-time")
+                return loading()
             }
-        }
 
-        // the user is being blocked by time
-        if (user.temporarilyLocked && user.unlockTime && user.unlockTime > Date.now()) {
-            nav("/waiting-time")
-        }
+            // the user is waiting to join a room
+            if (user.waitingForRoom) {
+                nav("/waiting-room")
+                return loading()
+            }
 
-        // the user is waiting to join a room
-        if (user.waitingForRoom) {
-            nav("/waiting-room")
-        }
+            // the user is otherwise not in a room (but there is no reason they aren't)
+            if (user.currentRoom === null || !roomRetrievalObj) {
+                nav("/join-room-query")
+                return loading()
+            }
 
-        // the user is otherwise not in a room (but there is no reason they aren't)
-        if (user.currentRoom === null) {
-            nav("/join-room-query")
-        }
+            // otherwise, we're in the right spot (and we can display the room)
+            // tell TypeScript that roomRetrievalObj is not undefined
+            const {room, dates} = roomRetrievalObj
+            setRoom({currentRoom: room})
+            setDates({dates})
 
-        // otherwise, we're in the right spot (and we can display the room)
-        setRoom({currentRoom: room})
-        setDates({dates})
+            /* ==================== END NAVIGATION LOGIC =================== */
 
-        /* ==================== END NAVIGATION LOGIC =================== */
+            let potentialPartners, competitors
+            if (room.sideOneIdentity === user?.identity) {
+                potentialPartners = room.sideTwo
+                competitors = room.sideOne
+            } else {
+                potentialPartners = room.sideOne
+                competitors = room.sideTwo
+            }
 
-        let potentialPartners, competitors
-        if (room?.sideOneIdentity === user?.identity) {
-            potentialPartners = room?.sideTwo
-            competitors = room?.sideOne
-        }
-
-        return (
-            <div>
+            return (
                 <div>
-                    {isDisplayingCompetitors ? "Your Competitors" : "Your Potential Matches"}
+                    <div>
+                        {isDisplayingCompetitors ? "Your Competitors" : "Your Potential Matches"}
+                    </div>
+                    <RoomDisplay
+                        isDisplayingCompetitors={isDisplayingCompetitors}
+                        potentialPartners={potentialPartners || []}
+                        competitors={competitors || []}
+                        dates={dates || []}
+                    />
                 </div>
-                <RoomDisplay
-                    isDisplayingCompetitors={isDisplayingCompetitors}
-                    potentialPartners={potentialPartners || []}
-                    competitors={competitors || []}
-                    dates={dates || []}
-                />
-            </div>
-        )
+            )
+        }
     }
 }
 
