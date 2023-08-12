@@ -6,6 +6,12 @@ import {useGetRoomQuery, useGetUserQuery} from '../services/api'
 import {RoomDisplay} from "./interacting/RoomDisplay";
 import {setDates, setRoom, setUser, UserState} from "../services/userSlice";
 import {useSelector} from "react-redux";
+import {LandingPage} from "./entry/LandingPage";
+import {WaitingForDate} from "./waiting/WaitingForDate";
+import {DateReview} from "./recording_date/DateReview";
+import {WaitingForTime} from "./waiting/WaitingForTime";
+import {WaitingForRoom} from "./waiting/WaitingForRoom";
+import {JoinNewRoom} from "./recording_date/JoinNewRoom";
 
 function loading() {
     return (
@@ -61,8 +67,7 @@ export function Home() {
 
         if (!user) {
             console.log("No user detected ... please log in")
-            nav("/landing")
-            return loading()
+            return <LandingPage />
         }
 
         else {
@@ -73,32 +78,27 @@ export function Home() {
             if (user.mustReviewDate) {
                 // the user needs to wait
                 if (user.lockingDate && user.lockingDate.time > Date.now()) {
-                    nav("/waiting-date")
-                    return loading()
+                    return <WaitingForDate />
                 }
                 // the user needs to review the date
                 else {
-                    nav("/date-review")
-                    return loading()
+                    return <DateReview />
                 }
             }
 
             // the user is being blocked by time
             if (user.temporarilyLocked && user.unlockTime && user.unlockTime > Date.now()) {
-                nav("/waiting-time")
-                return loading()
+                return <WaitingForTime />
             }
 
             // the user is waiting to join a room
             if (user.waitingForRoom) {
-                nav("/waiting-room")
-                return loading()
+                return <WaitingForRoom />
             }
 
             // the user is otherwise not in a room (but there is no reason they aren't)
             if (user.currentRoom === null || !roomRetrievalObj) {
-                nav("/join-room-query")
-                return loading()
+                return <JoinNewRoom/>
             }
 
             // otherwise, we're in the right spot (and we can display the room)
