@@ -7,6 +7,7 @@ declare interface User {
   phoneNumber: string
   emailAddress?: string
   firstName: string
+  lastName?: string
   identity: string
   age: number
   dateOfBirth: number  // time since 1970 (SIGNED)
@@ -20,7 +21,7 @@ declare interface User {
 
   // dating history
   waitingForRoom: boolean
-  currentRoom?: Room
+  currentRoom?: string
 
   temporarilyLocked: boolean
   unlockTime?: number
