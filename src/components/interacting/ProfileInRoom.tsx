@@ -79,6 +79,9 @@ export function ProfileInRoom(props: PropTypes) {
         }
     }
 
+    const profilePanelScreenSelected = {}
+    const profilePanelScreenDeselected = {}
+
     return (
         <div style={{height: 400, width: 300, minWidth: 300, margin: 50}}>
             {
@@ -89,24 +92,25 @@ export function ProfileInRoom(props: PropTypes) {
                     } with {competitor.firstName}{competitorDateIsSetup && `'s friend`}
                 </div>
             }
-            <div style={{position: "absolute", zIndex: 10}}>
+            <div style={{position: "absolute", zIndex: 10, display: "flex", justifyContent: "space-evenly",
+                width: 300, marginTop: 18, backgroundColor: "rgb(243,244,246)"}}>
                 <div
-                    className={screenSetting === "information" ?
-                        "profile-panel-button-selected" : "profile-panel-button-deselected"}
+                    style={screenSetting === "information" ?
+                       profilePanelScreenSelected : profilePanelScreenDeselected}
                     onClick={() => setScreenSetting("information")}
                 >
                     Profile
                 </div>
                 <div
-                    className={screenSetting === "messages" ?
-                        "profile-panel-button-selected" : "profile-panel-button-deselected"}
+                    style={screenSetting === "messages" ?
+                       profilePanelScreenSelected : profilePanelScreenDeselected}
                     onClick={() => setScreenSetting("messages")}
                 >
                     Messages
                 </div>
                 <div
-                    className={screenSetting === "interactions" ?
-                        "profile-panel-button-selected" : "profile-panel-button-deselected"}
+                    style={screenSetting === "interactions" ?
+                       profilePanelScreenSelected : profilePanelScreenDeselected}
                     onClick={() => setScreenSetting("interactions")}
                 >
                     Date
