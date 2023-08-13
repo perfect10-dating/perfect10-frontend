@@ -1,6 +1,6 @@
 import {useFormRoomMutation} from "../../services/api";
 import {useEffect} from "react";
-const POLLING_DELAY_SECONDS = 60 * 1
+const POLLING_DELAY_SECONDS = 60 * 10
 
 interface PropTypes {
     user: User
@@ -14,11 +14,13 @@ export function WaitingForRoom(props: PropTypes) {
 
         // will try to recreate the room every minute (a good compromise between snappiness and server load)
         const pollingFunction = async() => {
-            await new Promise((resolve) => setTimeout(resolve, POLLING_DELAY_SECONDS * 1000))
-            formRoom(props.user.cognitoId)
+            while (!statusObj.isSuccess) {
+                formRoom(props.user.cognitoId)
+                await new Promise((resolve) => setTimeout(resolve, POLLING_DELAY_SECONDS * 1000))
+            }
         }
         pollingFunction()
-    })
+    }, [props.user])
 
     return (
         <div style={{display: "flex", justifyContent: "center", flexDirection: "column", height: "100vh"}}>
