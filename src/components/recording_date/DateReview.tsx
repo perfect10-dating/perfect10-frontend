@@ -1,5 +1,6 @@
 import {useState} from "react";
 import {useReviewDateMutation} from "../../services/api";
+import Toggle from 'react-toggle'
 
 interface PropTypes {
     user: User
@@ -34,15 +35,39 @@ export function DateReview(props: PropTypes) {
             <div>Please review your date with {(otherUser as UserMini).firstName}{isSetup ? "'s friend" : ""}</div>
 
             <div>
-                <div>Did your date show up?</div>
+                <label>
+                    <Toggle
+                        defaultChecked={!wasNoShow}
+                        onChange={() => {
+                            setWasNoShow(!wasNoShow)
+                        }}
+                    />
+                    <span>Did your date show up?</span>
+                </label>
             </div>
 
             <div>
-                <div>Did your date look like their photos?</div>
+                <label>
+                    <Toggle
+                        defaultChecked={!wasCatfish}
+                        onChange={() => {
+                            setWasCatfish(!wasCatfish)
+                        }}
+                    />
+                    <span>Did your date look like their photos?</span>
+                </label>
             </div>
 
             <div>
-                <div>Did you feel safe around your date?</div>
+                <label>
+                    <Toggle
+                        defaultChecked={!wasThreatening}
+                        onChange={() => {
+                            setWasThreatening(!wasThreatening)
+                        }}
+                    />
+                    <span>Did you feel safe around your date?</span>
+                </label>
             </div>
 
             <div>
@@ -62,7 +87,15 @@ export function DateReview(props: PropTypes) {
             </div>
 
             <div>
-                <div>Would you go on a second date with this person?</div>
+                <label>
+                    <Toggle
+                        defaultChecked={secondDate}
+                        onChange={() => {
+                            setSecondDate(!secondDate)
+                        }}
+                    />
+                    <span>Would you go on a second date with this person?</span>
+                </label>
             </div>
 
             <div onClick={() => {
