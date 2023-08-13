@@ -66,19 +66,74 @@ export const api = createApi({
       }),
       invalidatesTags: ['MESSAGE']
     }),
-    /* ============= BEGIN CONVERSATION ROUTES ============== */
+    /* ============= END CONVERSATION ROUTES ============== */
+
+    /* ============= BEGIN DATE ROUTES ============== */
+    proposeDate: builder.mutation<any, {cognitoId: string, otherUserId: string, time: number}>({
+      query: (body) => ({
+        url: 'propose-date',
+        method: 'POST',
+        body
+      }),
+      invalidatesTags: ['DATE']
+    }),
+
+    proposeSetup: builder.mutation<any, {cognitoId: string, otherUserId: string, time: number}>({
+      query: (body) => ({
+        url: 'propose-setup',
+        method: 'POST',
+        body
+      }),
+      invalidatesTags: ['DATE']
+    }),
+
+    acceptDate: builder.mutation<any, {cognitoId: string, dateId: string}>({
+      query: (body) => ({
+        url: 'accept-date',
+        method: 'POST',
+        body
+      }),
+      invalidatesTags: ['DATE']
+    }),
+
+    acceptSetup: builder.mutation<any, {cognitoId: string, dateId: string}>({
+      query: (body) => ({
+        url: 'accept-setup',
+        method: 'POST',
+        body
+      }),
+      invalidatesTags: ['DATE']
+    }),
+
+    rejectDate: builder.mutation<any, {cognitoId: string, dateId: string}>({
+      query: (body) => ({
+        url: 'reject-date',
+        method: 'POST',
+        body
+      }),
+      invalidatesTags: ['DATE']
+    }),
+    /* ============= END DATE ROUTES ============== */
+
   }),
 })
 
 export const {
-  // user information
-  useCreateUserMutation,
-  useFormRoomMutation,
-  useGetUserQuery,
-  useGetRoomQuery,
+    // user information
+    useCreateUserMutation,
+    useFormRoomMutation,
+    useGetUserQuery,
+    useGetRoomQuery,
 
-  // message information
-  useGetMessagesQuery,
-  usePostMessageMutation
+    // message information
+    useGetMessagesQuery,
+    usePostMessageMutation,
+
+    // date information
+    useProposeDateMutation,
+    useProposeSetupMutation,
+    useAcceptDateMutation,
+    useAcceptSetupMutation,
+    useRejectDateMutation,
 
 } = api

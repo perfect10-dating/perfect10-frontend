@@ -45,6 +45,7 @@ declare interface Room {
 }
 
 declare interface Date {
+  _id: string
   isSetup: boolean
   proposer: string
   isAccepted: boolean
