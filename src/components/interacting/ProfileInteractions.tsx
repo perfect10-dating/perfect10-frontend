@@ -70,6 +70,7 @@ function ProposeDateForm(ownUser: User, otherUser: UserMini, proposeDate: any, t
                     }
                     setErrorMessage("")
                     proposeDate({cognitoId: ownUser.cognitoId, otherUserId: otherUser._id, time: dateMilliseconds})
+                    callback()
                 }
                 }>
                     {"Schedule >>"}
@@ -124,6 +125,7 @@ function ProposeSetupForm(ownUser: User, otherUser: UserMini, proposeSetup: any,
                     }
                     setErrorMessage("")
                     proposeSetup({cognitoId: ownUser.cognitoId, otherUserId: otherUser._id, time: dateMilliseconds})
+                    callback()
                 }
                 }>
                     {"Schedule >>"}
@@ -161,8 +163,7 @@ export function ProfileInteractions(props: PropTypes) {
                 return (
                     <div style={outerDivStyle}>
                         <div style={textStyle}>
-                            You suggested that {props.otherUser.firstName} go out with your friend. If {props.otherUser.firstName}
-                            agrees, you'll have the opportunity to move to a new room immediately.
+                            You suggested that {props.otherUser.firstName} go out with your friend. If {props.otherUser.firstName} agrees, you'll have the opportunity to move to a new room immediately.
                         </div>
 
                         <div style={dateScheduleButtonStyle} onClick={rejectDateFunction}>
@@ -175,8 +176,7 @@ export function ProfileInteractions(props: PropTypes) {
                 return (
                     <div style={outerDivStyle}>
                         <div style={textStyle}>
-                            You proposed a date with {props.otherUser.firstName}! If {props.otherUser.firstName}
-                            agrees, we'll let you know!
+                            You proposed a date with {props.otherUser.firstName}! If {props.otherUser.firstName} agrees, we'll let you know!
                         </div>
 
                         <div style={dateScheduleButtonStyle} onClick={rejectDateFunction}>

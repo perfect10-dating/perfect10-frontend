@@ -12,9 +12,38 @@ interface PropTypes {
     dates: Date[]
 }
 
+function userInDate(date: Date, userId: string) {
+    if (userId+"" === date.setupResponsibleUser+"") {
+        return true
+    }
+    for (let userIdInArr of date.users) {
+        if (userIdInArr+"" === userId+"") {
+            return true
+        }
+    }
+}
+
 export function ProfileInRoom(props: PropTypes) {
     // can be "information", "messages", "interactions"
     const [screenSetting, setScreenSetting] = useState("messages")
+
+    let date = undefined
+    for (let possibleDate of props.dates) {
+        // first, check to see if this profile is one described by the date
+        if (userInDate(possibleDate, props.information._id)) {
+            // if date is undefined, define it
+            if (!date) {
+                date = possibleDate
+            }
+            // otherwise, override it if the new date is accepted (i.e., someone else got in ahead of you)
+            else {
+                if (possibleDate.isAccepted) {
+                    date = possibleDate
+                    break
+                }
+            }
+        }
+    }
 
     let screenComponent
     switch (screenSetting) {
@@ -25,7 +54,7 @@ export function ProfileInRoom(props: PropTypes) {
             screenComponent = <ProfileMessages otherUser={props.information} />
             break
         case "interactions":
-            screenComponent = <ProfileInteractions otherUser={props.information} />
+            screenComponent = <ProfileInteractions otherUser={props.information} date={date} />
             break
         default:
             screenComponent = <div />
