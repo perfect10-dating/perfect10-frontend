@@ -24,7 +24,7 @@ declare interface User {
   currentRoom?: string
 
   temporarilyLocked: boolean
-  unlockTime?: number
+  unlockTime?: string
   mustReviewDate: boolean
   lockingDate?: PopulatedDate
 }
@@ -51,7 +51,7 @@ declare interface Date {
   isAccepted: boolean
   users: string[]
   setupResponsibleUser?: string
-  time: number
+  time: string // (new Date(date.time)).getTime()
 }
 
 declare interface PopulatedDate extends Date{

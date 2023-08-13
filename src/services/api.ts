@@ -28,6 +28,15 @@ export const api = createApi({
       }),
       invalidatesTags: ['USER']
     }),
+
+    unlockUser: builder.mutation<any, string>({
+      query: (cognitoId: string) => ({
+        url: 'unlock',
+        method: 'POST',
+        body: {cognitoId}
+      }),
+      invalidatesTags: ['USER']
+    }),
     /* ============= END USER ROUTES ============== */
 
     /* ============= BEGIN ROOM ROUTES ============== */
@@ -120,10 +129,13 @@ export const api = createApi({
 
 export const {
     // user information
-    useCreateUserMutation,
-    useFormRoomMutation,
     useGetUserQuery,
+    useCreateUserMutation,
+    useUnlockUserMutation,
+
+    // room information
     useGetRoomQuery,
+    useFormRoomMutation,
 
     // message information
     useGetMessagesQuery,
