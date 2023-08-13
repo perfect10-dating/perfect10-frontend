@@ -176,7 +176,7 @@ export function ProfileInteractions(props: PropTypes) {
                 return (
                     <div style={outerDivStyle}>
                         <div style={textStyle}>
-                            You proposed a date with {props.otherUser.firstName}! If {props.otherUser.firstName} agrees, we'll let you know!
+                            You proposed a date with {props.otherUser.firstName} at {(new Date(props.date.time)).toDateString()}! If {props.otherUser.firstName} agrees, we'll let you know!
                         </div>
 
                         <div style={dateScheduleButtonStyle} onClick={rejectDateFunction}>
