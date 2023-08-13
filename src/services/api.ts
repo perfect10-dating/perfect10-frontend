@@ -7,15 +7,36 @@ export const api = createApi({
     // baseUrl: 'http://10.0.0.197:3001'
     baseUrl: 'http://localhost:3001/api',
   }),
+  tagTypes: ['USER', 'ROOM', 'DATE', 'MESSAGE'],
   endpoints: (builder) => ({
 
     /* ============= BEGIN USER ROUTES ============== */
+    getUser: builder.query<User, string>({
+      // TODO -- will get this from AWS data
+      query: (cognitoId: string)=> ({
+        url: `get-user/${cognitoId}`,
+        method: 'GET',
+      }),
+      providesTags: ['USER']
+    }),
+
     createUser: builder.mutation<any, User>({
       query: (user: User) => ({
         url: `create-user`,
         method: 'POST',
         body: user
-      })
+      }),
+      invalidatesTags: ['USER']
+    }),
+    /* ============= END USER ROUTES ============== */
+
+    /* ============= BEGIN ROOM ROUTES ============== */
+    getRoom: builder.query<{room: Room, dates: Date[]}, string>({
+      query: (cognitoId: string)=> ({
+        url: `display-room/${cognitoId}`,
+        method: 'GET',
+      }),
+      providesTags: ['ROOM', 'DATE']
     }),
 
     formRoom: builder.mutation<any, string>({
@@ -23,31 +44,18 @@ export const api = createApi({
         url: 'form-room',
         method: 'POST',
         body: {userId: userId}
-      })
+      }),
+      invalidatesTags: ['ROOM'],
     }),
-
-    getUser: builder.query<User, string>({
-      // TODO -- will get this from AWS data
-      query: (cognitoId: string)=> ({
-        url: `get-user/${cognitoId}`,
-        method: 'GET',
-      })
-    }),
-
-    getRoom: builder.query<{room: Room, dates: Date[]}, string>({
-      query: (cognitoId: string)=> ({
-        url: `display-room/${cognitoId}`,
-        method: 'GET',
-      })
-    }),
-    /* ============= END USER ROUTES ============== */
+    /* ============= END ROOM ROUTES ============== */
 
     /* ============= BEGIN CONVERSATION ROUTES ============== */
     getMessages: builder.query<Message[], {cognitoId: string, otherUserId: string}>({
       query: ({cognitoId, otherUserId})=> ({
         url: `get-messages/${cognitoId}/${otherUserId}`,
         method: 'GET',
-      })
+      }),
+      providesTags: ['MESSAGE']
     }),
 
     postMessage: builder.mutation<any, { cognitoId: string, conversationId?: string, otherUserId?: string, text?: string, isImage: boolean, imageUrl?: string }>({
@@ -55,8 +63,10 @@ export const api = createApi({
         url: 'post-message',
         method: 'POST',
         body
-      })
+      }),
+      invalidatesTags: ['MESSAGE']
     }),
+    /* ============= BEGIN CONVERSATION ROUTES ============== */
   }),
 })
 
