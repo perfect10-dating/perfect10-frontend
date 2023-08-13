@@ -22,7 +22,8 @@ function loading() {
 }
 
 export function Home() {
-    const cognitoId = "607865"
+    const cognitoId = "607865"  // 19
+    // const cognitoId = "890233"     // matilda
     const dispatch = useAppDispatch()
 
     // set up API listeners for user, room, dates
@@ -80,26 +81,29 @@ export function Home() {
             // the user is being blocked by a date
             if (user.mustReviewDate) {
                 // the user needs to wait
-                if (user.lockingDate && user.lockingDate.time > Date.now()) {
-                    return <WaitingForDate />
+                if (user.lockingDate && (new Date(user.lockingDate.time)).getTime() > Date.now()) {
+                    console.log("waiting for date")
+                    return <WaitingForDate user={user as User} />
                 }
                 // the user needs to review the date
                 else {
-                    return <DateReview />
+                    console.log("reviewing date")
+                    return <DateReview user={user as User} />
                 }
             }
 
             // the user is being blocked by time
-            if (user.temporarilyLocked && user.unlockTime && user.unlockTime > Date.now()) {
-                return <WaitingForTime />
+            if (user.temporarilyLocked) {
+                return <WaitingForTime user={user as User} />
             }
 
             // the user is waiting to join a room
             if (user.waitingForRoom) {
-                return <WaitingForRoom />
+                return <WaitingForRoom user={user as User} />
             }
 
             // the user is otherwise not in a room (but there is no reason they aren't)
+            // we'll ask them if they wish to join a new room
             if (user.currentRoom === null || !roomRetrievalObj) {
                 return <JoinNewRoom/>
             }

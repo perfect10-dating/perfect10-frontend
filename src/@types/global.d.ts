@@ -26,7 +26,7 @@ declare interface User {
   temporarilyLocked: boolean
   unlockTime?: number
   mustReviewDate: boolean
-  lockingDate?: Date
+  lockingDate?: PopulatedDate
 }
 
 declare interface UserMini {
@@ -50,8 +50,13 @@ declare interface Date {
   proposer: string
   isAccepted: boolean
   users: string[]
-  setupResponsibleUser: string
+  setupResponsibleUser?: string
   time: number
+}
+
+declare interface PopulatedDate extends Date{
+  setupResponsibleUser?: UserMini
+  users: UserMini[]
 }
 
 declare interface Message {
