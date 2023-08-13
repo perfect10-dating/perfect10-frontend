@@ -22,8 +22,8 @@ function loading() {
 }
 
 export function Home() {
-    const cognitoId = "607865"  // 19
-    // const cognitoId = "890233"     // matilda
+    // const cognitoId = "607865"  // 19
+    const cognitoId = "890233"     // matilda
     const dispatch = useAppDispatch()
 
     // set up API listeners for user, room, dates

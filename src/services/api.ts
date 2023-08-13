@@ -38,6 +38,15 @@ export const api = createApi({
       }),
       invalidatesTags: ['USER']
     }),
+
+    readyJoinRoom: builder.mutation<any, string>({
+      query: (cognitoId: string) => ({
+        url: 'ready-join-room',
+        method: 'POST',
+        body: {cognitoId}
+      }),
+      invalidatesTags: ['USER']
+    }),
     /* ============= END USER ROUTES ============== */
 
     /* ============= BEGIN ROOM ROUTES ============== */
@@ -142,6 +151,7 @@ export const {
     useGetUserQuery,
     useCreateUserMutation,
     useUnlockUserMutation,
+    useReadyJoinRoomMutation,
 
     // room information
     useGetRoomQuery,
