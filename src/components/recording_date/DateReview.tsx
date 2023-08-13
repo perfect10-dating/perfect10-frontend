@@ -1,6 +1,9 @@
 import {useState} from "react";
 import {useReviewDateMutation} from "../../services/api";
-import Toggle from 'react-toggle'
+import {Slider, Toggle} from "rsuite";
+const DEFAULT_SLIDER_VALUE = 5.5
+const MIN_SLIDER_VALUE = 1
+const MAX_SLIDER_VALUE = 10
 
 interface PropTypes {
     user: User
@@ -9,11 +12,11 @@ export function DateReview(props: PropTypes) {
     const [wasNoShow, setWasNoShow] = useState(false)
     const [wasCatfish, setWasCatfish] = useState(false)
     const [wasThreatening, setWasThreatening] = useState(false)
-    const [intelligent, setIntelligent] = useState(5.5)
-    const [trustworthy, setTrustworthy] = useState(5.5)
-    const [attractive, setAttractive] = useState(5.5)
-    const [pleasant, setPleasant] = useState(5.5)
-    const [satisfied, setSatisfied] = useState(5.5)
+    const [intelligent, setIntelligent] = useState(DEFAULT_SLIDER_VALUE)
+    const [trustworthy, setTrustworthy] = useState(DEFAULT_SLIDER_VALUE)
+    const [attractive, setAttractive] = useState(DEFAULT_SLIDER_VALUE)
+    const [pleasant, setPleasant] = useState(DEFAULT_SLIDER_VALUE)
+    const [satisfied, setSatisfied] = useState(DEFAULT_SLIDER_VALUE)
     const [secondDate, setSecondDate] = useState(false)
 
     const [reviewDate] = useReviewDateMutation()
@@ -72,18 +75,54 @@ export function DateReview(props: PropTypes) {
 
             <div>
                 <div>How intelligent did you find your date?</div>
+                <Slider
+                    defaultValue={intelligent}
+                    min={MIN_SLIDER_VALUE}
+                    max={MAX_SLIDER_VALUE}
+                    graduated
+                    progress
+                    renderMark={mark => mark}
+                    onChange={(val) => setIntelligent(val)}
+                />
             </div>
 
             <div>
                 <div>How trustworthy did you find your date?</div>
+                <Slider
+                    defaultValue={trustworthy}
+                    min={MIN_SLIDER_VALUE}
+                    max={MAX_SLIDER_VALUE}
+                    graduated
+                    progress
+                    renderMark={mark => mark}
+                    onChange={(val) => setTrustworthy(val)}
+                />
             </div>
 
             <div>
                 <div>How attractive did you find your date?</div>
+                <Slider
+                    defaultValue={attractive}
+                    min={MIN_SLIDER_VALUE}
+                    max={MAX_SLIDER_VALUE}
+                    graduated
+                    progress
+                    renderMark={mark => mark}
+                    onChange={(val) => setAttractive(val)}
+                />
             </div>
 
             <div>
                 <div>How satisfied were you with your date overall?</div>
+                <Slider
+                    defaultValue={satisfied}
+                    min={MIN_SLIDER_VALUE}
+                    max={MAX_SLIDER_VALUE}
+                    graduated
+                    progress
+                    renderMark={mark => mark}
+                    onChange={(val) => setSatisfied(val)}
+                />
             </div>
 
             <div>
