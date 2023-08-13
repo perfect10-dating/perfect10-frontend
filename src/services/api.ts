@@ -93,7 +93,7 @@ export const api = createApi({
         method: 'POST',
         body
       }),
-      invalidatesTags: ['DATE']
+      invalidatesTags: ['DATE', 'USER']
     }),
 
     acceptSetup: builder.mutation<any, {cognitoId: string, dateId: string}>({
@@ -102,7 +102,7 @@ export const api = createApi({
         method: 'POST',
         body
       }),
-      invalidatesTags: ['DATE']
+      invalidatesTags: ['DATE', 'USER']
     }),
 
     rejectDate: builder.mutation<any, {cognitoId: string, dateId: string}>({
