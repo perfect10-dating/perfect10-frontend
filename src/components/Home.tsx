@@ -105,7 +105,7 @@ export function Home() {
             // the user is otherwise not in a room (but there is no reason they aren't)
             // we'll ask them if they wish to join a new room
             if (user.currentRoom === null || !roomRetrievalObj) {
-                return <JoinNewRoom/>
+                return <JoinNewRoom user={user as User} />
             }
 
             // otherwise, we're in the right spot (and we can display the room)

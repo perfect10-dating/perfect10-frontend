@@ -19,7 +19,7 @@ export function JoinNewRoom(props: PropTypes) {
                 <p style={{fontSize: 30}}>Ready to talk to more people?</p>
                 <p style={{marginTop: 10}}>When you're ready, we'll match you with a new room of members.</p>
                 <p style={{marginTop: 10}}>Until then, nobody will see your profile.</p>
-                <div style={{fontSize: 16, cursor: "pointer"}}
+                <div style={{fontSize: 20, cursor: "pointer", marginTop: 20}}
                     onClick={() => readyJoinRoom(props.user.cognitoId)}
                 >
                     {"Join New Room >>"}
