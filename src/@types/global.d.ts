@@ -59,15 +59,29 @@ declare interface PopulatedDate extends Date{
   users: UserMini[]
 }
 
+declare interface DateReview {
+  reviewee: string
+  dateObject: string
+  wasNoShow: boolean
+  wasCatfish: boolean
+  wasThreatening: boolean
+  intelligent: number
+  trustworthy: number
+  attractive: number
+  pleasant: number
+  satisfied: number
+  secondDate: boolean
+}
+
 declare interface Message {
-  text: string,
-  isImage: boolean,
-  imageUrl: string,
+  text: string
+  isImage: boolean
+  imageUrl: string
   conversation: string
-  createdAt: number,
-  sender: string,
+  createdAt: number
+  sender: string
 }
 
 declare interface Conversation {
-  users: [string],
+  users: [string]
 }

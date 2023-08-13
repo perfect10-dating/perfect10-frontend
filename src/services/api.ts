@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import {DateReview} from "../components/recording_date/DateReview";
 
 export const api = createApi({
   reducerPath: 'api',
@@ -122,6 +123,15 @@ export const api = createApi({
       }),
       invalidatesTags: ['DATE']
     }),
+
+    reviewDate: builder.mutation<any, {cognitoId: string, review: DateReview}>({
+      query: (body) => ({
+        url: 'review-date',
+        method: 'POST',
+        body
+      }),
+      invalidatesTags: ['USER']
+    })
     /* ============= END DATE ROUTES ============== */
 
   }),
@@ -147,5 +157,5 @@ export const {
     useAcceptDateMutation,
     useAcceptSetupMutation,
     useRejectDateMutation,
-
+    useReviewDateMutation
 } = api

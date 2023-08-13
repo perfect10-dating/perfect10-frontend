@@ -17,6 +17,7 @@ export function WaitingForTime(props: PropTypes) {
         unlockUser(props.user.cognitoId)
     }
 
+    // TODO -- include a button "Unlock immediately" which allows either paid unlocks or referral unlocks
     return (
         <div style={{display: "flex", justifyContent: "center", flexDirection: "column", height: "100vh"}}>
             <div style={{maxWidth: "calc(100vw - 20)", maxHeight: "calc(100vh - 20)", textAlign: "center", margin: 10}}>
