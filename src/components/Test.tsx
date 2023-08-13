@@ -38,7 +38,7 @@ const testUserCreator = (userNumber: number, longitude: number, latitude: number
 
 var passthrough = 0
 
-export function Home() {
+export function Test() {
     const [ createUser ] = useCreateUserMutation()
     const [ formRoom ] = useFormRoomMutation()
 
@@ -51,15 +51,15 @@ export function Home() {
             let lat = position.coords.latitude;
             let long = position.coords.longitude;
 
-            // console.log("================ CREATING NEW USERS ================")
-            // for (let i = 0; i < 60; i++) {
-            //     let user = testUserCreator(i, long, lat);
-            //     await createUser(user)
-            // }
-            // console.log("================ FINISHED NEW USERS ================")
+            console.log("================ CREATING NEW USERS ================")
+            for (let i = 60; i < 120; i++) {
+                let user = testUserCreator(i, long, lat);
+                await createUser(user)
+            }
+            console.log("================ FINISHED NEW USERS ================")
 
             // console.log("============= CREATING ROOM FOR USERS ================")
-            await formRoom("890233")
+            // await formRoom("890233")
             // console.log("============= FINISHED ROOM FOR USERS ================")
 
             passthrough += 1

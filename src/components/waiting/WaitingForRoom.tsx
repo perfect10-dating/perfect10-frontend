@@ -12,9 +12,9 @@ export function WaitingForRoom(props: PropTypes) {
     useEffect(() => {
         console.log("Polling started")
 
-        // will try to recreate the room every minute (a good compromise between snappiness and server load)
+        // will try to recreate the room every 10 minutes (a good compromise between snappiness and server load)
         const pollingFunction = async() => {
-            while (!statusObj.isSuccess) {
+            while (!statusObj.isSuccess && props.user.waitingForRoom) {
                 formRoom(props.user.cognitoId)
                 await new Promise((resolve) => setTimeout(resolve, POLLING_DELAY_SECONDS * 1000))
             }
