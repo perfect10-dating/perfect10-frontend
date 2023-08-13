@@ -80,7 +80,7 @@ export function ProfileInRoom(props: PropTypes) {
     }
 
     return (
-        <div style={{height: 500}}>
+        <div style={{height: 400, width: 300, minWidth: 300, margin: 50}}>
             {
                 competitor &&
                 <div className={"date-overlay-panel-red"}>
@@ -89,7 +89,7 @@ export function ProfileInRoom(props: PropTypes) {
                     } with {competitor.firstName}{competitorDateIsSetup && `'s friend`}
                 </div>
             }
-            <div className={"profile-panel-button-container"}>
+            <div style={{position: "absolute", zIndex: 10}}>
                 <div
                     className={screenSetting === "information" ?
                         "profile-panel-button-selected" : "profile-panel-button-deselected"}

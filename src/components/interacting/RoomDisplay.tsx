@@ -9,7 +9,7 @@ interface PropTypes {
 
 export function RoomDisplay(props: PropTypes) {
     return (
-        <div>
+        <div style={{overflow: "scroll", maxHeight: "100vh", maxWidth: "100vw", display: "flex"}}>
             {
                 (props.isDisplayingCompetitors ? props.competitors : props.potentialPartners).map(
                     (person, key) => {

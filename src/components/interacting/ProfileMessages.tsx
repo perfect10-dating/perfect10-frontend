@@ -46,7 +46,7 @@ export function ProfileMessages(props: PropTypes) {
     }
 
     return (
-        <div>
+        <div style={{width: "100%", height: "100%", zIndex: 0, position: "relative"}}>
             <MessageContainer {...selectedConversation} mobileView={true} />
         </div>
     )
