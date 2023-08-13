@@ -194,11 +194,12 @@ export function ProfileInteractions(props: PropTypes) {
                     <div style={outerDivStyle}>
                         <div style={textStyle}>
                             {props.otherUser.firstName} has a friend who wants to go out with you at {(new Date(props.date.time)).toDateString()}.
+                            Once you accept this date, you won't be able to accept any others until you go out with {props.otherUser.firstName}'s friend.
                         </div>
 
                         <div>
                             <div style={dateScheduleButtonStyle} onClick={() => {
-                              acceptDate({cognitoId: (ownUser as User).cognitoId, dateId: (props.date as Date)._id})
+                              acceptSetup({cognitoId: (ownUser as User).cognitoId, dateId: (props.date as Date)._id})
                             }}>
                                 {"Accept the date >>"}
                             </div>
@@ -215,11 +216,13 @@ export function ProfileInteractions(props: PropTypes) {
                     <div style={outerDivStyle}>
                         <div style={textStyle}>
                             {props.otherUser.firstName} wants to go out with you on {(new Date(props.date.time)).toDateString()}.
+
+                            Once you accept this date, you won't be able to accept any others until you go out with {props.otherUser.firstName}.
                         </div>
 
                         <div>
                             <div style={dateScheduleButtonStyle} onClick={() => {
-                                acceptSetup({cognitoId: (ownUser as User).cognitoId, dateId: (props.date as Date)._id})
+                                acceptDate({cognitoId: (ownUser as User).cognitoId, dateId: (props.date as Date)._id})
                             }}>
                                 {"Accept the date >>"}
                             </div>
