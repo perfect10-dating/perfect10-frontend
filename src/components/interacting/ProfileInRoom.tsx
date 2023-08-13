@@ -3,6 +3,7 @@ import {useState} from "react";
 import {ProfileInformation} from "./ProfileInformation";
 import {ProfileMessages} from "./ProfileMessages";
 import {ProfileInteractions} from "./ProfileInteractions";
+import {userSlice} from "../../services/userSlice";
 
 interface PropTypes {
     isCompetitor: boolean
@@ -13,7 +14,7 @@ interface PropTypes {
 
 export function ProfileInRoom(props: PropTypes) {
     // can be "information", "messages", "interactions"
-    const [screenSetting, setScreenSetting] = useState("information")
+    const [screenSetting, setScreenSetting] = useState("messages")
 
     let screenComponent
     switch (screenSetting) {
@@ -21,7 +22,7 @@ export function ProfileInRoom(props: PropTypes) {
             screenComponent = <ProfileInformation information={props.information} />
             break
         case "messages":
-            screenComponent = <ProfileMessages />
+            screenComponent = <ProfileMessages ownId={"foo"} otherUser={props.information} />
             break
         case "interactions":
             screenComponent = <ProfileInteractions />
@@ -79,7 +80,7 @@ export function ProfileInRoom(props: PropTypes) {
     }
 
     return (
-        <div>
+        <div style={{height: 500}}>
             {
                 competitor &&
                 <div className={"date-overlay-panel-red"}>

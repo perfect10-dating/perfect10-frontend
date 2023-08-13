@@ -12,9 +12,10 @@ export function RoomDisplay(props: PropTypes) {
         <div>
             {
                 (props.isDisplayingCompetitors ? props.competitors : props.potentialPartners).map(
-                    person => {
+                    (person, key) => {
                         return (
                             <ProfileInRoom
+                                key={key}
                                 isCompetitor={props.isDisplayingCompetitors}
                                 information={person as UserMini}
                                 potentialMatchedUsers={props.isDisplayingCompetitors ?

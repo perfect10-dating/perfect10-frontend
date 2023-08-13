@@ -52,3 +52,16 @@ declare interface Date {
   setupResponsibleUser: string
   time: number
 }
+
+declare interface Message {
+  text: string,
+  isImage: boolean,
+  imageUrl: string,
+  conversation: Conversation
+  createdAt: number,
+  sender: string,
+}
+
+declare interface Conversation {
+  users: [string],
+}
