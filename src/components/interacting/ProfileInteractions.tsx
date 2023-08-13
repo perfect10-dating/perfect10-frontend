@@ -7,7 +7,9 @@ interface PropTypes {
     date?: Date
 }
 
-const outerDivStyle = {width: "100%", height: "100%", backgroundColor: "rgb(243,244,246)", borderRadius: 15}
+const outerDivStyle = {width: "100%", height: "100%",
+    backgroundColor: "rgb(243,244,246)", borderRadius: 15,
+    display: "flex", flexDirection: "column" as "column", justifyContent: "space-between"}
 const textStyle = {padding: 20, paddingTop: 70}
 
 function ProposeDateForm() {
@@ -120,15 +122,20 @@ export function ProfileInteractions(props: PropTypes) {
             <div style={textStyle}>
                 Once you and {props.otherUser.firstName} have agreed on a date, please let us know here!
                 You can also choose to set {props.otherUser.firstName} up with a friend, if you're not interested
-                in anyone in this room, but your friend is interested in {props.otherUser.firstName}
+                in anyone in this room, but your friend is interested in {props.otherUser.firstName}.
+                If they agree to go out with your friend, you'll be able to join a new room immediately.
             </div>
 
             <div>
-                Propose a date with {props.otherUser.firstName}
-            </div>
+                <div style={{cursor: "pointer", textAlign: "center"}} onClick={() => setProposingDate(true)}>
+                    {`Propose a date with ${props.otherUser.firstName} >>`}
+                </div>
 
-            <div>
-                Set {props.otherUser.firstName} up with a friend
+                <div style={{cursor: "pointer", textAlign: "center", marginTop: 10, marginBottom: 30}}
+                    onClick={() => setProposingSetup(true)}
+                >
+                    {`Set ${props.otherUser.firstName} up with a friend >>`}
+                </div>
             </div>
         </div>
     )
