@@ -59,12 +59,12 @@ export const api = createApi({
     }),
 
     formRoom: builder.mutation<any, string>({
-      query: (userId: string) => ({
+      query: (cognitoId: string) => ({
         url: 'form-room',
         method: 'POST',
-        body: {userId: userId}
+        body: {cognitoId: cognitoId}
       }),
-      invalidatesTags: ['ROOM'],
+      invalidatesTags: (result) => result ? ['ROOM', 'USER'] : [],
     }),
     /* ============= END ROOM ROUTES ============== */
 
