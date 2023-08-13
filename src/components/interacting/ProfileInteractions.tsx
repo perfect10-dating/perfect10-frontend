@@ -7,6 +7,7 @@ import {
     useProposeDateMutation,
     useProposeSetupMutation, useRejectDateMutation
 } from "../../services/api";
+import {useTheme} from "styled-components";
 
 interface PropTypes {
     otherUser: UserMini
@@ -19,35 +20,56 @@ const outerDivStyle = {width: "100%", height: "100%",
 const textStyle = {padding: 20, paddingTop: 70}
 const inputFormStyle = {width: "calc(100% - 20px)", padding: 10, marginTop: 5, height: 25,
     borderRadius: 10, border: 0, backgroundColor: "rgb(194, 213, 242)"}
-const dateScheduleButtonStyle = {textAlign: "center" as "center", cursor: "button",
+const dateScheduleButtonStyle = {textAlign: "center" as "center", cursor: "pointer",
     marginBottom: 20}
+const errorMessageContainerStyle = {color: "red", }
 
-function ProposeDateForm(ownUser: User, otherUser: UserMini, proposeDate: any, timeOfDate: string, setTimeOfDate: any) {
+function ProposeDateForm(ownUser: User, otherUser: UserMini, proposeDate: any, timeOfDate: string, setTimeOfDate: any,
+                         errorMessage: string, setErrorMessage: any, callback: any
+                         ) {
 
     return (
         <div style={outerDivStyle}>
-            <label style={textStyle}>
-                Please specify the time for your date with {otherUser.firstName}
-                <input
-                    type="datetime-local"
-                    id="time-of-date"
-                    name="time-of-date"
-                    value={timeOfDate}
+            <div style={textStyle}>
+                <label>
+                    Please specify the time for your date with {otherUser.firstName}
+                    <input
+                        type="datetime-local"
+                        id="time-of-date"
+                        name="time-of-date"
+                        value={timeOfDate}
 
-                    style={inputFormStyle}
+                        style={inputFormStyle}
 
-                    onChange={(e) => {
-                        setTimeOfDate(e.target.value)
-                    }}
-                />
-            </label>
+                        onChange={(e) => {
+                            setTimeOfDate(e.target.value)
+                        }}
+                    />
+                </label>
+                {errorMessage !== "" &&
+                    <div style={errorMessageContainerStyle}>
+                        {errorMessage}
+                    </div>
+                }
+            </div>
 
             {
                 timeOfDate !== "" &&
                 <div style={dateScheduleButtonStyle} onClick={() => {
                     // schedule a date between the two users
                     let dateMilliseconds = (new Date(timeOfDate)).getTime()
-                    proposeDate({cognitoId: ownUser.cognitoId, time: dateMilliseconds})
+                    if (dateMilliseconds < Date.now()) {
+                        console.error("Cannot schedule a date in the past")
+                        setErrorMessage("Cannot schedule a date in the past")
+                        return
+                    }
+                    if (dateMilliseconds > Date.now() + 2628000000) {
+                        console.error("Cannot schedule a date more than a month in the future")
+                        setErrorMessage("Cannot schedule a date more than a month in the future")
+                        return
+                    }
+                    setErrorMessage("")
+                    proposeDate({cognitoId: ownUser.cognitoId, otherUserId: otherUser._id, time: dateMilliseconds})
                 }
                 }>
                     {"Schedule >>"}
@@ -57,31 +79,51 @@ function ProposeDateForm(ownUser: User, otherUser: UserMini, proposeDate: any, t
     )
 }
 
-function ProposeSetupForm(ownUser: User, otherUser: UserMini, proposeSetup: any, timeOfDate: string, setTimeOfDate: any) {
+function ProposeSetupForm(ownUser: User, otherUser: UserMini, proposeSetup: any, timeOfDate: string, setTimeOfDate: any,
+    errorMessage: string, setErrorMessage: any, callback: any
+) {
     return (
         <div style={outerDivStyle}>
-            <label style={textStyle}>
-                Please specify the time your friend would like to meet {otherUser.firstName}
-                <input
-                    type="datetime-local"
-                    id="time-of-date"
-                    name="time-of-date"
-                    value={timeOfDate}
+            <div style={textStyle}>
+                <label>
+                    Please specify the time your friend would like to meet {otherUser.firstName}
+                    <input
+                        type="datetime-local"
+                        id="time-of-date"
+                        name="time-of-date"
+                        value={timeOfDate}
 
-                    style={inputFormStyle}
+                        style={inputFormStyle}
 
-                    onChange={(e) => {
-                        setTimeOfDate(e.target.value)
-                    }}
-                />
-            </label>
+                        onChange={(e) => {
+                            setTimeOfDate(e.target.value)
+                        }}
+                    />
+                </label>
+                {errorMessage !== "" &&
+                    <div style={errorMessageContainerStyle}>
+                        {errorMessage}
+                    </div>
+                }
+            </div>
 
             {
                 timeOfDate !== "" &&
                 <div style={dateScheduleButtonStyle} onClick={() => {
                     // schedule a date between the two users
                     let dateMilliseconds = (new Date(timeOfDate)).getTime()
-                    proposeSetup({cognitoId: ownUser.cognitoId, time: dateMilliseconds})
+                    if (dateMilliseconds < Date.now()) {
+                        console.error("Cannot schedule a date in the past")
+                        setErrorMessage("Cannot schedule a date in the past")
+                        return
+                    }
+                    if (dateMilliseconds > Date.now() + 2628000000) {
+                        console.error("Cannot schedule a date more than a month in the future")
+                        setErrorMessage("Cannot schedule a date more than a month in the future")
+                        return
+                    }
+                    setErrorMessage("")
+                    proposeSetup({cognitoId: ownUser.cognitoId, otherUserId: otherUser._id, time: dateMilliseconds})
                 }
                 }>
                     {"Schedule >>"}
@@ -106,6 +148,7 @@ export function ProfileInteractions(props: PropTypes) {
     // set up the state
     let [ proposingDate, setProposingDate ] = useState(false)
     let [ proposingSetup, setProposingSetup ] = useState(false)
+    let [ errorMessage, setErrorMessage ] = useState("")
 
     if (props.date) {
         const rejectDateFunction = () => {
@@ -186,11 +229,15 @@ export function ProfileInteractions(props: PropTypes) {
     // you're putting in the information to propose a new date
     if (proposingDate) {
         // TODO -- callbacks ...?
-        return ProposeDateForm(ownUser as User, props.otherUser, proposeDate, timeOfDate, setTimeOfDate)
+        return ProposeDateForm(ownUser as User, props.otherUser,
+            proposeDate, timeOfDate, setTimeOfDate, errorMessage, setErrorMessage,
+            () => setProposingDate(false))
     }
     if (proposingSetup) {
         // TODO -- callbacks ...?
-        return ProposeSetupForm(ownUser as User, props.otherUser, proposeSetup, timeOfDate, setTimeOfDate)
+        return ProposeSetupForm(ownUser as User, props.otherUser,
+            proposeSetup, timeOfDate, setTimeOfDate, errorMessage, setErrorMessage,
+            () => setProposingSetup(false))
     }
 
     return (
