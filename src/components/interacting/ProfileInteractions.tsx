@@ -167,7 +167,7 @@ export function ProfileInteractions(props: PropTypes) {
                         </div>
 
                         <div style={dateScheduleButtonStyle} onClick={rejectDateFunction}>
-                            Withdraw your proposal
+                            {"Withdraw your proposal >>"}
                         </div>
                     </div>
                 )
@@ -180,7 +180,7 @@ export function ProfileInteractions(props: PropTypes) {
                         </div>
 
                         <div style={dateScheduleButtonStyle} onClick={rejectDateFunction}>
-                            Withdraw your proposal
+                            {"Withdraw your proposal >>"}
                         </div>
                     </div>
                 )
@@ -197,11 +197,11 @@ export function ProfileInteractions(props: PropTypes) {
                         </div>
 
                         <div>
-                            Accept the date!
+                            {"Accept the date >>"}
                         </div>
 
                         <div style={dateScheduleButtonStyle} onClick={rejectDateFunction}>
-                            Reject the date...
+                            {"Reject the date >>"}
                         </div>
                     </div>
                 )
@@ -214,11 +214,11 @@ export function ProfileInteractions(props: PropTypes) {
                         </div>
 
                         <div>
-                            Accept the date!
+                            {"Accept the date >>"}
                         </div>
 
                         <div style={dateScheduleButtonStyle} onClick={rejectDateFunction}>
-                            Reject the date...
+                            {"Reject the date >>"}
                         </div>
                     </div>
                 )
