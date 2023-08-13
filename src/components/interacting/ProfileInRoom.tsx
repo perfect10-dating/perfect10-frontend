@@ -25,7 +25,7 @@ export function ProfileInRoom(props: PropTypes) {
             screenComponent = <ProfileMessages otherUser={props.information} />
             break
         case "interactions":
-            screenComponent = <ProfileInteractions />
+            screenComponent = <ProfileInteractions otherUser={props.information} />
             break
         default:
             screenComponent = <div />
@@ -79,8 +79,8 @@ export function ProfileInRoom(props: PropTypes) {
         }
     }
 
-    const profilePanelScreenSelected = {}
-    const profilePanelScreenDeselected = {}
+    const profilePanelScreenSelected = {fontWeight: "bold"}
+    const profilePanelScreenDeselected = {cursor: "pointer"}
 
     return (
         <div style={{height: 400, width: 300, minWidth: 300, margin: 50}}>
@@ -93,7 +93,8 @@ export function ProfileInRoom(props: PropTypes) {
                 </div>
             }
             <div style={{position: "absolute", zIndex: 10, display: "flex", justifyContent: "space-evenly",
-                width: 300, marginTop: 18, backgroundColor: "rgb(243,244,246)"}}>
+                width: 300, marginTop: 18, backgroundColor: "rgb(243,244,246)", paddingBottom: 18,
+                borderBottom: "1px solid lightgray"}}>
                 <div
                     style={screenSetting === "information" ?
                        profilePanelScreenSelected : profilePanelScreenDeselected}
