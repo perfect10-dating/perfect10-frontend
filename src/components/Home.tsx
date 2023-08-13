@@ -5,7 +5,7 @@ import { useAppSelector, useAppDispatch } from '../app/hooks'
 import {useGetRoomQuery, useGetUserQuery} from '../services/api'
 import {RoomDisplay} from "./interacting/RoomDisplay";
 import {setDates, setRoom, setUser, UserState} from "../services/userSlice";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {LandingPage} from "./entry/LandingPage";
 import {WaitingForDate} from "./waiting/WaitingForDate";
 import {DateReview} from "./recording_date/DateReview";
@@ -23,6 +23,7 @@ function loading() {
 
 export function Home() {
     const cognitoId = "890233"
+    const dispatch = useAppDispatch()
 
     // set up API listeners for user, room, dates
     const {
@@ -72,7 +73,9 @@ export function Home() {
 
         else {
             // set the user that we retrieved
-            setUser({user})
+            console.log("setting user...")
+            console.log(user)
+            dispatch(setUser({user}))
 
             // the user is being blocked by a date
             if (user.mustReviewDate) {
@@ -104,8 +107,8 @@ export function Home() {
             // otherwise, we're in the right spot (and we can display the room)
             // tell TypeScript that roomRetrievalObj is not undefined
             const {room, dates} = roomRetrievalObj
-            setRoom({currentRoom: room})
-            setDates({dates})
+            dispatch(setRoom({currentRoom: room}))
+            dispatch(setDates({dates}))
 
             /* ==================== END NAVIGATION LOGIC =================== */
 

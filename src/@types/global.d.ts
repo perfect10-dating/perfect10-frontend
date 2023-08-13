@@ -57,7 +57,7 @@ declare interface Message {
   text: string,
   isImage: boolean,
   imageUrl: string,
-  conversation: Conversation
+  conversation: string
   createdAt: number,
   sender: string,
 }

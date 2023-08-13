@@ -22,7 +22,7 @@ export function ProfileInRoom(props: PropTypes) {
             screenComponent = <ProfileInformation information={props.information} />
             break
         case "messages":
-            screenComponent = <ProfileMessages ownId={"foo"} otherUser={props.information} />
+            screenComponent = <ProfileMessages otherUser={props.information} />
             break
         case "interactions":
             screenComponent = <ProfileInteractions />

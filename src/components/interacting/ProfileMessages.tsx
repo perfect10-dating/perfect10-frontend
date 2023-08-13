@@ -1,36 +1,48 @@
 import { MessageContainer } from "@minchat/react-chat-ui";
+import {useGetMessagesQuery, usePostMessageMutation} from "../../services/api";
+import {userSlice} from "../../services/userSlice";
+import {store} from "../../app/store";
 // https://github.com/MinChatHQ/react-chat-ui
 
 interface PropTypes {
-    ownId: string,
     otherUser: UserMini,
 }
 
 export function ProfileMessages(props: PropTypes) {
-    const selectedConversation = {
-        title: "Baron",
-        messages: [
-            {
-                text: "this is the prev message in the conversation",
-                user: {
-                    // avatar
-                    id: props.otherUser._id,
-                    name: props.otherUser.firstName
-                }
-            },
-            {
-                seen: false,
-                text: "this is the last message in the conversation",
-                user: {
-                    // avatar
-                    id: props.ownId,
-                    name: props.otherUser.firstName
-                }
-            }
-        ],
-        currentUserId: props.ownId,
-        onSendMessage: (message: string) => console.log(message)
-        // TODO -- set up attachment features
+    // TODO -- swap out hard-coded cognitoID
+    const {"user": ownUserState} = store.getState()
+    let ownUser = ownUserState.user
+    const {data: messages} = useGetMessagesQuery({
+        cognitoId: (ownUser?.cognitoId || ""), otherUserId: props.otherUser._id
+    })
+
+    let [postMessage] = usePostMessageMutation()
+    let selectedConversation = {}
+
+    if (ownUser) {
+        selectedConversation = {
+            // TODO -- allow image messages
+            messages: (messages || []).filter(message => message.text).map(message => {
+                return ({
+                    text: message.text,
+                    user: {
+                        // avatar
+                        id: message.sender,
+                        name: (message.sender === props.otherUser._id ? props.otherUser.firstName : ownUser?.firstName)
+                    }
+                })
+            }),
+            currentUserId: ownUser?._id,
+            onSendMessage: (message: string) => postMessage({
+                cognitoId: (ownUser?.cognitoId || ""),
+                conversationId: ((messages || [])[0]?.conversation || ""),
+                otherUserId: props.otherUser._id,
+                text: message,
+                isImage: false
+            })
+
+            // TODO -- set up attachment features
+        }
     }
 
     return (

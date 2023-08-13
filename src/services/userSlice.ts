@@ -21,6 +21,7 @@ export const userSlice = createSlice({
         user: User
       }>
     ) => {
+        console.log(action.payload.user)
       state.user = action.payload.user
     },
 
