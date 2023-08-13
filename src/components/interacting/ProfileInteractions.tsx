@@ -193,15 +193,19 @@ export function ProfileInteractions(props: PropTypes) {
                 return (
                     <div style={outerDivStyle}>
                         <div style={textStyle}>
-                            {props.otherUser.firstName} has a friend who wants to go out with you at {(new Date(props.date.time)).toDateString()}
+                            {props.otherUser.firstName} has a friend who wants to go out with you at {(new Date(props.date.time)).toDateString()}.
                         </div>
 
                         <div>
-                            {"Accept the date >>"}
-                        </div>
+                            <div style={dateScheduleButtonStyle} onClick={() => {
+                              acceptDate({cognitoId: (ownUser as User).cognitoId, dateId: (props.date as Date)._id})
+                            }}>
+                                {"Accept the date >>"}
+                            </div>
 
-                        <div style={dateScheduleButtonStyle} onClick={rejectDateFunction}>
-                            {"Reject the date >>"}
+                            <div style={dateScheduleButtonStyle} onClick={rejectDateFunction}>
+                                {"Reject the date >>"}
+                            </div>
                         </div>
                     </div>
                 )
@@ -210,16 +214,21 @@ export function ProfileInteractions(props: PropTypes) {
                 return (
                     <div style={outerDivStyle}>
                         <div style={textStyle}>
-                            {props.otherUser.firstName} wants to go out with you at {(new Date(props.date.time)).toDateString()}
+                            {props.otherUser.firstName} wants to go out with you on {(new Date(props.date.time)).toDateString()}.
                         </div>
 
                         <div>
-                            {"Accept the date >>"}
+                            <div style={dateScheduleButtonStyle} onClick={() => {
+                                acceptSetup({cognitoId: (ownUser as User).cognitoId, dateId: (props.date as Date)._id})
+                            }}>
+                                {"Accept the date >>"}
+                            </div>
+
+                            <div style={dateScheduleButtonStyle} onClick={rejectDateFunction}>
+                                {"Reject the date >>"}
+                            </div>
                         </div>
 
-                        <div style={dateScheduleButtonStyle} onClick={rejectDateFunction}>
-                            {"Reject the date >>"}
-                        </div>
                     </div>
                 )
             }
