@@ -125,7 +125,7 @@ export function Home() {
 
             return (
                 <div>
-                    <div>
+                    <div style={{fontSize: 30, textAlign: "center", marginTop: 30}}>
                         {isDisplayingCompetitors ? "Your Competitors" : "Your Potential Matches"}
                     </div>
                     <RoomDisplay
