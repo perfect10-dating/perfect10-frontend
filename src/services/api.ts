@@ -128,7 +128,7 @@ export const api = createApi({
       query: (body) => ({
         url: 'review-date',
         method: 'POST',
-        body
+        body: {cognitoId: body.cognitoId, ...body.review}
       }),
       invalidatesTags: ['USER']
     })
