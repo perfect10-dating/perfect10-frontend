@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { asyncSignUp, signUpFlowCanceled } from 'services/authSlice'
 import { BottomActionText, Input, LoginBox, Name, Seperation, Subheader, Submit } from './LoginComponents'
+import {LookingFor} from "../account/LookingFor";
 
 const inputFormStyle = {width: "calc(100% - 40px)", padding: 10, marginLeft: 20, marginRight: 20, height: 40,
     borderRadius: 10, border: 0, backgroundColor: "rgb(194, 213, 242)"}
@@ -21,6 +22,7 @@ export const SignUp = ({ style }: { style?: any }) => {
     const [passwordStatus, setPasswordStatus] = useState<'default' | 'entering' | 'valid'>('default')
     const [confirmPassword, setConfirmPassword] = useState<string>('')
     const [confirmPasswordStatus, setConfirmPasswordStatus] = useState<'default' | 'entering' | 'valid'>('default')
+    const [lookingFor, setLookingFor] = useState([] as string[])
 
     useEffect(() => {
         const newStatus = phoneNumber.length === 0 ? 'default' : /^\+?[1-9]\d{1,14}$/.test(phoneNumber) ? 'valid' : 'entering'
@@ -51,7 +53,10 @@ export const SignUp = ({ style }: { style?: any }) => {
             let lat = position.coords.latitude;
             let long = position.coords.longitude;
 
-            let result: any = await dispatch(asyncSignUp({ phoneNumber, password, firstName, birthDate, identity, latitude: lat, longitude: long }))
+            let result: any = await dispatch(asyncSignUp(
+                { phoneNumber, password, firstName, birthDate, identity,
+                    latitude: lat, longitude: long, lookingFor: Array.from(lookingFor) }
+            ))
             if (result.error) {
                 console.error(result.error)
                 alert(
@@ -100,6 +105,8 @@ export const SignUp = ({ style }: { style?: any }) => {
                         <option value={"man"}>Man</option>
                     </select>
                 </div>
+
+                <LookingFor lookingForCallback={setLookingFor} />
 
                 <div style={{textAlign: "center", marginTop: 30}}>
                     <div style={{fontSize: 12, textAlign: "left", marginLeft: 25}}>Select your birthday</div>
