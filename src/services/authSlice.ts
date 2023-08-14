@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { AuthenticationDetails, CognitoUser, CognitoUserPool, ISignUpResult } from 'amazon-cognito-identity-js'
+import { AuthenticationDetails, CognitoUser, CognitoUserAttribute, CognitoUserPool, ISignUpResult } from 'amazon-cognito-identity-js'
 
 const poolData = {
     // perfect10
@@ -248,11 +248,11 @@ const getUser = () => {
 const signUp = (phoneNumber: string, password: string, firstName: string, identity: string, birthDate: number) => {
     return new Promise<{ success: boolean }>((resolve) => {
         let attributeList = []
-        attributeList.push({Name: 'given_name', Value: firstName})
-        attributeList.push({Name: 'phone_number', Value: phoneNumber})
-        attributeList.push({Name: 'gender', Value: identity})
+        attributeList.push(new CognitoUserAttribute({Name: 'given_name', Value: firstName}))
+        attributeList.push(new CognitoUserAttribute({Name: 'phone_number', Value: phoneNumber}))
+        attributeList.push(new CognitoUserAttribute({Name: 'gender', Value: identity}))
         // convert a UNIX date into one that AWS likes
-        attributeList.push({Name: 'birthdate', Value: new Date(birthDate).toLocaleString().split(',')[0]})
+        attributeList.push(new CognitoUserAttribute({Name: 'birthdate', Value: new Date(birthDate).toLocaleString().split(',')[0]}))
         console.log(attributeList)
 
         userPool.signUp(phoneNumber, password, attributeList, [], (error?: Error, result?: ISignUpResult) => {
