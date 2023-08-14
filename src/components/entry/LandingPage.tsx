@@ -1,13 +1,22 @@
 import {useState} from "react";
 import {Login} from "./Login";
-import {Create} from "./Create";
+import {SignUp} from "./SignUp";
+import {authSlice} from "../../services/authSlice";
+import {useAppSelector} from "../../app/hooks";
+import {ForgotPassword} from "./ForgotPassword";
+import {ResetPassword} from "./ResetPassword";
 
 export function LandingPage() {
-    const [isCreatingAccount, setIsCreatingAccount] = useState(false)
+    const {loginPage} = useAppSelector(state => state.auth)
 
-    if (isCreatingAccount) {
-        return <Login />
-    } else {
-        return <Create />
+    switch(loginPage) {
+        case "signUp":
+            return <SignUp />
+        case "forgotPassword":
+            return <ForgotPassword />
+        case "resetPassword":
+            return <ResetPassword />
     }
+
+    return <Login />
 }
