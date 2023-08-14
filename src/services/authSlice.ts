@@ -127,13 +127,13 @@ export const asyncGetUser = createAsyncThunk<{ jwtToken?: string; role?: string 
 })
 
 export const asyncSignUp = createAsyncThunk<
-    { success?: boolean; userId?: string; phoneNumber: string; password: string; firstName: string; lastName: string },
-    { phoneNumber: string; password: string; firstName: string; lastName: string }
+    { success?: boolean; userId?: string; phoneNumber: string; password: string; firstName: string; },
+    { phoneNumber: string; password: string; firstName: string; }
 >('auth/signUp', async (credentials) => {
-    const { phoneNumber, password, firstName, lastName } = credentials
+    const { phoneNumber, password, firstName } = credentials
     const { success } = await signUp(phoneNumber, password)
     if (!success) throw new Error('sign up flow failed')
-    return { success, phoneNumber, password, firstName, lastName }
+    return { success, phoneNumber, password, firstName }
 })
 
 export const asyncConfirmCode = createAsyncThunk<
