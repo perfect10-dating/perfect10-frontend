@@ -9,11 +9,10 @@ interface PropTypes {
 }
 
 export function ProfileMessages(props: PropTypes) {
-    // TODO -- swap out hard-coded cognitoID
     const {"user": ownUserState} = store.getState()
     let ownUser = ownUserState.user
     let {data: messages, refetch: refetchMessages} = useGetMessagesQuery({
-        cognitoId: (ownUser?.cognitoId || ""), otherUserId: props.otherUser._id
+        otherUserId: props.otherUser._id
     })
 
     let [postMessage] = usePostMessageMutation()
@@ -35,7 +34,6 @@ export function ProfileMessages(props: PropTypes) {
             currentUserId: ownUser?._id,
             onSendMessage: (message: string) => {
                 postMessage({
-                    cognitoId: (ownUser?.cognitoId || ""),
                     conversationId: ((messages || [])[0]?.conversation || ""),
                     otherUserId: props.otherUser._id,
                     text: message,

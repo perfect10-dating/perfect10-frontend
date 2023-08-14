@@ -172,7 +172,7 @@ export function DateReview(props: PropTypes) {
                           intelligent, trustworthy, attractive, pleasant, satisfied, secondDate,
                       }
 
-                      reviewDate({cognitoId: props.user.cognitoId, review})
+                      reviewDate({review})
                 }}>
                     {"Finish the survey >>"}
                 </div>

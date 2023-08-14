@@ -14,7 +14,7 @@ export function WaitingForTime(props: PropTypes) {
 
     // if lock time expires, attempt to unlock the user
     if (millisecondsUntilUnlock < 0) {
-        unlockUser(props.user.cognitoId)
+        unlockUser()
     }
 
     // TODO -- include a button "Unlock immediately" which allows either paid unlocks or referral unlocks

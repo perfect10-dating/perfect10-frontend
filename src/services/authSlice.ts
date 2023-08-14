@@ -279,6 +279,7 @@ const signUp = (phoneNumber: string, password: string, firstName: string, identi
 
         userPool.signUp(phoneNumber, password, attributeList, [], (error?: Error, result?: ISignUpResult) => {
             if (error || !result) return resolve({ success: false })
+            console.log(result)
             return resolve({ success: true })
         })
     })

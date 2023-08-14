@@ -69,7 +69,7 @@ function ProposeDateForm(ownUser: User, otherUser: UserMini, proposeDate: any, t
                         return
                     }
                     setErrorMessage("")
-                    proposeDate({cognitoId: ownUser.cognitoId, otherUserId: otherUser._id, time: dateMilliseconds})
+                    proposeDate({otherUserId: otherUser._id, time: dateMilliseconds})
                     callback()
                 }
                 }>
@@ -124,7 +124,7 @@ function ProposeSetupForm(ownUser: User, otherUser: UserMini, proposeSetup: any,
                         return
                     }
                     setErrorMessage("")
-                    proposeSetup({cognitoId: ownUser.cognitoId, otherUserId: otherUser._id, time: dateMilliseconds})
+                    proposeSetup({otherUserId: otherUser._id, time: dateMilliseconds})
                     callback()
                 }
                 }>
@@ -154,7 +154,7 @@ export function ProfileInteractions(props: PropTypes) {
 
     if (props.date) {
         const rejectDateFunction = () => {
-            rejectDate({cognitoId: (ownUser as User).cognitoId, dateId: (props.date as Date)._id})
+            rejectDate({dateId: (props.date as Date)._id})
         }
 
         // if it's your date...
@@ -199,7 +199,7 @@ export function ProfileInteractions(props: PropTypes) {
 
                         <div>
                             <div style={dateScheduleButtonStyle} onClick={() => {
-                              acceptSetup({cognitoId: (ownUser as User).cognitoId, dateId: (props.date as Date)._id})
+                              acceptSetup({dateId: (props.date as Date)._id})
                             }}>
                                 {"Accept the date >>"}
                             </div>
@@ -222,7 +222,7 @@ export function ProfileInteractions(props: PropTypes) {
 
                         <div>
                             <div style={dateScheduleButtonStyle} onClick={() => {
-                                acceptDate({cognitoId: (ownUser as User).cognitoId, dateId: (props.date as Date)._id})
+                                acceptDate({dateId: (props.date as Date)._id})
                             }}>
                                 {"Accept the date >>"}
                             </div>

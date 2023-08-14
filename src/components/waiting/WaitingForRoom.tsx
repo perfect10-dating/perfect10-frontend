@@ -15,7 +15,7 @@ export function WaitingForRoom(props: PropTypes) {
         // will try to recreate the room every 10 minutes (a good compromise between snappiness and server load)
         const pollingFunction = async() => {
             while (!statusObj.isSuccess && props.user.waitingForRoom) {
-                formRoom(props.user.cognitoId)
+                formRoom()
                 await new Promise((resolve) => setTimeout(resolve, POLLING_DELAY_SECONDS * 1000))
             }
         }

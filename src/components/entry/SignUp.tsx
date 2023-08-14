@@ -1,7 +1,7 @@
 import { useAppDispatch } from 'app/hooks'
 import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { asyncSignUp, signUpFlowCanceled } from 'services/authSlice'
+import {asyncGetUser, asyncSignIn, asyncSignUp, signUpFlowCanceled} from 'services/authSlice'
 import { BottomActionText, Input, LoginBox, Name, Seperation, Subheader, Submit } from './LoginComponents'
 import {LookingFor} from "../account/LookingFor";
 
@@ -62,6 +62,19 @@ export const SignUp = ({ style }: { style?: any }) => {
                 alert(
                     `Failed to create account. Do you already have an existing account? If not, please contact us if the error persists.\n\nError info: ${result.error.message}`
                 )
+            }
+            else {
+                await dispatch(asyncSignIn({phoneNumber, password}))
+                // now we invalidate the user cache and navigate to /profile (so they can fill other information...)
+                dispatch({
+                    // format -- reducerPath/invalidateTags
+                    // see: https://github.com/reduxjs/redux-toolkit/issues/1862
+                    type: `api/invalidateTags`,
+                    payload: ['USER'],
+                });
+                navigate("/account")
+
+                // dispatch(asyncGetUser())
             }
         }
         catch (err) {
