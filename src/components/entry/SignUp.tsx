@@ -23,7 +23,7 @@ export const SignUp = ({ style }: { style?: any }) => {
     const [confirmPasswordStatus, setConfirmPasswordStatus] = useState<'default' | 'entering' | 'valid'>('default')
 
     useEffect(() => {
-        const newStatus = phoneNumber.length === 0 ? 'default' : /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/.test(phoneNumber) ? 'valid' : 'entering'
+        const newStatus = phoneNumber.length === 0 ? 'default' : /^\+?[1-9]\d{1,14}$/.test(phoneNumber) ? 'valid' : 'entering'
         setPhoneNumberStatus(newStatus)
     }, [phoneNumber])
 
@@ -72,6 +72,7 @@ export const SignUp = ({ style }: { style?: any }) => {
                         value={firstName}
                         onChange={(e) => setFirstName(e.target.value.trim())}
                     />
+                    <div style={{fontSize: 12, textAlign: "left", marginLeft: 25, marginBottom: -25}}>Format: +12345678901 (include country code)</div>
                     <Input
                         key="phoneNumber"
                         status={phoneNumberStatus}
@@ -97,11 +98,10 @@ export const SignUp = ({ style }: { style?: any }) => {
                         type="date"
                         id="birthdate"
                         name="birthdate"
-                        value={birthDate}
-
                         style={inputFormStyle}
 
                         onChange={(e) => {
+                            console.log(new Date(e.target.value).toLocaleString().split(',')[0])
                             setBirthDate((new Date(e.target.value)).getTime())
                         }}
                     />

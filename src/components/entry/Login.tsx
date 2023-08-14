@@ -14,7 +14,7 @@ export function Login() {
 
     useEffect(() => {
         // regex from here: https://stackoverflow.com/questions/16699007/regular-expression-to-match-standard-10-digit-phone-number
-        const newPhoneNumberStatus = phoneNumber.length === 0 ? 'default' : /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/.test(phoneNumber) ? 'valid' : 'entering'
+        const newPhoneNumberStatus = phoneNumber.length === 0 ? 'default' : /^\+?[1-9]\d{1,14}$/.test(phoneNumber) ? 'valid' : 'entering'
         setPhoneNumberStatus(newPhoneNumberStatus)
     }, [phoneNumber])
 

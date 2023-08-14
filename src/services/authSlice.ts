@@ -245,6 +245,18 @@ const getUser = () => {
     })
 }
 
+const getBirthDateString = (birthDate: number) => {
+    let birthDateAsDate = new Date(birthDate)
+    let month = birthDateAsDate.getMonth()
+    let day = birthDateAsDate.getDate()
+    let year = birthDateAsDate.getFullYear()
+
+    let monthString = (month >= 10) ? `${month}/` : `0${month}/`
+    let dayString = (day >= 10) ? `${day}/` : `0${day}/`
+
+    return `${monthString}${dayString}${year}`
+}
+
 const signUp = (phoneNumber: string, password: string, firstName: string, identity: string, birthDate: number) => {
     return new Promise<{ success: boolean }>((resolve) => {
         let attributeList = []
@@ -252,7 +264,7 @@ const signUp = (phoneNumber: string, password: string, firstName: string, identi
         attributeList.push(new CognitoUserAttribute({Name: 'phone_number', Value: phoneNumber}))
         attributeList.push(new CognitoUserAttribute({Name: 'gender', Value: identity}))
         // convert a UNIX date into one that AWS likes
-        attributeList.push(new CognitoUserAttribute({Name: 'birthdate', Value: new Date(birthDate).toLocaleString().split(',')[0]}))
+        attributeList.push(new CognitoUserAttribute({Name: 'birthdate', Value: getBirthDateString(birthDate)}))
         console.log(attributeList)
 
         userPool.signUp(phoneNumber, password, attributeList, [], (error?: Error, result?: ISignUpResult) => {
