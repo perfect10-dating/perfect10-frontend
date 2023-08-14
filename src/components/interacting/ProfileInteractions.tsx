@@ -18,7 +18,7 @@ const outerDivStyle = {width: "100%", height: "100%",
     backgroundColor: "rgb(243,244,246)", borderRadius: 15,
     display: "flex", flexDirection: "column" as "column", justifyContent: "space-between"}
 const textStyle = {padding: 20, paddingTop: 70}
-const inputFormStyle = {width: "calc(100% - 20px)", padding: 10, marginTop: 5, height: 25,
+const inputFormStyle = {width: "calc(100% - 20px)", padding: 10, marginTop: 5, height: 40,
     borderRadius: 10, border: 0, backgroundColor: "rgb(194, 213, 242)"}
 const dateScheduleButtonStyle = {textAlign: "center" as "center", cursor: "pointer",
     marginBottom: 20}
