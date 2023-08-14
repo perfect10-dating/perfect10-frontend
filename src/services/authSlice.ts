@@ -127,13 +127,17 @@ export const asyncGetUser = createAsyncThunk<{ jwtToken?: string; role?: string 
 })
 
 export const asyncSignUp = createAsyncThunk<
-    { success?: boolean; userId?: string; phoneNumber: string; password: string; firstName: string; identity: string; birthDate: number },
-    { phoneNumber: string; password: string; firstName: string; identity: string; birthDate: number }
+    { success?: boolean; userId?: string; phoneNumber: string; password: string; firstName: string; identity: string;
+        birthDate: number; longitude: number; latitude: number },
+    { phoneNumber: string; password: string; firstName: string; identity: string; birthDate: number;
+        longitude: number; latitude: number }
 >('auth/signUp', async (credentials) => {
-    const { phoneNumber, password, firstName, identity, birthDate } = credentials
-    const { success } = await signUp(phoneNumber, password, firstName, identity, birthDate)
+    const {
+        phoneNumber, password, firstName, identity, birthDate, longitude, latitude
+    } = credentials
+    const { success } = await signUp(phoneNumber, password, firstName, identity, birthDate, longitude, latitude)
     if (!success) throw new Error('sign up flow failed')
-    return { success, phoneNumber, password, firstName, identity, birthDate }
+    return { success, phoneNumber, password, firstName, identity, birthDate, latitude, longitude }
 })
 
 export const asyncConfirmCode = createAsyncThunk<
@@ -257,12 +261,16 @@ const getBirthDateString = (birthDate: number) => {
     return `${monthString}${dayString}${year}`
 }
 
-const signUp = (phoneNumber: string, password: string, firstName: string, identity: string, birthDate: number) => {
+const signUp = (phoneNumber: string, password: string, firstName: string, identity: string, birthDate: number,
+                longitude: number, latitude: number
+                ) => {
     return new Promise<{ success: boolean }>((resolve) => {
         let attributeList = []
         attributeList.push(new CognitoUserAttribute({Name: 'given_name', Value: firstName}))
         attributeList.push(new CognitoUserAttribute({Name: 'phone_number', Value: phoneNumber}))
         attributeList.push(new CognitoUserAttribute({Name: 'gender', Value: identity}))
+        attributeList.push(new CognitoUserAttribute({Name: 'custom:longitude', Value: `${longitude}`}))
+        attributeList.push(new CognitoUserAttribute({Name: 'custom:latitude', Value: `${latitude}`}))
         // convert a UNIX date into one that AWS likes
         attributeList.push(new CognitoUserAttribute({Name: 'birthdate', Value: getBirthDateString(birthDate)}))
         console.log(attributeList)

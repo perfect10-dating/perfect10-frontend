@@ -37,23 +37,32 @@ export const SignUp = ({ style }: { style?: any }) => {
         setConfirmPasswordStatus(newStatus)
     }, [confirmPassword])
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         if (phoneNumberStatus !== 'valid') return alert('Please enter a valid phoneNumber address.')
         if (passwordStatus !== 'valid') return alert('Please make sure your password is at least 8 characters long.')
         if (password !== confirmPassword) return alert('Please make sure your passwords match.')
         if (((Date.now() - birthDate) / (1000 * 60 * 60 * 24 * 365)) < 18) return alert("Minors are not allowed")
-        dispatch(asyncSignUp({ phoneNumber, password, firstName, birthDate, identity }))
-            .then((result: any) => {
-                if (result.error) {
-                    console.error(result.error)
-                    alert(
-                        `Failed to create account. Do you already have an existing account? If not, please contact us if the error persists.\n\nError info: ${result.error.message}`
-                    )
-                }
+
+        try {
+            let position: GeolocationPosition = await new Promise((resolve) => {
+                navigator.geolocation.getCurrentPosition((position) => resolve(position))
             })
-            .catch((e) => {
-                console.error(e)
-            })
+
+            let lat = position.coords.latitude;
+            let long = position.coords.longitude;
+
+            let result: any = await dispatch(asyncSignUp({ phoneNumber, password, firstName, birthDate, identity, latitude: lat, longitude: long }))
+            if (result.error) {
+                console.error(result.error)
+                alert(
+                    `Failed to create account. Do you already have an existing account? If not, please contact us if the error persists.\n\nError info: ${result.error.message}`
+                )
+            }
+        }
+        catch (err) {
+            console.error(err)
+            alert("You must enable your location to create an account")
+        }
     }
 
     return (
