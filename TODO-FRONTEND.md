@@ -4,8 +4,8 @@
 3. Handle and display errors in an understandable way
 
 ## Waiting for a Room
-1. Periodically attempt to create a room
-2. Upon failure, display "Please wait a few minutes while we find people to fill your room"
+1. ~~Periodically attempt to create a room~~
+2. ~~Upon failure, display "Please wait a few minutes while we find people to fill your room"~~
 3. Some sort of "report an error" feature (for instance you've been waiting for several days)
 
 ## Interacting in a Room
