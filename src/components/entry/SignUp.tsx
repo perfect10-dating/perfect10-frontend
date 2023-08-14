@@ -41,7 +41,8 @@ export const SignUp = ({ style }: { style?: any }) => {
         if (phoneNumberStatus !== 'valid') return alert('Please enter a valid phoneNumber address.')
         if (passwordStatus !== 'valid') return alert('Please make sure your password is at least 8 characters long.')
         if (password !== confirmPassword) return alert('Please make sure your passwords match.')
-        dispatch(asyncSignUp({ phoneNumber, password, firstName }))
+        if (((Date.now() - birthDate) / (1000 * 60 * 60 * 24 * 365)) < 18) return alert("Minors are not allowed")
+        dispatch(asyncSignUp({ phoneNumber, password, firstName, birthDate, identity }))
             .then((result: any) => {
                 if (result.error) {
                     console.error(result.error)
@@ -81,8 +82,7 @@ export const SignUp = ({ style }: { style?: any }) => {
                     />
                 </div>
                 <div style={{textAlign: "center"}}>
-                    <div style={{fontSize: 20}}>Select your gender identity</div>
-                    <div>Currently you may only identify within the gender binary... we're working on it!</div>
+                    <div style={{fontSize: 12, textAlign: "left", marginLeft: 25}}>Currently you may only identify within the gender binary... we're working on it!</div>
                     <select defaultValue={identity}
                             style={inputFormStyle}
                             onChange={(e) => setIdentity(e.target.value)}>
@@ -92,7 +92,7 @@ export const SignUp = ({ style }: { style?: any }) => {
                 </div>
 
                 <div style={{textAlign: "center", marginTop: 30}}>
-                    <div style={{fontSize: 20}}>Select your birthday</div>
+                    <div style={{fontSize: 12, textAlign: "left", marginLeft: 25}}>Select your birthday</div>
                     <input
                         type="date"
                         id="birthdate"

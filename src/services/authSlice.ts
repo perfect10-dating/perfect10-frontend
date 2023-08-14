@@ -127,13 +127,13 @@ export const asyncGetUser = createAsyncThunk<{ jwtToken?: string; role?: string 
 })
 
 export const asyncSignUp = createAsyncThunk<
-    { success?: boolean; userId?: string; phoneNumber: string; password: string; firstName: string; },
-    { phoneNumber: string; password: string; firstName: string; }
+    { success?: boolean; userId?: string; phoneNumber: string; password: string; firstName: string; identity: string; birthDate: number },
+    { phoneNumber: string; password: string; firstName: string; identity: string; birthDate: number }
 >('auth/signUp', async (credentials) => {
-    const { phoneNumber, password, firstName } = credentials
-    const { success } = await signUp(phoneNumber, password)
+    const { phoneNumber, password, firstName, identity, birthDate } = credentials
+    const { success } = await signUp(phoneNumber, password, firstName, identity, birthDate)
     if (!success) throw new Error('sign up flow failed')
-    return { success, phoneNumber, password, firstName }
+    return { success, phoneNumber, password, firstName, identity, birthDate }
 })
 
 export const asyncConfirmCode = createAsyncThunk<
@@ -245,9 +245,17 @@ const getUser = () => {
     })
 }
 
-const signUp = (phoneNumber: string, password: string) => {
+const signUp = (phoneNumber: string, password: string, firstName: string, identity: string, birthDate: number) => {
     return new Promise<{ success: boolean }>((resolve) => {
-        userPool.signUp(phoneNumber, password, [], [], (error?: Error, result?: ISignUpResult) => {
+        let attributeList = []
+        attributeList.push({Name: 'given_name', Value: firstName})
+        attributeList.push({Name: 'phone_number', Value: phoneNumber})
+        attributeList.push({Name: 'gender', Value: identity})
+        // convert a UNIX date into one that AWS likes
+        attributeList.push({Name: 'birthdate', Value: new Date(birthDate).toLocaleString().split(',')[0]})
+        console.log(attributeList)
+
+        userPool.signUp(phoneNumber, password, attributeList, [], (error?: Error, result?: ISignUpResult) => {
             if (error || !result) return resolve({ success: false })
             return resolve({ success: true })
         })
