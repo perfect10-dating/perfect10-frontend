@@ -17,13 +17,15 @@ export function ImageUploadPanel(props: PropTypes) {
 
     return (
         <div>
-            <div>At least four profile images are required</div>
-            <div>
+            <div style={{textAlign: "center"}}>At least four profile images are required</div>
+            <div style={{margin: "0 auto", display: "flex", flexWrap: "wrap"}}>
                 {
                     photoLinks.map((imageUrl, key) => {
                         return (
                             <div key={key}>
-                                <ImageUploader imageUrl={imageUrl} handleChange={(imageUrl) => {
+                                <ImageUploader imageUrl={imageUrl}
+                                               cropperAspectRatio={3/4}
+                                               handleChange={(imageUrl) => {
                                     // when we get a new URL, use that URL
                                     let imageUrlArray = Array.from(photoLinks)
                                     imageUrlArray[key] = imageUrl

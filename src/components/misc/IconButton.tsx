@@ -36,7 +36,7 @@ const StyledIconContainer = styled.div`
   position: relative;
   display: inline-block;
   width: 100px;
-  height: 100px;
+  height: 133px;
   user-select: none;
   cursor: pointer;
   overflow: hidden;
@@ -63,4 +63,6 @@ const StyledIconImage = styled.img`
 
 const StyledIconBackground = styled.img`
   max-width: 100%;
+  width: 100%;
+  height: 100%
 `

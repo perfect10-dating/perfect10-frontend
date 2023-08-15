@@ -26,8 +26,6 @@ export const ImageUploader = ({
     const [getSignedUrl, result] = useGetS3SignedUrlMutation()
     const [file, setFile] = useState('')
     const id = uuid()
-    const [mode, setMode] = useState<'unsplash' | 'flickr'>('unsplash')
-
     const [attribution, setAttribution] = useState<string>('')
     const [rawImageUrl, setRawImageUrl] = useState<string>('')
     const [croppedImageUrl, setCroppedImageUrl] = useState<string>('')
@@ -35,8 +33,6 @@ export const ImageUploader = ({
     const [photoCropperOpen, setPhotoCropperOpen] = useState<boolean>(false)
 
     const fileInput = useRef<HTMLInputElement>(null)
-
-    const handleUploadNavbarImage = (photoUrl: string) => openPhotoCropper(photoUrl)
 
     const openPhotoCropper = (photoUrl: string) => {
         if (!photoUrl) return
@@ -111,7 +107,7 @@ export const ImageUploader = ({
             />
             <div></div>
             <IconButtonAction
-                style={{ marginRight: '20px' }}
+                style={{ margin: 10, height: 100/(cropperAspectRatio || 1), width: 100 }}
                 handleClick={() => setPhotoSelectorOpen(true)}
                 iconUrl={imageUrl === '' ? '/img/standard_icons/upload-image.png' : '/img/standard_icons/change-image.png'}
                 alt={'Upload an Image'}
