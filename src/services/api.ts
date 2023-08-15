@@ -163,7 +163,7 @@ export const api = createApi({
     /* ============= BEGIN IMAGE ROUTES ============== */
     getS3SignedUrl: builder.mutation<{ signedRequest: string; resourceUrl: string }, void>({
       query: () => ({
-        url: `util/s3-signed-url`,
+        url: `s3-signed-url`,
         method: 'GET',
       }),
     }),
