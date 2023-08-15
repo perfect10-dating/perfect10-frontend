@@ -41,7 +41,7 @@ export const LookingFor = (props: PropTypes) => {
                                     }}
                                 />
 
-                                <span>
+                                <span style={{marginLeft: 5}}>
                                     {identity.plural}
                                 </span>
                             </label>

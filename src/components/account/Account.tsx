@@ -7,6 +7,7 @@ import {AgeRange} from "./AgeRange";
 import {useEffect, useState} from "react";
 
 const POLLING_DELAY_SECONDS = 5
+const USER_AVAILABLE_AGE_GAP = 15
 
 export function Account() {
     // const cognitoId = "607865"  // 19
@@ -45,10 +46,9 @@ export function Account() {
     }, [1])
 
     if (willEdit && isDirty && user) {
-        console.log(isDirty, !!user)
-        editUser({lookingFor, ageRange})
-        setWillEdit(false)
         setIsDirty(false)
+        setWillEdit(false)
+        editUser({lookingFor, ageRange})
     }
 
     // if no user, we'll pop back to the "/" route, which will handle login
@@ -61,23 +61,26 @@ export function Account() {
     }
 
     return (
-        <div>
-            <div>
-                Welcome, {user?.firstName || "Stranger"}
+        <div style={{height: "100vh", overflow: "scroll"}}>
+            <div style={{width: 300, maxWidth: "100vw", margin: "0 auto", marginTop: 50}}>
+                <div style={{textAlign: "center", fontSize: 30}}>
+                    Welcome, {user?.firstName || "Stranger"}
+                </div>
+                <div style={{textAlign: "center"}}>
+                    {user.profileComplete ? "Continue editing your profile" : "Complete your profile"}
+                </div>
+                <LookingFor initialLookingFor={user.lookingFor} lookingForCallback={(lookingFor) => {
+                    setLookingFor(lookingFor)
+                    setIsDirty(true)
+                }} />
+                <AgeRange default={user.ageRange}
+                          limits={{min: Math.max(18, user.age-USER_AVAILABLE_AGE_GAP),
+                              max: Math.min(99, user.age+USER_AVAILABLE_AGE_GAP)}}
+                          onChange={(ageRange) => {
+                              setAgeRange(ageRange)
+                              setIsDirty(true)
+                          }} />
             </div>
-            <div>
-                {user.profileComplete ? "Continue editing your profile" : "Complete your profile"}
-            </div>
-            <LookingFor initialLookingFor={user.lookingFor} lookingForCallback={(lookingFor) => {
-                setLookingFor(lookingFor)
-                setIsDirty(true)
-            }} />
-            <AgeRange default={user.ageRange} onChange={(ageRange) => {
-                setAgeRange(ageRange)
-                setIsDirty(true)
-            }} />
-
-
         </div>
     )
 }

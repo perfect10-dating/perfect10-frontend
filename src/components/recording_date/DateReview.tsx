@@ -51,6 +51,9 @@ export function DateReview(props: PropTypes) {
                 <div style={{fontSize: 25, textAlign: "center"}}>
                     Please review your date with {(otherUser as UserMini).firstName}{isSetup ? "'s friend" : ""}
                 </div>
+                <div style={{fontSize: 14, textAlign: "center"}}>
+                    Be as honest as possible. We won't tell them!
+                </div>
 
                 <div style={toggleContainerGroup}>
                     <div style={toggleDivStyle}>
