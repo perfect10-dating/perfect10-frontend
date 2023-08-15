@@ -79,7 +79,9 @@ export function Account(props: PropTypes) {
 
                 {
                     isDisplayingPreview ?
-                        <ProfileInformation information={user} />
+                        <div style={{height: 400, width: 300, minWidth: 300}}>
+                            <ProfileInformation information={user} />
+                        </div>
                     :
                         <div>
                             <ImageUploadPanel photoLinks={photoLinks}
