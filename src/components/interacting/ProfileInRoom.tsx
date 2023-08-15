@@ -1,5 +1,5 @@
 import {useCreateUserMutation, useFormRoomMutation} from "../../services/api";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {ProfileInformation} from "./ProfileInformation";
 import {ProfileMessages} from "./ProfileMessages";
 import {ProfileInteractions} from "./ProfileInteractions";
@@ -26,7 +26,11 @@ function userInDate(date: Date, userId: string) {
 
 export function ProfileInRoom(props: PropTypes) {
     // can be "information", "messages", "interactions"
-    const [screenSetting, setScreenSetting] = useState("messages")
+    const [screenSetting, setScreenSetting] = useState("information")
+    // if important props change (rendering a new user) display their pics
+    useEffect(() => {
+        setScreenSetting("information")
+    }, [props.isCompetitor, props.information._id])
 
     let date = undefined
     for (let possibleDate of props.dates) {
@@ -121,7 +125,8 @@ export function ProfileInRoom(props: PropTypes) {
                     } with {competitor.firstName}{competitorDateIsSetup && `'s friend`}
                 </div>
             }
-            <ProfileTopBar screenSetting={screenSetting} setScreenSetting={setScreenSetting} />
+            {!props.isCompetitor &&
+                <ProfileTopBar screenSetting={screenSetting} setScreenSetting={setScreenSetting}/>}
             {screenComponent}
         </div>
     )
