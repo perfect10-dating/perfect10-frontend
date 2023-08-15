@@ -141,33 +141,6 @@ export const ImageUploader = ({
                             onClick={uploadFromLocal}
                             alt="upload new image"
                         />
-                        <div
-                            style={{
-                                display: 'flex',
-                                flexDirection: 'row',
-                                justifyContent: 'space-between',
-                                alignItems: 'center',
-                                marginBottom: 5,
-                            }}
-                        >
-                            <hr
-                                style={{
-                                    width: '40%',
-                                    marginLeft: 0,
-                                    marginRight: 0,
-                                    border: '0.5px solid #bec7cf',
-                                }}
-                            />
-                            <p>OR</p>
-                            <hr
-                                style={{
-                                    width: '40%',
-                                    marginLeft: 0,
-                                    marginRight: 0,
-                                    border: '0.5px solid #bec7cf',
-                                }}
-                            />
-                        </div>
                     </div>
                 </Popup>
             )}
