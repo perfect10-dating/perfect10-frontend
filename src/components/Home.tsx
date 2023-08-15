@@ -23,7 +23,8 @@ function loading() {
 
 export function Home() {
     // const cognitoId = "607865"  // 19
-    const cognitoId = "890233"     // matilda
+    // const cognitoId = "890233"     // matilda
+    // const cognitoId = "foo"     // 19
     const dispatch = useAppDispatch()
 
     // set up API listeners for user, room, dates
@@ -33,14 +34,14 @@ export function Home() {
         isSuccess: userReqSuccessful,
         isError: userReqFailed,
         error: userReqError
-    } = useGetUserQuery(cognitoId)
+    } = useGetUserQuery()
     const {
         data: roomRetrievalObj,
         isLoading: roomIsLoading,
         isSuccess: roomReqSuccessful,
         isError: roomReqFailed,
         error: roomReqError
-    } = useGetRoomQuery(cognitoId)
+    } = useGetRoomQuery()
 
     // OR the isLoading
     const isLoading = roomIsLoading || userIsLoading
