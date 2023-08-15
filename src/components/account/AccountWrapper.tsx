@@ -7,6 +7,7 @@ import {Loading} from "@minchat/react-chat-ui";
 import {useAppDispatch} from "../../app/hooks";
 import {useNavigate} from "react-router-dom";
 import {Account} from "./Account";
+import {setUser} from "../../services/userSlice";
 
 export function AccountWrapper() {
     const dispatch = useAppDispatch()
@@ -31,6 +32,9 @@ export function AccountWrapper() {
         return <Loading />
     }
     else {
+        // set the user that we retrieved
+        console.log("setting user...")
+        dispatch(setUser({user}))
         return <Account user={user} />
     }
 }

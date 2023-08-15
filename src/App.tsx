@@ -8,10 +8,12 @@ import {asyncGetUser} from "./services/authSlice";
 import {useAppDispatch, useAppSelector} from "./app/hooks";
 import {Loading} from "@minchat/react-chat-ui";
 import {AccountWrapper} from "./components/account/AccountWrapper";
+import {TopBar} from "./components/misc/TopBar";
 
 export default function App() {
     const dispatch = useAppDispatch()
     const hold = 0
+    const user = useAppSelector(state => state.user.user)
 
     // when we load the app, try to get the user from localStorage immediately
     useEffect(() => {
@@ -31,13 +33,16 @@ export default function App() {
     }
 
     return (
-    <Router>
-      <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path={"/account"} element={<AccountWrapper />} />
-          {/*<Route path={"/test"} element={<Test />} />*/}
-          // TODO -- edit profile
-      </Routes>
-    </Router>
+            <Router>
+                <div style={{position: "relative"}}>
+                    {user && <TopBar user={user} />}
+                    <Routes>
+                        <Route path="/" element={<Home />} />
+                        <Route path={"/account"} element={<AccountWrapper />} />
+                        {/*<Route path={"/test"} element={<Test />} />*/}
+                        // TODO -- edit profile
+                    </Routes>
+                </div>
+            </Router>
     )
 }

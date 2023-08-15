@@ -19,6 +19,7 @@ export function Home() {
     // const cognitoId = "890233"     // matilda
     // const cognitoId = "foo"     // 19
     const dispatch = useAppDispatch()
+    const navigate = useNavigate()
 
     // set up API listeners for user, room, dates
     const {
@@ -70,12 +71,11 @@ export function Home() {
         else {
             // set the user that we retrieved
             console.log("setting user...")
-            console.log(user)
             dispatch(setUser({user}))
 
             // if the profile is not complete, immediately nav them to /account to finish it
             if (!user.profileComplete) {
-
+                navigate("/account")
             }
 
             // the user is being blocked by a date
@@ -128,7 +128,7 @@ export function Home() {
             }
 
             return (
-                <div>
+                <div style={{paddingTop: 50}}>
                     <div style={{fontSize: 30, textAlign: "center", marginTop: 30}}>
                         {isDisplayingCompetitors ? "Your Competitors" : "Your Potential Matches"}
                     </div>

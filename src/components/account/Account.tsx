@@ -57,7 +57,7 @@ export function Account(props: PropTypes) {
     }
 
     return (
-        <div style={{height: "100vh", overflow: "scroll"}}>
+        <div style={{height: "100vh", overflow: "scroll", paddingTop: 50}}>
             <div style={{width: 360, maxWidth: "100vw", margin: "0 auto", marginTop: 50, marginBottom: 50}}>
                 {/*<div style={{textAlign: "center", fontSize: 30}}>*/}
                 {/*    Welcome, {user?.firstName || "Stranger"}*/}
