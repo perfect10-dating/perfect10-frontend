@@ -20,7 +20,7 @@ export function Account() {
     } = useGetUserQuery()
 
     // if no user, we'll pop back to the "/" route, which will handle login
-    if (!userReqFailed) {
+    if (userReqFailed) {
         navigate("/")
     }
 

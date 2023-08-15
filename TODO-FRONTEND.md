@@ -1,6 +1,12 @@
+## Auth State Management
+1. Log In
+2. Log Out
+3. Forgot Password
+4. Delete Account
+
 ## Account Creation
 1. Get all requisite information from a user
-2. Create a user with Cognito
+2. ~~Create a user with Cognito~~
 3. Handle and display errors in an understandable way
 
 ## Waiting for a Room

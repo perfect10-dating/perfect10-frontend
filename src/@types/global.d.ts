@@ -11,8 +11,9 @@ declare interface User {
   identity: string
   age: number
   dateOfBirth: number  // time since 1970 (SIGNED)
-  locationCoords: [number, number]  // longitude, latitude
+  location: {coordinates: [number, number]}  // longitude, latitude
   photoLinks: string[]
+  profileComplete: boolean
 
   // preferences
   lookingFor: string[]
