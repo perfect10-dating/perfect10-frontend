@@ -157,10 +157,21 @@ export const api = createApi({
         body: body.review
       }),
       invalidatesTags: ['USER']
-    })
+    }),
     /* ============= END DATE ROUTES ============== */
 
+    /* ============= BEGIN IMAGE ROUTES ============== */
+    getS3SignedUrl: builder.mutation<{ signedRequest: string; resourceUrl: string }, void>({
+      query: () => ({
+        url: `util/s3-signed-url`,
+        method: 'GET',
+      }),
+    }),
+    /* ============= END IMAGE ROUTES ============== */
+
+
   }),
+
 })
 
 export const {
@@ -185,5 +196,8 @@ export const {
     useAcceptDateMutation,
     useAcceptSetupMutation,
     useRejectDateMutation,
-    useReviewDateMutation
+    useReviewDateMutation,
+
+    // image information
+    useGetS3SignedUrlMutation,
 } = api

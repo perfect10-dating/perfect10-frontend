@@ -5,6 +5,7 @@ import {LookingFor} from "./LookingFor";
 import {Loading} from "@minchat/react-chat-ui";
 import {AgeRange} from "./AgeRange";
 import {useEffect, useState} from "react";
+import {ImageUploader} from "./ImageHandling/ImageUploader";
 
 const POLLING_DELAY_SECONDS = 5
 const USER_AVAILABLE_AGE_GAP = 15
@@ -69,6 +70,7 @@ export function Account() {
                 <div style={{textAlign: "center"}}>
                     {user.profileComplete ? "Continue editing your profile" : "Complete your profile"}
                 </div>
+                <ImageUploader imageUrl={} handleChange={} />
                 <LookingFor initialLookingFor={user.lookingFor} lookingForCallback={(lookingFor) => {
                     setLookingFor(lookingFor)
                     setIsDirty(true)
