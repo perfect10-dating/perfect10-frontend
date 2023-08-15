@@ -63,9 +63,10 @@ export function Home() {
          * 2. If the user is waiting to complete a date and NOT passed that time --> navigate to /waiting-date
          * 3. If the user is waiting to complete a date and IS passed that time --> navigate to /date-review
          * 4. If the user is waiting for a time to unlock --> navigate to /waiting-time
-         * 5. If the user is not waiting for either a date or time (or the time has passed), but is not in a room --> navigate to /join-room-query
-         * 6. If the user is waiting for the creation of a room --> navigate to /waiting-room
-         * 7. Otherwise, display the room the user is in
+         * 5. If the user hasn't completed their profile
+         * 6. If the user is not waiting for either a date or time (or the time has passed), but is not in a room --> navigate to /join-room-query
+         * 7. If the user is waiting for the creation of a room --> navigate to /waiting-room
+         * 8. Otherwise, display the room the user is in
          */
 
         if (!user) {

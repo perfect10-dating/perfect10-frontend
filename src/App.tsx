@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
 import { Home } from './components/Home'
-import {Test} from "./components/Test";
+// import {Test} from "./components/Test";
 import {Account} from "./components/account/Account";
 import {useEffect} from "react";
 import {asyncGetUser} from "./services/authSlice";
@@ -34,7 +34,7 @@ export default function App() {
       <Routes>
           <Route path="/" element={<Home />} />
           <Route path={"/account"} element={<Account />} />
-          <Route path={"/test"} element={<Test />} />
+          {/*<Route path={"/test"} element={<Test />} />*/}
           // TODO -- edit profile
       </Routes>
     </Router>

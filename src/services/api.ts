@@ -38,6 +38,15 @@ export const api = createApi({
       invalidatesTags: ['USER']
     }),
 
+    editUser: builder.mutation<any, { lookingFor: string[]; ageRange: AgeRange }>({
+      query: (body: { lookingFor: string[]; ageRange: AgeRange }) => ({
+        url: `edit-user`,
+        method: 'POST',
+        body
+      }),
+      invalidatesTags: ['USER']
+    }),
+
     unlockUser: builder.mutation<any, void>({
       query: () => ({
         url: 'unlock',
@@ -158,6 +167,7 @@ export const {
     // user information
     useGetUserQuery,
     useCreateUserMutation,
+    useEditUserMutation,
     useUnlockUserMutation,
     useReadyJoinRoomMutation,
 

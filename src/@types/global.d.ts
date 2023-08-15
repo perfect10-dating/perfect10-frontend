@@ -11,14 +11,16 @@ declare interface User {
   identity: string
   age: number
   dateOfBirth: number  // time since 1970 (SIGNED)
-  location: {coordinates: [number, number]}  // longitude, latitude
+  location: {
+    type: ['Point']
+    coordinates: [number, number]}  // longitude, latitude
   photoLinks: string[]
   profileComplete: boolean
 
   // preferences
   lookingFor: string[]
   shortTerm: boolean
-  ageRange: {min: number, max: number}
+  ageRange: AgeRange
 
   // dating history
   waitingForRoom: boolean
@@ -36,6 +38,11 @@ declare interface UserMini {
   identity: string
   age: number
   location: {coordinates: [number, number]}  // longitude, latitude
+}
+
+declare interface AgeRange {
+  min: number
+  max: number
 }
 
 declare interface Room {
