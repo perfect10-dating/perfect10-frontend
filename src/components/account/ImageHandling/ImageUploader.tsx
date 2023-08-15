@@ -74,8 +74,7 @@ export const ImageUploader = ({
         setAttribution(attribution || '')
     }
 
-    const uploadFromLocal = (event: any) => {
-        event.preventDefault()
+    const uploadFromLocal = () => {
         fileInput.current?.click()
     }
 
@@ -108,41 +107,15 @@ export const ImageUploader = ({
             <div></div>
             <IconButtonAction
                 style={{ margin: 10, height: 100/(cropperAspectRatio || 1), width: 100 }}
-                handleClick={() => setPhotoSelectorOpen(true)}
+                handleClick={() => uploadFromLocal()}
                 iconUrl={imageUrl === '' ? '/img/standard_icons/upload-image.png' : '/img/standard_icons/change-image.png'}
                 alt={'Upload an Image'}
                 highlighted={imageUrl !== ''}
                 backgroundUrl={imageUrl}
             />
-            {photoSelectorOpen && (
-                <Popup handleBackgroundClick={handleCancelSelect}>
-                    <div
-                        style={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'flex-start',
-                            alignItems: 'normal',
-                            position: 'fixed',
-                            top: 60,
-                            right: 0,
-                            height: 'calc(100vh - 60px)',
-                            width: 300,
-                            backgroundColor: '#fff',
-                            padding: '0 20px',
-                        }}
-                    >
-                        <img
-                            style={{ width: 100, margin: '30px auto', cursor: 'pointer' }}
-                            src={'/img/standard_icons/upload-image.png'}
-                            onClick={uploadFromLocal}
-                            alt="upload new image"
-                        />
-                    </div>
-                </Popup>
-            )}
 
             {photoCropperOpen && (
-                <Popup style={{ left: 280 }} handleBackgroundClick={handleCancelCrop}>
+                <Popup style={{}} handleBackgroundClick={handleCancelCrop}>
                     <div className="photo-cropper-overlay">
                         <PhotoCropper
                             aspectRatio={cropperAspectRatio}

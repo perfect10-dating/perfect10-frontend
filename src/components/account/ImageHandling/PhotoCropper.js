@@ -100,7 +100,7 @@ class PhotoCropper extends Component {
                         <p>Drag and resize the blue box to crop the photo</p>
                         <p>When you're satisfied with your selection, click 'Save'</p>
                         <div className="loading-box">
-                            <img src="/img/legacy_icons/waiting.png" alt="Loading"></img>
+                            {/*<img src="/img/standard_icons/waiting.png" alt="Loading"></img>*/}
                             <p>Uploading photo ({this.state.imageSize} kb)...</p>
                             <p>For optimal performance, please use photo smaller than 512kb</p>
                         </div>
@@ -121,7 +121,7 @@ class PhotoCropper extends Component {
             aspectRatio = this.props.aspectRatio
         }
         return (
-            <div>
+            <div style={{color: "lightgray", textAlign: "center"}}>
                 {this.state.showUploadLoading ? this.renderUploadLoading() : null}
                 <p>Drag and resize the blue box to crop the photo</p>
                 <p>When you're satisfied with your selection, click 'Save'</p>
@@ -135,11 +135,12 @@ class PhotoCropper extends Component {
                         this._cropper = cropper
                     }}
                 />
-                <p className="crop-submit" onClick={this.handleSave}>
-                    Save
-                </p>
-                <br />
-                <CropCancel onClick={this.props.onCancel}>Cancel</CropCancel>
+                <div style={{display: "flex", fontSize: 24, justifyContent: "space-evenly"}}>
+                    <CropSubmit onClick={this.handleSave}>
+                        Save
+                    </CropSubmit>
+                    <CropCancel onClick={this.props.onCancel}>Cancel</CropCancel>
+                </div>
             </div>
         )
     }
@@ -149,19 +150,12 @@ export default withHooks(PhotoCropper)
 
 const CropSubmit = styled.div`
   display: inline-block;
-  width: 220px;
-  padding: 10px;
-  border-radius: 30px;
-  background: #08324c;
   color: white;
-  text-align: center;
   cursor: pointer;
-  margin: 10px 0 0;
 `
 
 const CropCancel = styled.div`
   display: inline-block;
-  margin: 20px auto;
   cursor: pointer;
-  color: #444;
+  color: lightgray;
 `
