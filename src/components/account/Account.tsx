@@ -10,23 +10,16 @@ import {ImageUploadPanel} from "./ImageUploadPanel";
 const POLLING_DELAY_SECONDS = 5
 const USER_AVAILABLE_AGE_GAP = 15
 
-export function Account() {
+interface PropTypes {
+    user: User
+}
+
+export function Account(props: PropTypes) {
     // const cognitoId = "607865"  // 19
     // const cognitoId = "890233"     // matilda
     // const cognitoId = "foo"     // 19
-    const dispatch = useAppDispatch()
-    const navigate = useNavigate()
     const [editUser] = useEditUserMutation()
-
-    // set up API listeners for user, room, dates
-    const {
-        data: user,
-        isLoading: userIsLoading,
-        isSuccess: userReqSuccessful,
-        isError: userReqFailed,
-        error: userReqError,
-        // isUninitialized
-    } = useGetUserQuery()
+    const {user} = props
 
     const [isDirty, setIsDirty] = useState(false)
     const [lookingFor, setLookingFor] = useState(user?.lookingFor || [])
@@ -50,16 +43,7 @@ export function Account() {
     if (willEdit && isDirty && user) {
         setIsDirty(false)
         setWillEdit(false)
-        editUser({lookingFor, ageRange, photoLinks})
-    }
-
-    // if no user, we'll pop back to the "/" route, which will handle login
-    if (userReqFailed) {
-        navigate("/")
-    }
-
-    if (!user) {
-        return <Loading />
+        editUser({lookingFor, ageRange, photoLinks: photoLinks.filter(link => link.length > 0)})
     }
 
     return (

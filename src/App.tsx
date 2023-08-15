@@ -7,6 +7,7 @@ import {useEffect} from "react";
 import {asyncGetUser} from "./services/authSlice";
 import {useAppDispatch, useAppSelector} from "./app/hooks";
 import {Loading} from "@minchat/react-chat-ui";
+import {AccountWrapper} from "./components/account/AccountWrapper";
 
 export default function App() {
     const dispatch = useAppDispatch()
@@ -33,7 +34,7 @@ export default function App() {
     <Router>
       <Routes>
           <Route path="/" element={<Home />} />
-          <Route path={"/account"} element={<Account />} />
+          <Route path={"/account"} element={<AccountWrapper />} />
           {/*<Route path={"/test"} element={<Test />} />*/}
           // TODO -- edit profile
       </Routes>
