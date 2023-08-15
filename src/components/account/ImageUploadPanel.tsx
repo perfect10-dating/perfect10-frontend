@@ -28,6 +28,7 @@ export function ImageUploadPanel(props: PropTypes) {
                                     let imageUrlArray = Array.from(photoLinks)
                                     imageUrlArray[key] = imageUrl
                                     setPhotoLinks(imageUrlArray)
+                                    props.photoLinksCallback(imageUrlArray)
                                 }} />
                             </div>
                         )
