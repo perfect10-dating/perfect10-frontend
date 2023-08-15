@@ -8,6 +8,7 @@ import {useEffect, useState} from "react";
 import {ImageUploadPanel} from "./ImageUploadPanel";
 import {ProfileInteractions} from "../interacting/ProfileInteractions";
 import {ProfileInformation} from "../interacting/ProfileInformation";
+import {ProfileTopBar} from "../interacting/ProfileTopBar";
 
 const POLLING_DELAY_SECONDS = 5
 const USER_AVAILABLE_AGE_GAP = 15
@@ -24,6 +25,8 @@ export function Account(props: PropTypes) {
     // const cognitoId = "890233"     // matilda
     // const cognitoId = "foo"     // 19
     const [editUser] = useEditUserMutation()
+    const navigate = useNavigate()
+
     const {user} = props
 
     const [isDirty, setIsDirty] = useState(false)
@@ -102,6 +105,14 @@ export function Account(props: PropTypes) {
                                           setIsDirty(true)
                                       }} />
                         </div>
+                }
+                {
+                    user.profileComplete &&
+                    <div style={{marginTop: 70, cursor: 'pointer', fontSize: 20, textAlign: "center"}}
+                         onClick={() => navigate("/")}
+                    >
+                        {"Finish Profile and Join Room >>"}
+                    </div>
                 }
             </div>
         </div>

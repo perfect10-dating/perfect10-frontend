@@ -12,14 +12,7 @@ import {DateReview} from "./recording_date/DateReview";
 import {WaitingForTime} from "./waiting/WaitingForTime";
 import {WaitingForRoom} from "./waiting/WaitingForRoom";
 import {JoinNewRoom} from "./recording_date/JoinNewRoom";
-
-function loading() {
-    return (
-        <div>
-            Loading...
-        </div>
-    )
-}
+import {Loading} from "@minchat/react-chat-ui";
 
 export function Home() {
     // const cognitoId = "607865"  // 19
@@ -53,7 +46,7 @@ export function Home() {
 
     if (isLoading) {
         // TODO -- loading spinner
-        return loading()
+        return <Loading/>
     }
     else {
         /* ==================== BEGIN NAVIGATION LOGIC =================== */
@@ -79,6 +72,11 @@ export function Home() {
             console.log("setting user...")
             console.log(user)
             dispatch(setUser({user}))
+
+            // if the profile is not complete, immediately nav them to /account to finish it
+            if (!user.profileComplete) {
+
+            }
 
             // the user is being blocked by a date
             if (user.mustReviewDate) {

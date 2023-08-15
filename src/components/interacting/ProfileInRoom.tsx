@@ -4,6 +4,7 @@ import {ProfileInformation} from "./ProfileInformation";
 import {ProfileMessages} from "./ProfileMessages";
 import {ProfileInteractions} from "./ProfileInteractions";
 import {userSlice} from "../../services/userSlice";
+import {ProfileTopBar} from "./ProfileTopBar";
 
 interface PropTypes {
     isCompetitor: boolean
@@ -48,7 +49,9 @@ export function ProfileInRoom(props: PropTypes) {
     let screenComponent
     switch (screenSetting) {
         case "information":
-            screenComponent = <ProfileInformation information={props.information} />
+            screenComponent = (props.information.photoLinks && props.information.photoLinks.length >= 1) ?
+                <ProfileInformation information={props.information} /> :
+                <div>Invalid Profile</div>
             break
         case "messages":
             screenComponent = <ProfileMessages otherUser={props.information} />
@@ -108,9 +111,6 @@ export function ProfileInRoom(props: PropTypes) {
         }
     }
 
-    const profilePanelScreenSelected = {fontWeight: "bold"}
-    const profilePanelScreenDeselected = {cursor: "pointer"}
-
     return (
         <div style={{height: 400, width: 300, minWidth: 300, margin: 50}}>
             {
@@ -121,31 +121,7 @@ export function ProfileInRoom(props: PropTypes) {
                     } with {competitor.firstName}{competitorDateIsSetup && `'s friend`}
                 </div>
             }
-            <div style={{position: "absolute", zIndex: 10, display: "flex", justifyContent: "space-evenly",
-                width: 300, marginTop: 18, backgroundColor: "rgb(243,244,246)", paddingBottom: 18,
-                borderBottom: "1px solid lightgray"}}>
-                <div
-                    style={screenSetting === "information" ?
-                       profilePanelScreenSelected : profilePanelScreenDeselected}
-                    onClick={() => setScreenSetting("information")}
-                >
-                    Profile
-                </div>
-                <div
-                    style={screenSetting === "messages" ?
-                       profilePanelScreenSelected : profilePanelScreenDeselected}
-                    onClick={() => setScreenSetting("messages")}
-                >
-                    Messages
-                </div>
-                <div
-                    style={screenSetting === "interactions" ?
-                       profilePanelScreenSelected : profilePanelScreenDeselected}
-                    onClick={() => setScreenSetting("interactions")}
-                >
-                    Date
-                </div>
-            </div>
+            <ProfileTopBar screenSetting={screenSetting} setScreenSetting={setScreenSetting} />
             {screenComponent}
         </div>
     )
