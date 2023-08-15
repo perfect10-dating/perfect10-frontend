@@ -30,8 +30,14 @@ export function Login() {
         }
     }, [status])
 
-    const handleSubmit = () => {
-        dispatch(asyncSignIn({ phoneNumber: phoneNumber, password }))
+    const handleSubmit = async () => {
+        await dispatch(asyncSignIn({ phoneNumber: phoneNumber, password }))
+        dispatch({
+            // format -- reducerPath/invalidateTags
+            // see: https://github.com/reduxjs/redux-toolkit/issues/1862
+            type: `api/invalidateTags`,
+            payload: ['USER'],
+        });
     }
 
 
@@ -62,11 +68,11 @@ export function Login() {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                         />
-                        <InputSubAction onClick={() => dispatch(forgotPasswordFlowStarted())}>Forgot password?</InputSubAction>
+                        {/*<InputSubAction onClick={() => dispatch(forgotPasswordFlowStarted())}>Forgot password?</InputSubAction>*/}
                     </div>
 
                     <div style={{marginTop: 30}}>
-                        <div onClick={handleSubmit}>Log In</div>
+                        <div style={{fontWeight: 500, cursor: "pointer"}} onClick={handleSubmit}>Log In</div>
                         <Seperation>or</Seperation>
                         <BottomActionText onClick={() => dispatch(signUpFlowStarted())}>Create New Account</BottomActionText>
                     </div>
