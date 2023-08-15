@@ -5,7 +5,7 @@
 4. Delete Account
 
 ## Account Creation
-1. Get all requisite information from a user
+1. ~~Get all requisite information from a user~~
 2. ~~Create a user with Cognito~~
 3. Handle and display errors in an understandable way
 
@@ -16,7 +16,7 @@
 
 ## Interacting in a Room
 1. ~~Display all users [information, messages, interactions]~~
-2. Information: name / age / identity / photos
+2. ~~Information: name / age / identity / photos~~
 3. ~~Messages: Display message history, write message, some sort of polling~~
 4. ~~Interactions: Propose date / accept date / reject date / same for setups~~
 5. Lock out users (and maybe say who they accepted a date with?)

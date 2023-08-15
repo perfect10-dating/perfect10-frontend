@@ -1,4 +1,5 @@
 import {useState} from "react";
+import {fixIdentity} from "../../utils/fixIdentity";
 
 interface PropTypes {
     information: UserMini
@@ -36,6 +37,14 @@ export function ProfileInformation(props: PropTypes) {
                 <div style={{fontSize: 20, marginLeft: 10, marginTop: 4}}>{props.information.age}</div>
             </div>
 
+            <div style={{position: "absolute", height: 50, width: "100%", bottom: 0, right: 15,
+                color: "white", display: "flex", textAlign: "right", justifyContent: "right"
+            }}>
+                <div style={{fontSize: 20, marginLeft: 10, marginTop: 4}}>
+                    {fixIdentity(props.information.identity)}
+                </div>
+            </div>
+
             {
                 photoLinkIndex !== 0 &&
                 <div style={{position: "absolute", height: "75%", width: "30%",
@@ -65,7 +74,7 @@ export function ProfileInformation(props: PropTypes) {
                 </div>
             }
 
-            <img style={{height: "100%", width: "100%", borderRadius: 15}}
+            <img style={{height: "100%", width: "100%", borderRadius: 15, border: "1px solid lightgray"}}
                  src={props.information.photoLinks[photoLinkIndex] || ''}
             />
         </div>
