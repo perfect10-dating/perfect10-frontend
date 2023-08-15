@@ -16,8 +16,8 @@ export function ImageUploadPanel(props: PropTypes) {
     let [photoLinks, setPhotoLinks] = useState(props.photoLinks.concat(additionalCells))
 
     return (
-        <div>
-            <div style={{textAlign: "center"}}>At least four profile images are required</div>
+        <div style={{marginTop: 5, backgroundColor: "rgb(243,244,246)", borderRadius: 10}}>
+            <div style={{textAlign: "center", paddingTop: 10}}>At least four profile images are required</div>
             <div style={{margin: "0 auto", display: "flex", flexWrap: "wrap"}}>
                 {
                     photoLinks.map((imageUrl, key) => {
