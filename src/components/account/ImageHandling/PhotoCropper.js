@@ -5,7 +5,7 @@ import { v4 as uuid } from 'uuid'
 
 import styled from 'styled-components/macro'
 
-import { useGetS3SignedUrlMutation } from 'services/miscApi'
+import { useGetS3SignedUrlMutation } from 'services/api'
 
 const withHooks = (PhotoCropper) => (props) => {
     const [getSignedUrl] = useGetS3SignedUrlMutation()
@@ -25,20 +25,20 @@ class PhotoCropper extends Component {
 
     dataURItoBlob = (dataURI, type) => {
         type = type || 'image/png'
-        var binary = atob(dataURI.split(',')[1])
-        var array = []
-        for (var i = 0; i < binary.length; i++) {
+        let binary = atob(dataURI.split(',')[1])
+        let array = []
+        for (let i = 0; i < binary.length; i++) {
             array.push(binary.charCodeAt(i))
         }
         return new Blob([new Uint8Array(array)], { type: type })
     }
 
     componentDidMount() {
-        this._isMounted = true // workaround since react has deprecated isMounted()
+        this._isMounted = true // workaround since React has deprecated isMounted()
     }
 
     componentWillUnmount() {
-        this._isMounted = false // workaround since react has deprecated isMounted()
+        this._isMounted = false // workaround since React has deprecated isMounted()
     }
 
     handleSave = () => {
@@ -156,8 +156,7 @@ const CropSubmit = styled.div`
   color: white;
   text-align: center;
   cursor: pointer;
-  margin: 0;
-  margin-top: 10px;
+  margin: 10px 0 0;
 `
 
 const CropCancel = styled.div`

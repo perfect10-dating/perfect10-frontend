@@ -5,7 +5,7 @@ import {LookingFor} from "./LookingFor";
 import {Loading} from "@minchat/react-chat-ui";
 import {AgeRange} from "./AgeRange";
 import {useEffect, useState} from "react";
-import {ImageUploader} from "./ImageHandling/ImageUploader";
+import {ImageUploadPanel} from "./ImageUploadPanel";
 
 const POLLING_DELAY_SECONDS = 5
 const USER_AVAILABLE_AGE_GAP = 15
@@ -31,6 +31,7 @@ export function Account() {
     const [isDirty, setIsDirty] = useState(false)
     const [lookingFor, setLookingFor] = useState(user?.lookingFor || [])
     const [ageRange, setAgeRange] = useState(user?.ageRange || {min: 25, max: 35})
+    const [photoLinks, setPhotoLinks] = useState(user?.photoLinks || [])
     const [willEdit, setWillEdit] = useState(false)
 
     useEffect(() => {
@@ -49,7 +50,7 @@ export function Account() {
     if (willEdit && isDirty && user) {
         setIsDirty(false)
         setWillEdit(false)
-        editUser({lookingFor, ageRange})
+        editUser({lookingFor, ageRange, photoLinks})
     }
 
     // if no user, we'll pop back to the "/" route, which will handle login
@@ -70,7 +71,10 @@ export function Account() {
                 <div style={{textAlign: "center"}}>
                     {user.profileComplete ? "Continue editing your profile" : "Complete your profile"}
                 </div>
-                <ImageUploader imageUrl={} handleChange={} />
+                <ImageUploadPanel photoLinks={photoLinks} photoLinksCallback={(photoLinks) => {
+                  setPhotoLinks(photoLinks)
+                  setIsDirty(true)
+                }} />
                 <LookingFor initialLookingFor={user.lookingFor} lookingForCallback={(lookingFor) => {
                     setLookingFor(lookingFor)
                     setIsDirty(true)
