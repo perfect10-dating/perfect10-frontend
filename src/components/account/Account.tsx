@@ -63,7 +63,7 @@ export function Account(props: PropTypes) {
                 {/*    {user.profileComplete ? "Continue editing your profile" : "Complete your profile"}*/}
                 {/*</div>*/}
 
-                <div style={{fontSize: 24, display: "flex", justifyContent: "space-between", marginLeft: 20, marginRight: 20}}>
+                <div style={{fontSize: 24, display: "flex", justifyContent: "space-between", marginLeft: 40, marginRight: 40}}>
                     <div style={!isDisplayingPreview ? previewButtonSelectedStyle : previewButtonUnselectedStyle}
                         onClick={() => setIsDisplayingPreview(false)}
                     >
@@ -79,8 +79,9 @@ export function Account(props: PropTypes) {
 
                 {
                     isDisplayingPreview ?
-                        <div style={{height: 400, width: 300, minWidth: 300}}>
-                            <ProfileInformation information={user} />
+                        <div style={{height: 400, width: 300, minWidth: 300, marginLeft: "calc(50% - 150px)",
+                            position: "relative", display: "inline-block"}}>
+                            <ProfileInformation information={user} isPreview={true} />
                         </div>
                     :
                         <div>

@@ -38,6 +38,7 @@ declare interface UserMini {
   identity: string
   age: number
   location: {coordinates: [number, number]}  // longitude, latitude
+  photoLinks: string[]
 }
 
 declare interface AgeRange {
