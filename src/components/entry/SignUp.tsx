@@ -8,7 +8,11 @@ import {LookingFor} from "../account/LookingFor";
 const inputFormStyle = {width: "calc(100% - 40px)", padding: 10, marginLeft: 20, marginRight: 20, height: 40,
     borderRadius: 10, border: 0, backgroundColor: "rgb(194, 213, 242)"}
 
-export const SignUp = ({ style }: { style?: any }) => {
+interface PropTypes {
+    referringUser?: string
+}
+
+export const SignUp = (props: PropTypes) => {
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
     const location = useLocation()

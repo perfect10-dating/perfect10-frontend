@@ -10,6 +10,11 @@ import {Loading} from "@minchat/react-chat-ui";
 import {AccountWrapper} from "./components/account/AccountWrapper";
 import {TopBar} from "./components/misc/TopBar";
 
+const getReferringUser = () => {
+    const hrefArray = window.location.href.split('/')
+    return hrefArray[hrefArray.length-1]
+}
+
 export default function App() {
     const dispatch = useAppDispatch()
     const hold = 0
@@ -38,6 +43,9 @@ export default function App() {
                     {user && <TopBar user={user} />}
                     <Routes>
                         <Route path="/" element={<Home />} />
+                        <Route path="/referral/*" element={
+                            <Home referringUser={getReferringUser()} />
+                        } />
                         <Route path={"/account"} element={<AccountWrapper />} />
                         {/*<Route path={"/test"} element={<Test />} />*/}
                         // TODO -- edit profile

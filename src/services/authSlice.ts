@@ -128,17 +128,18 @@ export const asyncGetUser = createAsyncThunk<{ jwtToken?: string; role?: string 
 
 export const asyncSignUp = createAsyncThunk<
     { success?: boolean; userId?: string; phoneNumber: string; password: string; firstName: string; identity: string;
-        birthDate: number; longitude: number; latitude: number; lookingFor: string[] },
+        birthDate: number; longitude: number; latitude: number; lookingFor: string[]; referringUser?: string },
     { phoneNumber: string; password: string; firstName: string; identity: string; birthDate: number;
-        longitude: number; latitude: number; lookingFor: string[] }
+        longitude: number; latitude: number; lookingFor: string[]; referringUser?: string }
 >('auth/signUp', async (credentials) => {
     const {
         phoneNumber, password, firstName, identity, birthDate,
-        longitude, latitude, lookingFor
+        longitude, latitude, lookingFor, referringUser,
     } = credentials
-    const { success } = await signUp(phoneNumber, password, firstName, identity, birthDate, longitude, latitude, lookingFor)
+    const { success } = await signUp(phoneNumber, password, firstName, identity, birthDate,
+        longitude, latitude, lookingFor, referringUser)
     if (!success) throw new Error('sign up flow failed')
-    return { success, phoneNumber, password, firstName, identity, birthDate, latitude, longitude, lookingFor }
+    return { success, phoneNumber, password, firstName, identity, birthDate, latitude, longitude, lookingFor, referringUser }
 })
 
 export const asyncConfirmCode = createAsyncThunk<
@@ -263,7 +264,7 @@ const getBirthDateString = (birthDate: number) => {
 }
 
 const signUp = (phoneNumber: string, password: string, firstName: string, identity: string, birthDate: number,
-                longitude: number, latitude: number, lookingFor: string[],
+                longitude: number, latitude: number, lookingFor: string[], referringUser?: string
                 ) => {
     return new Promise<{ success: boolean }>((resolve) => {
         let attributeList = []
@@ -275,6 +276,9 @@ const signUp = (phoneNumber: string, password: string, firstName: string, identi
         attributeList.push(new CognitoUserAttribute({Name: 'custom:lookingFor', Value: lookingFor.join(":")}))
         // convert a UNIX date into one that AWS likes
         attributeList.push(new CognitoUserAttribute({Name: 'birthdate', Value: getBirthDateString(birthDate)}))
+        if (referringUser) {
+            attributeList.push(new CognitoUserAttribute({Name: 'custom:referringUser', Value: referringUser}))
+        }
         console.log(attributeList)
 
         userPool.signUp(phoneNumber, password, attributeList, [], (error?: Error, result?: ISignUpResult) => {

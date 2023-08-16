@@ -14,7 +14,11 @@ import {WaitingForRoom} from "./waiting/WaitingForRoom";
 import {JoinNewRoom} from "./recording_date/JoinNewRoom";
 import {Loading} from "@minchat/react-chat-ui";
 
-export function Home() {
+interface PropTypes {
+    referringUser?: string
+}
+
+export function Home(props: PropTypes) {
     // const cognitoId = "607865"  // 19
     // const cognitoId = "890233"     // matilda
     // const cognitoId = "foo"     // 19
@@ -65,7 +69,7 @@ export function Home() {
 
         if (!user) {
             console.log("No user detected ... please log in")
-            return <LandingPage />
+            return <LandingPage referringUser={props.referringUser} />
         }
 
         else {

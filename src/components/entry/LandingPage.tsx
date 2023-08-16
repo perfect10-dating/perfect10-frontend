@@ -6,12 +6,16 @@ import {useAppSelector} from "../../app/hooks";
 import {ForgotPassword} from "./ForgotPassword";
 import {ResetPassword} from "./ResetPassword";
 
-export function LandingPage() {
+interface PropTypes {
+    referringUser?: string
+}
+
+export function LandingPage(props: PropTypes) {
     const {loginPage} = useAppSelector(state => state.auth)
 
     switch(loginPage) {
         case "signUp":
-            return <SignUp />
+            return <SignUp referringUser={props.referringUser} />
         case "forgotPassword":
             return <ForgotPassword />
         case "resetPassword":
