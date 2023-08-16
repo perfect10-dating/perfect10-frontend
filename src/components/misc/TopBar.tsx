@@ -13,15 +13,19 @@ export function TopBar(props: PropTypes) {
     // TODO -- images for each of these
     return (
         <div style={{position: "absolute", zIndex: 10000, top: 0, backgroundColor: "rgb(200, 200, 200)",
-            display: "flex", justifyContent: "space-between", fontSize: 24, padding: 5, width: "100vw"
+            display: "flex", justifyContent: "space-between", flexWrap: "wrap",
+            fontSize: 24, padding: 5, width: "100vw"
         }}>
             <div style={{display: "flex"}}>
-                <div style={{cursor: "pointer", marginLeft: 20, marginRight: 20, fontWeight: 500
+                <div style={{cursor: "pointer", marginLeft: 20, marginRight: 30, fontWeight: 500
                 }} onClick={() => navigate("/")}>
                     Date
                 </div>
-                <div style={{cursor: "pointer", fontWeight: 500}} onClick={() => navigate("/account")}>
+                <div style={{cursor: "pointer", fontWeight: 500, marginRight: 30}} onClick={() => navigate("/account")}>
                     Account
+                </div>
+                <div style={{cursor: "pointer", fontWeight: 500}} onClick={() => navigate("/priority")}>
+                    Priority Mode
                 </div>
             </div>
 

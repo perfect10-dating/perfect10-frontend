@@ -15,6 +15,8 @@ declare interface User {
     type: ['Point']
     coordinates: [number, number]}  // longitude, latitude
   photoLinks: string[]
+  priorityMode: boolean
+  priorityModeExpiryTime?: string
   profileComplete: boolean
 
   // preferences

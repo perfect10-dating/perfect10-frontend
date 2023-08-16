@@ -9,6 +9,7 @@ import {useAppDispatch, useAppSelector} from "./app/hooks";
 import {Loading} from "@minchat/react-chat-ui";
 import {AccountWrapper} from "./components/account/AccountWrapper";
 import {TopBar} from "./components/misc/TopBar";
+import {PriorityModePage} from "./components/premium/PriorityModePage";
 
 const getReferringUser = () => {
     const hrefArray = window.location.href.split('/')
@@ -47,6 +48,7 @@ export default function App() {
                             <Home referringUser={getReferringUser()} />
                         } />
                         <Route path={"/account"} element={<AccountWrapper />} />
+                        <Route path={"/priority"} element={<PriorityModePage />} />
                         {/*<Route path={"/test"} element={<Test />} />*/}
                         // TODO -- edit profile
                     </Routes>
