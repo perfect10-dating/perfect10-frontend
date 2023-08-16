@@ -38,8 +38,10 @@ export const api = createApi({
       invalidatesTags: ['USER']
     }),
 
-    editUser: builder.mutation<any, { lookingFor: string[]; ageRange: AgeRange; photoLinks: string[] }>({
-      query: (body: { lookingFor: string[]; ageRange: AgeRange; photoLinks: string[] }) => ({
+    editUser: builder.mutation<any, { lookingFor: string[]; ageRange: AgeRange;
+      photoLinks: string[], shortTerm: boolean }>({
+      query: (body: { lookingFor: string[]; ageRange: AgeRange;
+        photoLinks: string[], shortTerm: boolean }) => ({
         url: `edit-user`,
         method: 'POST',
         body

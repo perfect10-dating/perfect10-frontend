@@ -9,6 +9,7 @@ import {ImageUploadPanel} from "./ImageUploadPanel";
 import {ProfileInteractions} from "../interacting/ProfileInteractions";
 import {ProfileInformation} from "../interacting/ProfileInformation";
 import {ProfileTopBar} from "../interacting/ProfileTopBar";
+import {ShortTerm} from "./ShortTerm";
 
 const POLLING_DELAY_SECONDS = 5
 const USER_AVAILABLE_AGE_GAP = 15
@@ -33,6 +34,7 @@ export function Account(props: PropTypes) {
     const [lookingFor, setLookingFor] = useState(user?.lookingFor || [])
     const [ageRange, setAgeRange] = useState(user?.ageRange || {min: 25, max: 35})
     const [photoLinks, setPhotoLinks] = useState(user?.photoLinks || [])
+    const [shortTerm, setShortTerm] = useState(user.shortTerm)
     const [willEdit, setWillEdit] = useState(false)
 
     const [isDisplayingPreview, setIsDisplayingPreview] = useState(false)
@@ -53,7 +55,7 @@ export function Account(props: PropTypes) {
     if (willEdit && isDirty && user) {
         setIsDirty(false)
         setWillEdit(false)
-        editUser({lookingFor, ageRange, photoLinks: photoLinks.filter(link => link.length > 0)})
+        editUser({lookingFor, shortTerm, ageRange, photoLinks: photoLinks.filter(link => link.length > 0)})
     }
 
     return (
@@ -93,6 +95,10 @@ export function Account(props: PropTypes) {
                                                   setPhotoLinks(photoLinks)
                                                   setIsDirty(true)
                                               }} />
+                            <ShortTerm initialShortTerm={user.shortTerm} shortTermCallback={() => {
+                                setShortTerm(!shortTerm)
+                                setIsDirty(true)
+                            }} />
                             <LookingFor initialLookingFor={user.lookingFor} lookingForCallback={(lookingFor) => {
                                 setLookingFor(lookingFor)
                                 setIsDirty(true)
