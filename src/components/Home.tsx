@@ -13,6 +13,7 @@ import {WaitingForTime} from "./waiting/WaitingForTime";
 import {WaitingForRoom} from "./waiting/WaitingForRoom";
 import {JoinNewRoom} from "./recording_date/JoinNewRoom";
 import {Loading} from "@minchat/react-chat-ui";
+import {RerollRoom} from "./interacting/RerollRoom";
 
 interface PropTypes {
     referringUser?: string
@@ -140,7 +141,7 @@ export function Home(props: PropTypes) {
             }
 
             return (
-                <div style={{paddingTop: 50}}>
+                <div style={{paddingTop: 50, overflow: 'scroll', maxHeight: "100vh"}}>
                     <div style={{fontSize: 30, textAlign: "center", marginTop: 30}}>
                         {
                             // only display the toggle if this is not a one-sided room

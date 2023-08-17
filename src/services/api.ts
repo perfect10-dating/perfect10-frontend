@@ -67,6 +67,15 @@ export const api = createApi({
       }),
       invalidatesTags: ['USER']
     }),
+
+    switchRoomsDelayed: builder.mutation<any, void>({
+      query: () => ({
+        url: 'switch-rooms-delayed',
+        method: 'POST',
+        body: {}
+      }),
+      invalidatesTags: ['USER', 'ROOM']
+    }),
     /* ============= END USER ROUTES ============== */
 
     /* ============= BEGIN ROOM ROUTES ============== */
@@ -184,6 +193,7 @@ export const {
     useEditUserMutation,
     useUnlockUserMutation,
     useReadyJoinRoomMutation,
+    useSwitchRoomsDelayedMutation,
 
     // room information
     useGetRoomQuery,

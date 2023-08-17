@@ -1,4 +1,5 @@
 import {useUnlockUserMutation} from "../../services/api";
+import {useEffect, useState} from "react";
 
 interface PropTypes {
     user: User
@@ -6,7 +7,17 @@ interface PropTypes {
 export function WaitingForTime(props: PropTypes) {
     let [unlockUser] = useUnlockUserMutation()
 
-    let millisecondsUntilUnlock = (new Date(props.user.unlockTime as string)).getTime() - Date.now()
+    const [time, setTime] = useState(Date.now);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setTime(Date.now);
+        }, 1000);
+
+        return () => clearInterval(interval);
+    }, []);
+
+    let millisecondsUntilUnlock = (new Date(props.user.unlockTime as string)).getTime() - time
     let seconds = Math.floor(millisecondsUntilUnlock / 1000)
     let minutes = Math.floor(seconds / 60)
     let hours = Math.floor(minutes / 60)

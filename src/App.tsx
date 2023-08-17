@@ -10,6 +10,7 @@ import {Loading} from "@minchat/react-chat-ui";
 import {AccountWrapper} from "./components/account/AccountWrapper";
 import {TopBar} from "./components/misc/TopBar";
 import {PriorityModePage} from "./components/premium/PriorityModePage";
+import {RerollRoom} from "./components/interacting/RerollRoom";
 
 const getReferringUser = () => {
     const hrefArray = window.location.href.split('/')
@@ -49,6 +50,7 @@ export default function App() {
                         } />
                         <Route path={"/account"} element={<AccountWrapper />} />
                         <Route path={"/priority"} element={<PriorityModePage />} />
+                        <Route path={"/switch-room"} element={<RerollRoom />} />
                         {/*<Route path={"/test"} element={<Test />} />*/}
                         // TODO -- edit profile
                     </Routes>

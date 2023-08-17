@@ -24,6 +24,9 @@ export function TopBar(props: PropTypes) {
                 <div style={{cursor: "pointer", fontWeight: 500, marginRight: 30}} onClick={() => navigate("/account")}>
                     Account
                 </div>
+                <div style={{cursor: "pointer", fontWeight: 500, marginRight: 30}} onClick={() => navigate("/switch-room")}>
+                    Switch Room
+                </div>
                 <div style={{cursor: "pointer", fontWeight: 500}} onClick={() => navigate("/priority")}>
                     Priority Mode
                 </div>
