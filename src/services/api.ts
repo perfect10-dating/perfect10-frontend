@@ -1,13 +1,14 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import {DateReview} from "../components/recording_date/DateReview";
 import {RootState} from "../app/store";
+import currentApp from "../appConfiguration";
 
 export const api = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
     // baseUrl: 'https://api.bellwetherinsight.com',
     // baseUrl: 'http://10.0.0.197:3001'
-    baseUrl: 'http://localhost:3001/api',
+    baseUrl: currentApp.baseApiUrl,
     prepareHeaders: (headers, { getState }) => {
       const token = (getState() as RootState).auth.jwtToken
       console.log("Token is:")

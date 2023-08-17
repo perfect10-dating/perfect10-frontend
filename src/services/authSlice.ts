@@ -1,13 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { AuthenticationDetails, CognitoUser, CognitoUserAttribute, CognitoUserPool, ISignUpResult } from 'amazon-cognito-identity-js'
+import currentApp from "../appConfiguration";
 
-const poolData = {
-    // perfect10
-    UserPoolId: 'us-east-1_dgaKxRACk',
-    ClientId: '2n6hgl70qm8but7chh0t52ngv8',
-}
-
-const userPool = new CognitoUserPool(poolData)
+const userPool = new CognitoUserPool(currentApp.cognito)
 
 export interface AuthState {
     authenticated: boolean
