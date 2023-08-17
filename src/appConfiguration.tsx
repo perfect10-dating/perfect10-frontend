@@ -11,9 +11,10 @@ const liveApp = {
         UserPoolId: 'us-east-1_Idy0VPEqK',
         ClientId: '1hm0bcej0ok1rimjt93ehuuft3',
     },
-    baseApiUrl: "https://api.rizz.ly.com/api",
+    baseApiUrl: "https://api.rizz.ly/api",
+    // baseApiUrl: "http://rizzly-dev-api.us-east-1.elasticbeanstalk.com/api",
 }
 
-const currentApp = testApp
+const currentApp = liveApp
 
 export default currentApp
