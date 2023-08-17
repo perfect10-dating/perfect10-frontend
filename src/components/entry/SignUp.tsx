@@ -50,6 +50,7 @@ export const SignUp = (props: PropTypes) => {
         if (((Date.now() - birthDate) / (1000 * 60 * 60 * 24 * 365)) < 18) return alert("Minors are not allowed")
 
         try {
+            console.log("here...")
             let position: GeolocationPosition = await new Promise((resolve) => {
                 navigator.geolocation.getCurrentPosition((position) => resolve(position))
             })
