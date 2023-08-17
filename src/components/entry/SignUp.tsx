@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import {asyncGetUser, asyncSignIn, asyncSignUp, signUpFlowCanceled} from 'services/authSlice'
 import { BottomActionText, Input, LoginBox, Name, Seperation, Subheader, Submit } from './LoginComponents'
 import {LookingFor} from "../account/LookingFor";
+import {setHasCollectedLocation} from "../../services/userSlice";
 
 const inputFormStyle = {width: "calc(100% - 40px)", padding: 10, marginLeft: 20, marginRight: 20, height: 40,
     borderRadius: 10, border: 0, backgroundColor: "rgb(194, 213, 242)"}
@@ -70,6 +71,8 @@ export const SignUp = (props: PropTypes) => {
             }
             else {
                 await dispatch(asyncSignIn({phoneNumber, password}))
+                // tell the app that we have accurate location
+                await dispatch(setHasCollectedLocation({hasUpdatedLocation: true}))
                 // now we invalidate the user cache and navigate to /profile (so they can fill other information...)
                 dispatch({
                     // format -- reducerPath/invalidateTags

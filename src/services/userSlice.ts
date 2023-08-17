@@ -1,13 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export interface UserState {
-  user?: User
-  currentRoom?: Room
-  dates: Date[]
+    user?: User
+    currentRoom?: Room
+    dates: Date[]
+    hasUpdatedLocation: boolean
 }
 
 const initialState: UserState = {
-  dates: []
+    dates: [],
+    hasUpdatedLocation: false
 }
 
 export const userSlice = createSlice({
@@ -53,9 +55,19 @@ export const userSlice = createSlice({
         }>
     ) => {
       state.dates.push(action.payload.date)
+    },
+
+    // tell the store that we've collected location
+    setHasCollectedLocation: (
+        state,
+        action: PayloadAction<{hasUpdatedLocation: boolean}>
+    )=> {
+        state.hasUpdatedLocation = action.payload.hasUpdatedLocation
     }
   },
 })
 
-export const { setUser, setRoom, setDates, addDate } = userSlice.actions
+export const { setUser, setRoom,
+    setDates, addDate , setHasCollectedLocation
+} = userSlice.actions
 export default userSlice.reducer

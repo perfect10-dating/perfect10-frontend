@@ -11,9 +11,7 @@ declare interface User {
   identity: string
   age: number
   dateOfBirth: number  // time since 1970 (SIGNED)
-  location: {
-    type: ['Point']
-    coordinates: [number, number]}  // longitude, latitude
+  location: UserLocation
   photoLinks: string[]
   priorityMode: boolean
   priorityModeExpiryTime?: string
@@ -39,8 +37,13 @@ declare interface UserMini {
   firstName: string
   identity: string
   age: number
-  location: {coordinates: [number, number]}  // longitude, latitude
+  location: UserLocation
   photoLinks: string[]
+}
+
+declare interface UserLocation {
+  type: 'Point'
+  coordinates: [number, number]// longitude, latitude
 }
 
 declare interface AgeRange {
