@@ -1,9 +1,7 @@
-import {useCreateUserMutation, useFormRoomMutation} from "../../services/api";
 import {useEffect, useState} from "react";
 import {ProfileInformation} from "./ProfileInformation";
 import {ProfileMessages} from "./ProfileMessages";
 import {ProfileInteractions} from "./ProfileInteractions";
-import {userSlice} from "../../services/userSlice";
 import {ProfileTopBar} from "./ProfileTopBar";
 
 interface PropTypes {
@@ -13,13 +11,29 @@ interface PropTypes {
     dates: Date[]
 }
 
-function userInDate(date: Date, userId: string) {
+export function userInDate(date: Date, userId: string) {
     if (userId+"" === date.setupResponsibleUser+"") {
         return true
     }
     for (let userIdInArr of date.users) {
         if (userIdInArr+"" === userId+"") {
             return true
+        }
+    }
+}
+
+/**
+ * Returns the ID, or user object, of the other user in the date
+ */
+export function getOtherUserInDate(date: Date, userId: string) {
+    let setupResponsibleUserId = date.setupResponsibleUser
+    if (userId+"" !== setupResponsibleUserId+"") {
+        return date.setupResponsibleUser
+    }
+    for (let userInArr of date.users) {
+        // case -- the id is a string
+        if (userInArr+"" === userId+"") {
+            return userInArr
         }
     }
 }
@@ -67,7 +81,7 @@ export function ProfileInRoom(props: PropTypes) {
             screenComponent = <div />
     }
 
-    // TODO -- does a competitor have a date set up with this profile?
+    // does a competitor have a date set up with this profile?
     let competitorHasDateWithProfile = false
     let competitorDateIsSetup = false
     let competitorDate: Date
@@ -84,17 +98,20 @@ export function ProfileInRoom(props: PropTypes) {
                 competitorHasDateWithProfile = true
                 competitorDate = date
 
+                // the date is a setup, and the competitor set it up
                 if (date.users.length === 1) {
                     competitorDateIsSetup = true
                     competitorId = date.setupResponsibleUser
                 }
                 else {
+                    // the competitor is the other user
                     competitorId = (date.users[i==0 ? 1 : 0] as string)
                 }
 
                 break
             }
         }
+        // if this user set up the date
         if (date.setupResponsibleUser === props.information._id) {
             competitorHasDateWithProfile = true
             competitorDate = date
@@ -119,7 +136,10 @@ export function ProfileInRoom(props: PropTypes) {
         <div style={{height: 400, width: 300, minWidth: 300, margin: 50}}>
             {
                 competitor &&
-                <div className={"date-overlay-panel-red"}>
+                <div style={{height: "100%", width: "100%", borderRadius: 15,
+                    position: "absolute", bottom: 0, zIndex: 50,
+                    backgroundColor: "red", color: "white",
+                }}>
                     {props.information.firstName} agreed to a {
                         competitorDateIsSetup ? "setup" : "date"
                     } with {competitor.firstName}{competitorDateIsSetup && `'s friend`}

@@ -1,4 +1,4 @@
-import {ProfileInRoom} from "./ProfileInRoom";
+import {getOtherUserInDate, ProfileInRoom, userInDate} from "./ProfileInRoom";
 
 interface PropTypes {
     isDisplayingCompetitors: boolean
@@ -19,7 +19,7 @@ export function RoomDisplay(props: PropTypes) {
                             <ProfileInRoom
                                 key={key}
                                 isCompetitor={props.isDisplayingCompetitors}
-                                information={person as UserMini}
+                                information={person}
                                 potentialMatchedUsers={props.isDisplayingCompetitors ?
                                                         props.potentialPartners : props.competitors}
                                 dates={props.dates}

@@ -31,14 +31,15 @@ export function ProfileInformation(props: PropTypes) {
             </div>
 
             <div style={{position: "absolute", height: 50, width: "100%", bottom: 0, left: 15,
-                color: "white", display: "flex"
+                color: "white", display: "flex", zIndex: 30
             }}>
                 <div style={{fontSize: 24, fontWeight: "semibold"}}>{props.information.firstName}</div>
                 <div style={{fontSize: 20, marginLeft: 10, marginTop: 4}}>{props.information.age}</div>
             </div>
 
             <div style={{position: "absolute", height: 50, width: "100%", bottom: 0, right: 15,
-                color: "white", display: "flex", textAlign: "right", justifyContent: "right"
+                color: "white", display: "flex", textAlign: "right", justifyContent: "right",
+                zIndex: 30,
             }}>
                 <div style={{fontSize: 20, marginLeft: 10, marginTop: 4}}>
                     {fixIdentity(props.information.identity)}
@@ -74,7 +75,14 @@ export function ProfileInformation(props: PropTypes) {
                 </div>
             }
 
-            <img style={{height: "100%", width: "100%", borderRadius: 15, border: "1px solid lightgray"}}
+            <div style={{height: "50%", width: "100%", borderRadius: 15,
+                position: "absolute", bottom: 0, zIndex: 1,
+                background: "linear-gradient(#0000, #000)"
+            }}
+            />
+
+            <img style={{height: "100%", width: "100%", borderRadius: 15,
+                border: "1px solid lightgray"}}
                  src={props.information.photoLinks[photoLinkIndex] || ''}
             />
         </div>

@@ -122,8 +122,16 @@ export function Home(props: PropTypes) {
 
             /* ==================== BEGIN RENDER LOGIC =================== */
 
+            let isOneSided = false
             let potentialPartners, competitors
-            if (room.sideOneIdentity === user?.identity) {
+            // if this is a one-identity room, your partners and competitors are the same
+            // prevent you from seeing yourself
+            if (room.sideTwo.length === 0) {
+                isOneSided = true
+                potentialPartners = room.sideOne.filter(sideOneUser => sideOneUser._id !== user?._id)
+                competitors = potentialPartners
+            }
+            else if (room.sideOneIdentity === user?.identity) {
                 potentialPartners = room.sideTwo
                 competitors = room.sideOne
             } else {
@@ -134,7 +142,12 @@ export function Home(props: PropTypes) {
             return (
                 <div style={{paddingTop: 50}}>
                     <div style={{fontSize: 30, textAlign: "center", marginTop: 30}}>
-                        {isDisplayingCompetitors ? "Your Competitors" : "Your Potential Matches"}
+                        {
+                            // only display the toggle if this is not a one-sided room
+                            // (if it is one-sided, only display partners)
+                            !isOneSided &&
+                            isDisplayingCompetitors ? "Your Competitors" : "Your Potential Matches"
+                        }
                     </div>
                     <div style={{fontSize: 16, textAlign: "center", cursor: "pointer"}}
                         onClick={() => setIsDisplayingCompetitors(!isDisplayingCompetitors)}

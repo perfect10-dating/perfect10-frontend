@@ -17,7 +17,7 @@ export const ShortTerm = (props: PropTypes) => {
                     />
 
                     <div style={{marginLeft: 5, marginTop: -8}}>
-                                    I'm primarily interested in short-term relationships
+                                    I'm primarily interested in short-term relationships instead of long-term relationships
                                 </div>
                 </label>
             </div>
