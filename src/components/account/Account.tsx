@@ -32,6 +32,7 @@ export function Account(props: PropTypes) {
 
     const [photoLinks, setPhotoLinks] = useState(user?.photoLinks || [])
     const [shortTerm, setShortTerm] = useState(user.shortTerm)
+    const [ageRange, setAgeRange] = useState(user?.ageRange || {min: 25, max: 35})
 
     const [isDisplayingPreview, setIsDisplayingPreview] = useState(false)
 
@@ -81,8 +82,11 @@ export function Account(props: PropTypes) {
                             <AgeRange default={user.ageRange}
                                       limits={{min: Math.max(18, user.age-USER_AVAILABLE_AGE_GAP),
                                           max: Math.min(99, user.age+USER_AVAILABLE_AGE_GAP)}}
-                                      onChange={(ageRange) => {
-                                          editUser({ageRange})
+                                      onChange={(newAgeRange) => {
+                                          if (ageRange.min !== newAgeRange.min || ageRange.max != newAgeRange.max) {
+                                              editUser({ageRange: newAgeRange})
+                                              setAgeRange(newAgeRange)
+                                          }
                                       }} />
                         </div>
                 }
