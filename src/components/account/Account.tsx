@@ -11,7 +11,7 @@ import {ProfileInformation} from "../interacting/ProfileInformation";
 import {ProfileTopBar} from "../interacting/ProfileTopBar";
 import {ShortTerm} from "./ShortTerm";
 
-const POLLING_DELAY_SECONDS = 5
+const POLLING_DELAY_SECONDS = 1
 const USER_AVAILABLE_AGE_GAP = 15
 
 interface PropTypes {
@@ -30,33 +30,10 @@ export function Account(props: PropTypes) {
 
     const {user} = props
 
-    const [isDirty, setIsDirty] = useState(false)
-    const [lookingFor, setLookingFor] = useState(user?.lookingFor || [])
-    const [ageRange, setAgeRange] = useState(user?.ageRange || {min: 25, max: 35})
     const [photoLinks, setPhotoLinks] = useState(user?.photoLinks || [])
     const [shortTerm, setShortTerm] = useState(user.shortTerm)
-    const [willEdit, setWillEdit] = useState(false)
 
     const [isDisplayingPreview, setIsDisplayingPreview] = useState(false)
-
-    useEffect(() => {
-        console.log("Polling started")
-
-        // will try to save the user
-        const pollingFunction = async() => {
-            while (true) {
-                setWillEdit(true)
-                await new Promise((resolve) => setTimeout(resolve, POLLING_DELAY_SECONDS * 1000))
-            }
-        }
-        pollingFunction()
-    }, [1])
-
-    if (willEdit && isDirty && user) {
-        setIsDirty(false)
-        setWillEdit(false)
-        editUser({lookingFor, shortTerm, ageRange, photoLinks: photoLinks.filter(link => link.length > 0)})
-    }
 
     return (
         <div style={{height: "100vh", overflow: "scroll", paddingTop: 50}}>
@@ -92,23 +69,20 @@ export function Account(props: PropTypes) {
                         <div>
                             <ImageUploadPanel photoLinks={photoLinks}
                                               photoLinksCallback={(photoLinks) => {
-                                                  setPhotoLinks(photoLinks)
-                                                  setIsDirty(true)
+                                                  editUser({photoLinks: photoLinks.filter(link => link.length > 0)})
                                               }} />
                             <ShortTerm initialShortTerm={user.shortTerm} shortTermCallback={() => {
+                                editUser({shortTerm: !shortTerm})
                                 setShortTerm(!shortTerm)
-                                setIsDirty(true)
                             }} />
                             <LookingFor initialLookingFor={user.lookingFor} lookingForCallback={(lookingFor) => {
-                                setLookingFor(lookingFor)
-                                setIsDirty(true)
+                                editUser({lookingFor})
                             }} />
                             <AgeRange default={user.ageRange}
                                       limits={{min: Math.max(18, user.age-USER_AVAILABLE_AGE_GAP),
                                           max: Math.min(99, user.age+USER_AVAILABLE_AGE_GAP)}}
                                       onChange={(ageRange) => {
-                                          setAgeRange(ageRange)
-                                          setIsDirty(true)
+                                          editUser({ageRange})
                                       }} />
                         </div>
                 }
