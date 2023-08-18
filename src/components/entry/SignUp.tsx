@@ -30,7 +30,7 @@ export const SignUp = (props: PropTypes) => {
     const [lookingFor, setLookingFor] = useState([] as string[])
 
     useEffect(() => {
-        const newStatus = phoneNumber.length === 0 ? 'default' : /^\+?[1-9]\d{1,14}$/.test(phoneNumber) ? 'valid' : 'entering'
+        const newStatus = phoneNumber.length === 0 ? 'default' : /^\+[1-9]\d{3,14}$/.test(phoneNumber) ? 'valid' : 'entering'
         setPhoneNumberStatus(newStatus)
     }, [phoneNumber])
 
