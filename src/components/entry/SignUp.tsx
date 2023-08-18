@@ -167,7 +167,7 @@ export const SignUp = (props: PropTypes) => {
                     />
 
                 </div>
-                <div style={{margin: "0 auto", paddingBottom: 30, textAlign: "center"}}>
+                <div style={{margin: "0 auto", paddingBottom: 100, textAlign: "center"}}>
                     <div style={{cursor: "pointer"}} onClick={handleSubmit} >{"Sign Up >>"}</div>
                     <p>or</p>
                     <div style={{cursor: "pointer"}} onClick={() => dispatch(signUpFlowCanceled())}>
