@@ -8,6 +8,7 @@
     "@types/uuid": "^9.0.2",
     "amazon-cognito-identity-js": "^6.3.2",
     "express": "^4.17.2",
+    "image-conversion": "^2.1.1",
     "photoeditorsdk": "^5.18.0",
     "react": "^17.0.2",
     "react-cropper": "^2.3.3",

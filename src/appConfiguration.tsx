@@ -15,6 +15,6 @@ const liveApp = {
     // baseApiUrl: "http://rizzly-dev-api.us-east-1.elasticbeanstalk.com/api",
 }
 
-const currentApp = liveApp
+const currentApp = testApp
 
 export default currentApp

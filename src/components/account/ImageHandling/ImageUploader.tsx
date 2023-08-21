@@ -111,7 +111,7 @@ export const ImageUploader = ({
                 iconUrl={imageUrl === '' ? '/img/standard_icons/upload-image.png' : '/img/standard_icons/change-image.png'}
                 alt={'Upload an Image'}
                 highlighted={imageUrl !== ''}
-                backgroundUrl={imageUrl}
+                backgroundUrl={croppedImageUrl !== '' ? croppedImageUrl : imageUrl}
             />
 
             {photoCropperOpen && (

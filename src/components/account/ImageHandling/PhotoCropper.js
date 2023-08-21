@@ -2,6 +2,7 @@ import 'cropperjs/dist/cropper.css'
 import { Component } from 'react'
 import Cropper from 'react-cropper'
 import { v4 as uuid } from 'uuid'
+import * as imageConversion from 'image-conversion';
 
 import styled from 'styled-components/macro'
 
@@ -18,6 +19,7 @@ class PhotoCropper extends Component {
         super(props)
         this.state = {
             saving: false,
+            compressing: false,
             showUploadLoading: false,
             imageSize: 0,
         }
@@ -41,12 +43,38 @@ class PhotoCropper extends Component {
         this._isMounted = false // workaround since React has deprecated isMounted()
     }
 
-    handleSave = () => {
+    handleSave = async () => {
         if (this.state.saving) return // don't interrupt current save operation
         let dataUrl = this._cropper.cropper.getCroppedCanvas().toDataURL('image/png')
         let blob = this.dataURItoBlob(dataUrl)
         let file = new File([blob], uuid()) // randomize file name
-        this.setState({ saving: true, showUploadLoading: true, imageSize: (file.size / 1000).toFixed(1) })
+
+        this.setState({ compressing: true, showUploadLoading: true, imageSize: (file.size / 1000).toFixed(1) })
+
+        let compressedFile
+        try {
+            // pass if the file is already smaller than 100 kb
+            if (file.size < 100000) {
+                compressedFile = file
+            }
+            else {
+                // compress the file down to 100 kb
+                compressedFile = await imageConversion.compressAccurately(file, {
+                    size: 100,
+                    accuracy: 0.8,
+                    type: file.type,
+                    width: 300,
+                    height: 400
+                })
+            }
+        }
+        catch (err) {
+            console.error(err)
+            alert("Saving failed-- error with compression. Please try again")
+            return
+        }
+
+        this.setState({ saving: true, showUploadLoading: true, imageSize: (compressedFile.size / 1000).toFixed(1) })
 
         this.props
             .getSignedUrl()
@@ -55,9 +83,9 @@ class PhotoCropper extends Component {
                     await fetch(value.data.signedRequest, {
                         method: 'Put',
                         headers: {
-                            'content-type': file.type,
+                            'content-type': compressedFile.type,
                         },
-                        body: file,
+                        body: compressedFile,
                     })
                     this.props.onSave(value.data.resourceUrl)
                 }
@@ -107,7 +135,7 @@ class PhotoCropper extends Component {
                             marginTop: 15, padding: 2, paddingLeft: 5, paddingRight: 5,
                             borderRadius: 5, color: "black"
                         }}>
-                            Saving...
+                            {this.state.saving ? "Saving..." : "Compressing..."}
                         </CropSubmit>
                         <br />
                         <p className="crop-cancel" onClick={this.props.onCancel}>
