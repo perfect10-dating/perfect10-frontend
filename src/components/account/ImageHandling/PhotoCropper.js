@@ -69,8 +69,7 @@ class PhotoCropper extends Component {
                 )
             })
             .finally(() => {
-                // TODO -- uncomment
-                // this.setState({ saving: false })
+                this.setState({ saving: false })
             })
     }
 
@@ -98,14 +97,18 @@ class PhotoCropper extends Component {
                 <div className="overlay-background"></div>
                 <div className="photo-cropper-overlay">
                     <div>
-                        <p>Drag and resize the blue box to crop the photo</p>
-                        <p>When you're satisfied with your selection, click 'Save'</p>
                         <div className="loading-box">
                             {/*<img src="/img/standard_icons/waiting.png" alt="Loading"></img>*/}
                             <p>Uploading photo ({this.state.imageSize} kb)...</p>
                             <p>For optimal performance, please use photo smaller than 512kb</p>
                         </div>
-                        <CropSubmit style={{ backgroundColor: 'rgb(181, 181, 181)', cursor: 'default' }}>Saving...</CropSubmit>
+                        <CropSubmit style={{
+                            backgroundColor: 'rgb(181, 181, 181)', cursor: 'default',
+                            marginTop: 15, padding: 2, paddingLeft: 5, paddingRight: 5,
+                            borderRadius: 5, color: "black"
+                        }}>
+                            Saving...
+                        </CropSubmit>
                         <br />
                         <p className="crop-cancel" onClick={this.props.onCancel}>
                             Cancel
@@ -123,25 +126,29 @@ class PhotoCropper extends Component {
         }
         return (
             <div style={{color: "lightgray", textAlign: "center", marginTop: 10}}>
-                {this.state.showUploadLoading ? this.renderUploadLoading() : null}
-                <p>Drag and resize the blue box to crop the photo</p>
-                <p>When you're satisfied with your selection, click 'Save'</p>
-                <Cropper
-                    src={this.props.src}
-                    style={{ height: 400, width: 400, margin: '20px auto', maxWidth: "80vw", maxHeight: "60vh" }}
-                    initialAspectRatio={aspectRatio}
-                    aspectRatio={this.props.lockAspectRatio ? aspectRatio : null}
-                    guides={false}
-                    ref={(cropper) => {
-                        this._cropper = cropper
-                    }}
-                />
-                <div style={{display: "flex", fontSize: 24, justifyContent: "space-evenly"}}>
-                    <CropSubmit onClick={this.handleSave}>
-                        Save
-                    </CropSubmit>
-                    <CropCancel onClick={this.props.onCancel}>Cancel</CropCancel>
-                </div>
+                {this.state.showUploadLoading ? this.renderUploadLoading() :
+
+                    <div>
+                        <p>Drag and resize the blue box to crop the photo</p>
+                        <p>When you're satisfied with your selection, click 'Save'</p>
+                        <Cropper
+                            src={this.props.src}
+                            style={{ height: 400, width: 400, margin: '20px auto', maxWidth: "80vw", maxHeight: "60vh" }}
+                            initialAspectRatio={aspectRatio}
+                            aspectRatio={this.props.lockAspectRatio ? aspectRatio : null}
+                            guides={false}
+                            ref={(cropper) => {
+                                this._cropper = cropper
+                            }}
+                        />
+                        <div style={{display: "flex", fontSize: 24, justifyContent: "space-evenly"}}>
+                            <CropSubmit onClick={this.handleSave}>
+                                Save
+                            </CropSubmit>
+                            <CropCancel onClick={this.props.onCancel}>Cancel</CropCancel>
+                        </div>
+                    </div>
+                }
             </div>
         )
     }

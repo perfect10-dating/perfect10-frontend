@@ -92,7 +92,7 @@ export function Account(props: PropTypes) {
                 }
                 {
                     user.profileComplete &&
-                    <div style={{marginTop: 70, cursor: 'pointer', fontSize: 20, textAlign: "center"}}
+                    <div style={{marginTop: 70, marginBottom: 80, cursor: 'pointer', fontSize: 20, textAlign: "center"}}
                          onClick={() => navigate("/")}
                     >
                         {"Finish Profile and Join Room >>"}
