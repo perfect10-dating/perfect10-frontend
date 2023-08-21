@@ -69,7 +69,8 @@ class PhotoCropper extends Component {
                 )
             })
             .finally(() => {
-                this.setState({ saving: false })
+                // TODO -- uncomment
+                // this.setState({ saving: false })
             })
     }
 
@@ -121,13 +122,13 @@ class PhotoCropper extends Component {
             aspectRatio = this.props.aspectRatio
         }
         return (
-            <div style={{color: "lightgray", textAlign: "center"}}>
+            <div style={{color: "lightgray", textAlign: "center", marginTop: 10}}>
                 {this.state.showUploadLoading ? this.renderUploadLoading() : null}
                 <p>Drag and resize the blue box to crop the photo</p>
                 <p>When you're satisfied with your selection, click 'Save'</p>
                 <Cropper
                     src={this.props.src}
-                    style={{ height: 400, width: 400, margin: '20px auto' }}
+                    style={{ height: 400, width: 400, margin: '20px auto', maxWidth: "80vw", maxHeight: "60vh" }}
                     initialAspectRatio={aspectRatio}
                     aspectRatio={this.props.lockAspectRatio ? aspectRatio : null}
                     guides={false}
