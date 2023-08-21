@@ -16,7 +16,7 @@ export function TopBar(props: PropTypes) {
             display: "flex", justifyContent: "space-between", flexWrap: "wrap",
             fontSize: 24, padding: 5, width: "100vw"
         }}>
-            <div style={{display: "flex", flexWrap: "wrap"}}>
+            <div style={{display: "flex", overflow: "scroll"}}>
                 <div style={{cursor: "pointer", marginLeft: 20, marginRight: 30, fontWeight: 500
                 }} onClick={() => navigate("/")}>
                     Date
