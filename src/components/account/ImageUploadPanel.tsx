@@ -18,7 +18,7 @@ export function ImageUploadPanel(props: PropTypes) {
     return (
         <div style={{marginTop: 5, backgroundColor: "rgb(243,244,246)", borderRadius: 10}}>
             <div style={{textAlign: "center", paddingTop: 10}}>At least four profile images are required</div>
-            <div style={{margin: "0 auto", display: "flex", flexWrap: "wrap"}}>
+            <div style={{margin: "0 auto", display: "flex", flexWrap: "wrap", justifyContent: "center"}}>
                 {
                     photoLinks.map((imageUrl, key) => {
                         return (
