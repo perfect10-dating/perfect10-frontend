@@ -5,6 +5,7 @@ import {asyncGetUser, asyncSignIn, asyncSignUp, signUpFlowCanceled} from 'servic
 import { BottomActionText, Input, LoginBox, Name, Seperation, Subheader, Submit } from './LoginComponents'
 import {LookingFor} from "../account/LookingFor";
 import {setHasCollectedLocation} from "../../services/userSlice";
+import {getBirthDateString} from "../../utils/getBirthDateString";
 
 const inputFormStyle = {width: "calc(100% - 40px)", padding: 10, marginLeft: 20, marginRight: 20, height: 40,
     borderRadius: 10, border: 0, backgroundColor: "rgb(194, 213, 242)"}
@@ -45,7 +46,7 @@ export const SignUp = (props: PropTypes) => {
     }, [confirmPassword])
 
     const handleSubmit = async () => {
-        if (phoneNumberStatus !== 'valid') return alert('Please enter a valid phoneNumber address.')
+        if (phoneNumberStatus !== 'valid') return alert('Please enter a valid phone number.')
         if (passwordStatus !== 'valid') return alert('Please make sure your password is at least 8 characters long.')
         if (password !== confirmPassword) return alert('Please make sure your passwords match.')
         if (((Date.now() - birthDate) / (1000 * 60 * 60 * 24 * 365)) < 18) return alert("Minors are not allowed")
@@ -138,7 +139,7 @@ export const SignUp = (props: PropTypes) => {
                         style={inputFormStyle}
 
                         onChange={(e) => {
-                            console.log(new Date(e.target.value).toLocaleString().split(',')[0])
+                            console.log(getBirthDateString((new Date(e.target.value)).getTime()))
                             setBirthDate((new Date(e.target.value)).getTime())
                         }}
                     />

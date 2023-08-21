@@ -46,7 +46,7 @@ export function Login() {
             <div style={{maxWidth: "calc(100vw - 20)", maxHeight: "calc(100vh - 20)", textAlign: "center", margin: 10,
             }}>
                 <p style={{fontSize: 30, marginBottom: 20}}>Please Log In</p>
-                {status === 'failed' && <div>Please check your username and password:</div>}
+                {status === 'failed' && <div>Please check your phone number and password:</div>}
                 <form autoComplete="off" spellCheck="false" style={{}}>
                     <div style={{ backgroundColor: "rgb(243,244,246)", borderRadius: 15, paddingTop: 2, paddingBottom: 2,
                         margin: "0 auto", width: 300, maxWidth: "calc(100vw - 20px)",

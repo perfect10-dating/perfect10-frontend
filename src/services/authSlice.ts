@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { AuthenticationDetails, CognitoUser, CognitoUserAttribute, CognitoUserPool, ISignUpResult } from 'amazon-cognito-identity-js'
 import currentApp from "../appConfiguration";
+import {getBirthDateString} from "../utils/getBirthDateString";
 
 const userPool = new CognitoUserPool(currentApp.cognito)
 
@@ -244,18 +245,6 @@ const getUser = () => {
             resolve({ jwtToken: result.getIdToken().getJwtToken(), role: result.getIdToken().payload['custom:role'] })
         })
     })
-}
-
-const getBirthDateString = (birthDate: number) => {
-    let birthDateAsDate = new Date(birthDate)
-    let month = birthDateAsDate.getMonth()
-    let day = birthDateAsDate.getDate()
-    let year = birthDateAsDate.getFullYear()
-
-    let monthString = (month >= 10) ? `${month}/` : `0${month}/`
-    let dayString = (day >= 10) ? `${day}/` : `0${day}/`
-
-    return `${monthString}${dayString}${year}`
 }
 
 const signUp = (phoneNumber: string, password: string, firstName: string, identity: string, birthDate: number,
