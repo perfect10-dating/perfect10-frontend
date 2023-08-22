@@ -1,8 +1,11 @@
 import {useGetUserQuery} from "../../services/api";
 import {Loading} from "@minchat/react-chat-ui";
 import {useNavigate} from "react-router-dom";
+import {setUser} from "../../services/userSlice";
+import {useAppDispatch} from "../../app/hooks";
 
 export function PriorityModePage() {
+    const dispatch = useAppDispatch()
     const navigate = useNavigate()
 
     const {
@@ -16,6 +19,7 @@ export function PriorityModePage() {
     // if no user, we'll pop back to the "/" route, which will handle login
     if (userReqFailed) {
         console.log("PRIORITY_MODE: Failed getting user object, navigating to '/'")
+        dispatch(setUser({user: undefined}))
         navigate("/")
     }
 
@@ -23,6 +27,7 @@ export function PriorityModePage() {
         return <Loading />
     }
 
+    dispatch(setUser({user}))
     return (
         <div style={{display: "flex", justifyContent: "center", flexDirection: "column", height: "100vh"}}>
             <div style={{maxWidth: "calc(100vw - 20)", maxHeight: "calc(100vh - 20)", textAlign: "center", margin: 10}}>

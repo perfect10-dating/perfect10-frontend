@@ -25,6 +25,7 @@ export function AccountWrapper() {
     // if no user, we'll pop back to the "/" route, which will handle login
     if (userReqFailed) {
         console.log("ACCOUNT-WRAPPER: Failed getting user object, navigating to '/'")
+        dispatch(setUser({user: undefined}))
         navigate("/")
     }
 

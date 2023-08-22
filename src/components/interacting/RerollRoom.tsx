@@ -30,6 +30,7 @@ export function RerollRoom() {
     // if no user, we'll pop back to the "/" route, which will handle login
     if (userReqFailed || roomReqFailed) {
         console.log("ACCOUNT-WRAPPER: Failed getting user object, navigating to '/'")
+        dispatch(setUser({user: undefined}))
         navigate("/")
     }
 

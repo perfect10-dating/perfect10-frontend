@@ -20,7 +20,7 @@ export const userSlice = createSlice({
     setUser: (
       state,
       action: PayloadAction<{
-        user: User
+        user?: User
       }>
     ) => {
         console.log(action.payload.user)

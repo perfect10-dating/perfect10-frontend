@@ -68,15 +68,21 @@ export function Home(props: PropTypes) {
          * 8. Otherwise, display the room the user is in
          */
 
-        if (!user) {
+        if (userReqFailed) {
+            dispatch(setUser({user: undefined}))
+        }
+        else {
+            // set the user that we retrieved, if any
+            dispatch(setUser({user}))
+        }
+
+        if (!user || userReqFailed) {
             console.log("No user detected ... please log in")
             return <LandingPage referringUser={props.referringUser} />
         }
 
         else {
-            // set the user that we retrieved
-            console.log("setting user...")
-            dispatch(setUser({user}))
+            console.log("user detected...")
 
             // if the profile is not complete, immediately nav them to /account to finish it
             if (!user.profileComplete) {
