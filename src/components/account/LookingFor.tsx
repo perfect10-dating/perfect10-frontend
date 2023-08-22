@@ -7,7 +7,13 @@ interface PropTypes {
 }
 
 export const LookingFor = (props: PropTypes) => {
-    const lookingForOptions = [{plural: "Men", singular: "man"}, {plural: "Women", singular: "woman"}]
+    const lookingForOptions = [
+        {plural: "Men", singular: "man"},
+        {plural: "Women", singular: "woman"},
+        {plural: "Non-binary people", singular: "nonbinary"},
+        {plural: "Trans men", singular: "transMan"},
+        {plural: "Trans women", singular: "transWoman"},
+    ]
     const [lookingFor, setLookingFor] = useState(new Set(props.initialLookingFor || []))
 
     return (

@@ -119,12 +119,15 @@ export const SignUp = (props: PropTypes) => {
                     />
                 </div>
                 <div style={{textAlign: "center"}}>
-                    <div style={{fontSize: 12, textAlign: "left", marginLeft: 25}}>Currently you may only identify within the gender binary... we're working on it!</div>
+                    <div style={{fontSize: 12, textAlign: "left", marginLeft: 25}}>What group do you most identify as?</div>
                     <select defaultValue={identity}
                             style={inputFormStyle}
                             onChange={(e) => setIdentity(e.target.value)}>
                         <option value={"woman"}>Woman</option>
                         <option value={"man"}>Man</option>
+                        <option value={"nonbinary"}>Non-binary</option>
+                        <option value={"transWoman"}>Trans woman</option>
+                        <option value={"transMan"}>Trans man</option>
                     </select>
                 </div>
 
