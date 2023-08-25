@@ -68,7 +68,7 @@ export function Account(props: PropTypes) {
                         </div>
                     :
                         <div>
-                            <ImageUploadPanel photoLinks={photoLinks}
+                            <ImageUploadPanel photoLinks={user.photoLinks}
                                               photoLinksCallback={(photoLinks) => {
                                                   editUser({photoLinks: photoLinks.filter(link => link.length > 0)})
                                               }} />

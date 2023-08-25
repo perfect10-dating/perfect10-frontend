@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {ImageUploader} from "./ImageHandling/ImageUploader";
 
 const MAX_NUMBER_USER_IMAGES = 6
@@ -15,6 +15,14 @@ export function ImageUploadPanel(props: PropTypes) {
     }
     let [photoLinks, setPhotoLinks] = useState(props.photoLinks.concat(additionalCells))
 
+    useEffect(() => {
+        let additionalCells = []
+        for (let i = 0; i < MAX_NUMBER_USER_IMAGES - props.photoLinks.length; i++) {
+            additionalCells.push('')
+        }
+        setPhotoLinks(props.photoLinks.concat(additionalCells))
+    }, [props.photoLinks])
+
     return (
         <div style={{marginTop: 5, backgroundColor: "rgb(243,244,246)", borderRadius: 10}}>
             <div style={{textAlign: "center", paddingTop: 10}}>At least four profile images are required</div>
@@ -27,6 +35,7 @@ export function ImageUploadPanel(props: PropTypes) {
                                                cropperAspectRatio={3/4}
                                                handleChange={(imageUrl) => {
                                     // when we get a new URL, use that URL
+                                    // Array.from just to copy arrays (NOT redundant)
                                     let imageUrlArray = Array.from(photoLinks)
                                     imageUrlArray[key] = imageUrl
                                     setPhotoLinks(imageUrlArray)
