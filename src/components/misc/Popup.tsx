@@ -20,7 +20,7 @@ export const Popup = ({ children, handleBackgroundClick, style }: Props) => {
 				<VerticalPadder height={100} />
 				<Foreground
 					id="foreground"
-					onClick={(event) => event.stopPropagation()}
+					onMouseDown={(event) => event.stopPropagation()}
 				>
 					{children}
 				</Foreground>
