@@ -75,6 +75,8 @@ export const SignUp = (props: PropTypes) => {
                 // tell the app that we have accurate location
                 await dispatch(setHasCollectedLocation({hasUpdatedLocation: true}))
                 // now we invalidate the user cache and navigate to /profile (so they can fill other information...)
+                // however, we must await a timeout first to allow time for the API object to be created
+                await new Promise(resolve => setTimeout(resolve, 1000))
                 dispatch({
                     // format -- reducerPath/invalidateTags
                     // see: https://github.com/reduxjs/redux-toolkit/issues/1862
