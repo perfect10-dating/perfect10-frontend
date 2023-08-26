@@ -53,8 +53,11 @@ export const SignUp = (props: PropTypes) => {
 
         try {
             console.log("here...")
-            let position: GeolocationPosition = await new Promise((resolve) => {
-                navigator.geolocation.getCurrentPosition((position) => resolve(position))
+            let position: GeolocationPosition = await new Promise((resolve, reject) => {
+                navigator.geolocation.getCurrentPosition((position) => resolve(position),
+                    (err) => reject(err),
+                    {timeout: 30000} // timeout in ms
+                    )
             })
 
             let lat = position.coords.latitude;
