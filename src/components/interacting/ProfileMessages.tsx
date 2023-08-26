@@ -37,12 +37,17 @@ export function ProfileMessages(props: PropTypes) {
         selectedConversation = {
             // TODO -- allow image messages
             messages: (messages || []).filter(message => message.text).map(message => {
+                let info = {firstName: ownUser?.firstName, avatar: ownUser?.photoLinks[0]}
+                if (message.sender === props.otherUser._id) {
+                    info = {firstName: props.otherUser.firstName, avatar: props.otherUser.photoLinks[0]}
+                }
+
                 return ({
                     text: message.text,
                     user: {
-                        // avatar
+                        avatar: info.avatar,
                         id: message.sender,
-                        name: (message.sender === props.otherUser._id ? props.otherUser.firstName : ownUser?.firstName)
+                        name: info.firstName
                     }
                 })
             }),
