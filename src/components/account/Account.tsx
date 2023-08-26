@@ -79,7 +79,9 @@ export function Account(props: PropTypes) {
                             <LookingFor initialLookingFor={user.lookingFor} lookingForCallback={(lookingFor) => {
                                 editUser({lookingFor})
                             }} />
-                            <AgeRange default={user.ageRange}
+                            <AgeRange
+                                      userAge={user.age}
+                                      default={user.ageRange}
                                       limits={{min: Math.max(18, user.age-USER_AVAILABLE_AGE_GAP),
                                           max: Math.min(99, user.age+USER_AVAILABLE_AGE_GAP)}}
                                       onChange={(newAgeRange) => {
