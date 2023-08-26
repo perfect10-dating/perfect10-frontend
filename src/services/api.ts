@@ -103,16 +103,20 @@ export const api = createApi({
         url: `get-messages/${otherUserId}`,
         method: 'GET',
       }),
-      providesTags: ['MESSAGE']
+      providesTags: (result, error, arg) => [
+        {type: "MESSAGE", id: arg.otherUserId}
+      ]
     }),
 
-    postMessage: builder.mutation<any, { conversationId?: string, otherUserId?: string, text?: string, isImage: boolean, imageUrl?: string }>({
+    postMessage: builder.mutation<any, { conversationId?: string, otherUserId: string, text?: string, isImage: boolean, imageUrl?: string }>({
       query: (body) => ({
         url: 'post-message',
         method: 'POST',
         body
       }),
-      invalidatesTags: ['MESSAGE']
+      invalidatesTags: (result, error, arg) => [
+        {type: "MESSAGE", id: arg.otherUserId}
+      ]
     }),
     /* ============= END CONVERSATION ROUTES ============== */
 

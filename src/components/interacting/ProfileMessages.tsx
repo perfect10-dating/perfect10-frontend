@@ -40,7 +40,7 @@ export function ProfileMessages(props: PropTypes) {
                     isImage: false
                 })
 
-                refetchMessages()
+                // refetchMessages()
             }
 
             // TODO -- set up attachment features
