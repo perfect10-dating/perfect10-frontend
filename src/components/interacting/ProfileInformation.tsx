@@ -50,7 +50,8 @@ export function ProfileInformation(props: PropTypes) {
                 photoLinkIndex !== 0 &&
                 <div style={{position: "absolute", height: "75%", width: "30%",
                     color: "white", top: "10%", left: 0, fontSize: 60, cursor: "pointer",
-                    display: "flex", flexDirection: "column", justifyContent: "center"
+                    display: "flex", flexDirection: "column", justifyContent: "center",
+                    zIndex: 3
                 }}
                 onClick={() => setPhotoLinkIndex(photoLinkIndex-1)}
                 >
@@ -65,7 +66,7 @@ export function ProfileInformation(props: PropTypes) {
                 <div style={{position: "absolute", height: "75%", width: "30%",
                     color: "white", top: "10%", right: 0, fontSize: 60, cursor: "pointer",
                     display: "flex", flexDirection: "column", justifyContent: "center",
-                    textAlign: "right"
+                    textAlign: "right", zIndex: 3
                 }}
                      onClick={() => setPhotoLinkIndex(photoLinkIndex+1)}
                 >
