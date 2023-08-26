@@ -150,17 +150,20 @@ export function Home(props: PropTypes) {
                 <div style={{paddingTop: 50, overflow: 'scroll', maxHeight: "100vh"}}>
                     <div style={{fontSize: 30, textAlign: "center", marginTop: 30}}>
                         {
-                            // only display the toggle if this is not a one-sided room
-                            // (if it is one-sided, only display partners)
-                            !isOneSided &&
-                            isDisplayingCompetitors ? "Your Competitors" : "Your Potential Matches"
+                            (!isOneSided && isDisplayingCompetitors) ? "Your Competitors" : "Your Potential Matches"
                         }
                     </div>
-                    <div style={{fontSize: 16, textAlign: "center", cursor: "pointer"}}
-                        onClick={() => setIsDisplayingCompetitors(!isDisplayingCompetitors)}
-                    >
-                        {isDisplayingCompetitors ? "View Potential Matches >>" : "View Competitors >>"}
-                    </div>
+                    {
+                        // only display the toggle if this is not a one-sided room
+                        // (if it is one-sided, only display partners)
+                        !isOneSided &&
+                        <div style={{fontSize: 16, textAlign: "center", cursor: "pointer"}}
+                             onClick={() => setIsDisplayingCompetitors(!isDisplayingCompetitors)}
+                        >
+                            {isDisplayingCompetitors ? "View Potential Matches >>" : "View Competitors >>"}
+                        </div>
+                    }
+
                     <RoomDisplay
                         isDisplayingCompetitors={isDisplayingCompetitors}
                         potentialPartners={potentialPartners || []}
