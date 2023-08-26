@@ -2,7 +2,9 @@ import { MessageContainer } from "@minchat/react-chat-ui";
 import {useGetMessagesQuery, usePostMessageMutation} from "../../services/api";
 import {userSlice} from "../../services/userSlice";
 import {store} from "../../app/store";
+import {useEffect} from "react";
 // https://github.com/MinChatHQ/react-chat-ui
+const REFRESH_NUM_SECS = 10
 
 interface PropTypes {
     otherUser: UserMini,
@@ -14,6 +16,19 @@ export function ProfileMessages(props: PropTypes) {
     let {data: messages, refetch: refetchMessages} = useGetMessagesQuery({
         otherUserId: props.otherUser._id
     })
+
+    // starts a polling loop
+    useEffect(() => {
+        const loop = async () => {
+            while (true) {
+                await new Promise(resolve => setTimeout(resolve, REFRESH_NUM_SECS*1000))
+                refetchMessages()
+            }
+        }
+
+        loop()
+
+    }, [])
 
     let [postMessage] = usePostMessageMutation()
     let selectedConversation = {}
