@@ -80,7 +80,6 @@ export function Home(props: PropTypes) {
             console.log("No user detected ... please log in")
             return <LandingPage referringUser={props.referringUser} />
         }
-
         else {
             console.log("user detected...")
 
