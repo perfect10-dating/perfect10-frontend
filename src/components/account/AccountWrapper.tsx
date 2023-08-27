@@ -8,6 +8,7 @@ import {useAppDispatch} from "../../app/hooks";
 import {useNavigate} from "react-router-dom";
 import {Account} from "./Account";
 import {setUser} from "../../services/userSlice";
+import {LoadingWrapper} from "../misc/LoadingWrapper";
 
 export function AccountWrapper() {
     const dispatch = useAppDispatch()
@@ -30,7 +31,7 @@ export function AccountWrapper() {
     }
 
     if (!user) {
-        return <Loading />
+        return <LoadingWrapper />
     }
     else {
         // set the user that we retrieved

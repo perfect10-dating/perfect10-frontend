@@ -3,6 +3,7 @@ import {Loading} from "@minchat/react-chat-ui";
 import {useAppDispatch} from "../../app/hooks";
 import {useNavigate} from "react-router-dom";
 import {setUser} from "../../services/userSlice";
+import {LoadingWrapper} from "../misc/LoadingWrapper";
 const MAX_UNBALANCE = .30    // 3:4 person ratio (1/3) causes penalties, but 4:6 (2/4) does not
 
 export function RerollRoom() {
@@ -35,7 +36,7 @@ export function RerollRoom() {
     }
 
     if (!user || !roomRetrievalObj) {
-        return <Loading />
+        return <LoadingWrapper />
     }
     else {
         // set the user that we retrieved
@@ -80,7 +81,7 @@ export function RerollRoom() {
                     } >>`}
                         {
                             penalty &&
-                            <div style={{fontSize: "10"}}>
+                            <div style={{fontSize: "10px"}}>
                                 Switches are free when your room is deeply unbalanced. Yours is not.
                             </div>
                         }

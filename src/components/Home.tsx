@@ -14,6 +14,7 @@ import {WaitingForRoom} from "./waiting/WaitingForRoom";
 import {JoinNewRoom} from "./recording_date/JoinNewRoom";
 import {Loading} from "@minchat/react-chat-ui";
 import {RerollRoom} from "./interacting/RerollRoom";
+import {LoadingWrapper} from "./misc/LoadingWrapper";
 
 interface PropTypes {
     referringUser?: string
@@ -49,10 +50,9 @@ export function Home(props: PropTypes) {
     const [isDisplayingCompetitors, setIsDisplayingCompetitors] = useState(false)
 
     // const nav = useNavigate()
-
     if (isLoading) {
         // TODO -- loading spinner
-        return <Loading/>
+        return <LoadingWrapper />
     }
     else {
         /* ==================== BEGIN NAVIGATION LOGIC =================== */

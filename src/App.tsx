@@ -13,6 +13,7 @@ import {PriorityModePage} from "./components/premium/PriorityModePage";
 import {RerollRoom} from "./components/interacting/RerollRoom";
 import {setHasCollectedLocation} from "./services/userSlice";
 import {useEditUserMutation} from "./services/api";
+import {LoadingWrapper} from "./components/misc/LoadingWrapper";
 
 const getReferringUser = () => {
     const hrefArray = window.location.href.split('/')
@@ -54,7 +55,7 @@ export default function App() {
 
     // prevent anything from occurring before we attempt auth
     if (pending) {
-        return <Loading />
+        return <LoadingWrapper />
     }
 
     // if we have the user and have not updated location, do so
@@ -64,7 +65,7 @@ export default function App() {
 
     return (
             <Router>
-                <div style={{position: "relative"}}>
+                <div style={{position: "relative", height: "100vh"}}>
                     {user && <TopBar user={user} />}
                     <Routes>
                         <Route path="/" element={<Home />} />

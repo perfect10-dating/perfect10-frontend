@@ -3,6 +3,7 @@ import {Loading} from "@minchat/react-chat-ui";
 import {useNavigate} from "react-router-dom";
 import {setUser} from "../../services/userSlice";
 import {useAppDispatch} from "../../app/hooks";
+import {LoadingWrapper} from "../misc/LoadingWrapper";
 
 export function PriorityModePage() {
     const dispatch = useAppDispatch()
@@ -24,7 +25,7 @@ export function PriorityModePage() {
     }
 
     if (!user) {
-        return <Loading />
+        return <LoadingWrapper />
     }
 
     dispatch(setUser({user}))
