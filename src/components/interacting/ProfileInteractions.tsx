@@ -17,6 +17,9 @@ interface PropTypes {
 const outerDivStyle = {width: "100%", height: "100%",
     backgroundColor: "rgb(243,244,246)", borderRadius: 15,
     display: "flex", flexDirection: "column" as "column", justifyContent: "space-between"}
+const backButtonStyle = {cursor: "pointer", position: "absolute" as "absolute",
+    margin: 10, marginLeft: 20, fontSize: 16
+}
 const textStyle = {padding: 20, paddingTop: 70}
 const inputFormStyle = {width: "calc(100% - 20px)", padding: 10, marginTop: 5, height: 40,
     borderRadius: 10, border: 0, backgroundColor: "rgb(194, 213, 242)"}
@@ -25,11 +28,15 @@ const dateScheduleButtonStyle = {textAlign: "center" as "center", cursor: "point
 const errorMessageContainerStyle = {color: "red", }
 
 function ProposeDateForm(ownUser: User, otherUser: UserMini, proposeDate: any, timeOfDate: string, setTimeOfDate: any,
-                         errorMessage: string, setErrorMessage: any, callback: any
+                         errorMessage: string, setErrorMessage: (error: string) => void, callback: any, closeCallback: any
                          ) {
 
     return (
         <div style={outerDivStyle}>
+            <div style={backButtonStyle} onClick={closeCallback}>
+                {"<< Back"}
+            </div>
+
             <div style={textStyle}>
                 <label>
                     Please specify the time for your date with {otherUser.firstName}
@@ -81,10 +88,14 @@ function ProposeDateForm(ownUser: User, otherUser: UserMini, proposeDate: any, t
 }
 
 function ProposeSetupForm(ownUser: User, otherUser: UserMini, proposeSetup: any, timeOfDate: string, setTimeOfDate: any,
-    errorMessage: string, setErrorMessage: any, callback: any
+    errorMessage: string, setErrorMessage: (error: string) => void, callback: any, closeCallback: any
 ) {
     return (
         <div style={outerDivStyle}>
+            <div style={backButtonStyle} onClick={closeCallback}>
+                {"<< Back"}
+            </div>
+
             <div style={textStyle}>
                 <label>
                     Please specify the time your friend would like to meet {otherUser.firstName}
@@ -243,13 +254,13 @@ export function ProfileInteractions(props: PropTypes) {
         // TODO -- callbacks ...?
         return ProposeDateForm(ownUser as User, props.otherUser,
             proposeDate, timeOfDate, setTimeOfDate, errorMessage, setErrorMessage,
-            () => setProposingDate(false))
+            () => setProposingDate(false), () => setProposingDate(false))
     }
     if (proposingSetup) {
         // TODO -- callbacks ...?
         return ProposeSetupForm(ownUser as User, props.otherUser,
             proposeSetup, timeOfDate, setTimeOfDate, errorMessage, setErrorMessage,
-            () => setProposingSetup(false))
+            () => setProposingSetup(false), () => setProposingDate(false))
     }
 
     return (
