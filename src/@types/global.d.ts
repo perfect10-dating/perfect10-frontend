@@ -37,8 +37,9 @@ declare interface UserMini {
   firstName: string
   identity: string
   age: number
-  location: UserLocation
   photoLinks: string[]
+  shortTerm: boolean
+  distance?: number
 }
 
 declare interface UserLocation {

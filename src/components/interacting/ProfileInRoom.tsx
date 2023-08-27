@@ -68,7 +68,7 @@ export function ProfileInRoom(props: PropTypes) {
     switch (screenSetting) {
         case "information":
             screenComponent = (props.information.photoLinks && props.information.photoLinks.length >= 1) ?
-                <ProfileInformation information={props.information} /> :
+                <ProfileInformation information={props.information} distance={props.information.distance || 0} /> :
                 <div>Invalid Profile</div>
             break
         case "messages":

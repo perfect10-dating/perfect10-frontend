@@ -146,17 +146,24 @@ export function Home(props: PropTypes) {
                 competitors = room.sideTwo
             }
 
+            // don't display text at the top of the page if the window is too short
+            // (this fits the carousel better to mobile viewers)
+            const displayTopDivs = window.innerHeight > 600
+
             return (
                 <div style={{paddingTop: 50, overflow: 'scroll', maxHeight: "100vh"}}>
-                    <div style={{fontSize: 30, textAlign: "center", marginTop: 30}}>
-                        {
-                            (!isOneSided && isDisplayingCompetitors) ? "Your Competitors" : "Your Potential Matches"
-                        }
-                    </div>
+                    {
+                        displayTopDivs &&
+                        <div style={{fontSize: 30, textAlign: "center", marginTop: 30}}>
+                            {
+                                (!isOneSided && isDisplayingCompetitors) ? "Your Competitors" : "Your Potential Matches"
+                            }
+                        </div>
+                    }
                     {
                         // only display the toggle if this is not a one-sided room
                         // (if it is one-sided, only display partners)
-                        !isOneSided &&
+                        (!isOneSided && displayTopDivs) &&
                         <div style={{fontSize: 16, textAlign: "center", cursor: "pointer"}}
                              onClick={() => setIsDisplayingCompetitors(!isDisplayingCompetitors)}
                         >

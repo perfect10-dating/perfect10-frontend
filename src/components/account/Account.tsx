@@ -64,7 +64,7 @@ export function Account(props: PropTypes) {
                     isDisplayingPreview ?
                         <div style={{height: 400, width: 300, minWidth: 300, marginLeft: "calc(50% - 150px)",
                             position: "relative", display: "inline-block"}}>
-                            <ProfileInformation information={user} isPreview={true} />
+                            <ProfileInformation information={user} isPreview={true} distance={0} />
                         </div>
                     :
                         <div>

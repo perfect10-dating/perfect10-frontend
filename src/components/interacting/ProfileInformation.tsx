@@ -4,6 +4,7 @@ import {fixIdentity} from "../../utils/fixIdentity";
 interface PropTypes {
     information: UserMini
     isPreview?: boolean
+    distance: number
 }
 
 export function ProfileInformation(props: PropTypes) {
@@ -30,19 +31,29 @@ export function ProfileInformation(props: PropTypes) {
                 </div>
             </div>
 
-            <div style={{position: "absolute", height: 50, width: "100%", bottom: 0, left: 15,
-                color: "white", display: "flex", zIndex: 30
+            <div style={{position: "absolute", height: 60, width: "50%", bottom: 0, left: 15,
+                color: "white", zIndex: 30
             }}>
-                <div style={{fontSize: 24, fontWeight: "semibold"}}>{props.information.firstName}</div>
-                <div style={{fontSize: 20, marginLeft: 10, marginTop: 4}}>{props.information.age}</div>
+                <div style={{display: "flex"}}>
+                    <div style={{fontSize: 24, fontWeight: "semibold"}}>{props.information.firstName}</div>
+                    <div style={{fontSize: 20, marginLeft: 10, marginTop: 4}}>{props.information.age}</div>
+                </div>
+
+                <div style={{marginTop: -3, fontSize: 12, marginLeft: 5}}>
+                    {props.distance} miles away
+                </div>
             </div>
 
-            <div style={{position: "absolute", height: 50, width: "100%", bottom: 0, right: 15,
-                color: "white", display: "flex", textAlign: "right", justifyContent: "right",
+            <div style={{position: "absolute", height: 60, width: "50%", bottom: 0, right: 15,
+                color: "white", textAlign: "right", justifyContent: "right",
                 zIndex: 30,
             }}>
                 <div style={{fontSize: 20, marginLeft: 10, marginTop: 4}}>
                     {fixIdentity(props.information.identity)}
+                </div>
+
+                <div style={{marginTop: -3, fontSize: 12, marginRight: 5}}>
+                    {props.information.shortTerm ? "Short-term" : "Long-term"}
                 </div>
             </div>
 
