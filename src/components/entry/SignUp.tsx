@@ -6,6 +6,7 @@ import { BottomActionText, Input, LoginBox, Name, Seperation, Subheader, Submit 
 import {LookingFor} from "../account/LookingFor";
 import {setHasCollectedLocation} from "../../services/userSlice";
 import {getBirthDateString} from "../../utils/getBirthDateString";
+import {LoadingWrapper} from "../misc/LoadingWrapper";
 
 const inputFormStyle = {width: "calc(100% - 40px)", padding: 10, marginLeft: 20, marginRight: 20, height: 40,
     borderRadius: 10, border: 0, backgroundColor: "rgb(194, 213, 242)"}
@@ -18,6 +19,8 @@ export const SignUp = (props: PropTypes) => {
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
     const location = useLocation()
+
+    const [isSubmitting, setIsSubmitting] = useState(false)
 
     const [firstName, setFirstName] = useState<string>('')
     const [phoneNumber, setPhoneNumber] = useState<string>('')
@@ -60,6 +63,8 @@ export const SignUp = (props: PropTypes) => {
                     )
             })
 
+            setIsSubmitting(true)
+
             let lat = position.coords.latitude;
             let long = position.coords.longitude;
 
@@ -68,6 +73,7 @@ export const SignUp = (props: PropTypes) => {
                     latitude: lat, longitude: long, lookingFor: Array.from(lookingFor) }
             ))
             if (result.error) {
+                setIsSubmitting(false)
                 console.error(result.error)
                 alert(
                     `Failed to create account. Do you already have an existing account? If not, please contact us if the error persists.\n\nError info: ${result.error.message}`
@@ -92,9 +98,15 @@ export const SignUp = (props: PropTypes) => {
             }
         }
         catch (err) {
+            setIsSubmitting(false)
             console.error(err)
             alert("You must enable your location to create an account")
         }
+    }
+
+    // show the loading spinner if we're submitting
+    if (isSubmitting) {
+        return <LoadingWrapper />
     }
 
     return (

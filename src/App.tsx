@@ -55,7 +55,11 @@ export default function App() {
 
     // prevent anything from occurring before we attempt auth
     if (pending) {
-        return <LoadingWrapper />
+        return(
+            <div style={{position: "relative", height: "100vh"}}>
+                <LoadingWrapper />
+            </div>
+            )
     }
 
     // if we have the user and have not updated location, do so
