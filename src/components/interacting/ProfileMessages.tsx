@@ -83,19 +83,11 @@ export function ProfileMessages(props: PropTypes) {
 		<div
 			style={{ width: "100%", height: "100%", zIndex: 0, position: "relative" }}
 		>
-			<div
-				style={{
-					position: "absolute",
-					zIndex: 1000,
-					display: "flex",
-					justifyContent: "space-evenly",
-					width: "100%",
-					marginTop: 18,
-					backgroundColor: "rgb(243,244,246)",
-					paddingBottom: 18,
-				}}
+			<MessageContainer
+				{...selectedConversation}
+				mobileView={true}
+				otherUser={props.otherUser}
 			/>
-			<MessageContainer {...selectedConversation} mobileView={true} />
 		</div>
 	);
 }
