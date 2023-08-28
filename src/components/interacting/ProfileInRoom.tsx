@@ -162,43 +162,47 @@ export function ProfileInRoom(props: PropTypes) {
 	}
 
 	return (
-		<div
-			style={{
-				height: 400,
-				width: 300,
-				minWidth: 300,
-				margin: 50,
-				position: "relative",
-				display: "inline-block",
-			}}
-		>
-			{competitor && (
-				<div
-					style={{
-						height: "100%",
-						width: "100%",
-						borderRadius: 15,
-						position: "absolute",
-						bottom: 0,
-						zIndex: 50,
-						backgroundColor: "red",
-						color: "white",
-					}}
-				>
-					{props.information.firstName} agreed to a{" "}
-					{competitorDateIsSetup ? "setup" : "date"} with {competitor.firstName}
-					{competitorDateIsSetup && `'s friend`}
-				</div>
-			)}
-			{!props.isCompetitor && (
-				<ProfileTopBar
-					screenSetting={screenSetting}
-					setScreenSetting={setScreenSetting}
-					markMessagesUnread={messagesUnread}
-					markInteractionsUnread={!!date}
-				/>
-			)}
-			{screenComponent}
+		<div style={{ marginTop: "15%" }}>
+			<div
+				style={{
+					height: 400,
+					width: 300,
+					minWidth: 300,
+					margin: 50,
+					position: "relative",
+					display: "inline-block",
+					scale: `${(window.innerHeight / 400) * 70}%`,
+				}}
+			>
+				{competitor && (
+					<div
+						style={{
+							height: "100%",
+							width: "100%",
+							borderRadius: 15,
+							position: "absolute",
+							bottom: 0,
+							zIndex: 50,
+							backgroundColor: "red",
+							color: "white",
+						}}
+					>
+						{props.information.firstName} agreed to a{" "}
+						{competitorDateIsSetup ? "setup" : "date"} with{" "}
+						{competitor.firstName}
+						{competitorDateIsSetup && `'s friend`}
+					</div>
+				)}
+				{!props.isCompetitor && (
+					<ProfileTopBar
+						screenSetting={screenSetting}
+						setScreenSetting={setScreenSetting}
+						markMessagesUnread={messagesUnread}
+						markInteractionsUnread={!!date}
+					/>
+				)}
+				{screenComponent}
+			</div>
 		</div>
 	);
 }

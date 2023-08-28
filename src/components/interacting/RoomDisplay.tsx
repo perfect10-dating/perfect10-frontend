@@ -36,7 +36,7 @@ export function RoomDisplay(props: PropTypes) {
 						display: "flex",
 						justifyContent: "center",
 						alignItems: "center",
-						backgroundColor: "rgba(0, 0, 0, 0.5)",
+						backgroundColor: "rgba(0, 0, 0, 0.85)",
 					}}
 				>
 					<ProfileInRoom
