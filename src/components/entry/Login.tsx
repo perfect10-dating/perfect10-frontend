@@ -3,6 +3,7 @@ import {useAppDispatch, useAppSelector} from "../../app/hooks";
 import {useSelector} from "react-redux";
 import {asyncSignIn, forgotPasswordFlowStarted, signUpFlowStarted} from "../../services/authSlice";
 import {BottomActionText, Input, InputSubAction, Seperation} from "./LoginComponents";
+import {LoadingWrapper} from "../misc/LoadingWrapper";
 
 export function Login() {
     const dispatch = useAppDispatch()
@@ -11,6 +12,8 @@ export function Login() {
     const [phoneNumberStatus, setPhoneNumberStatus] = useState<string>('default')
     const [password, setPassword] = useState<string>('')
     const [passwordStatus, setPasswordStatus] = useState<'default' | 'entering' | 'valid'>('default')
+
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         // regex from here: https://stackoverflow.com/questions/16699007/regular-expression-to-match-standard-10-digit-phone-number
@@ -31,15 +34,22 @@ export function Login() {
     }, [status])
 
     const handleSubmit = async () => {
+        setLoading(true)
         await dispatch(asyncSignIn({ phoneNumber: phoneNumber, password }))
-        dispatch({
-            // format -- reducerPath/invalidateTags
-            // see: https://github.com/reduxjs/redux-toolkit/issues/1862
-            type: `api/invalidateTags`,
-            payload: ['USER'],
-        });
+        // timeout to allow login even when asyncSignIn is slow to propagate
+        setTimeout(() => {
+            dispatch({
+                // format -- reducerPath/invalidateTags
+                // see: https://github.com/reduxjs/redux-toolkit/issues/1862
+                type: `api/invalidateTags`,
+                payload: ['USER'],
+            });
+        }, 1000)
     }
 
+    if (loading) {
+        return <LoadingWrapper />
+    }
 
     return (
         <div style={{display: "flex", justifyContent: "center", flexDirection: "column", height: "100vh"}}>
@@ -53,6 +63,7 @@ export function Login() {
                     }}>
                         <Input
                             key="email"
+                            spellCheck={false}
                             status={phoneNumberStatus}
                             placeholder="Phone Number"
                             autoComplete="phoneNumber"
@@ -61,6 +72,7 @@ export function Login() {
                         />
                         <Input
                             key="password"
+                            spellCheck={false}
                             status={passwordStatus}
                             type="password"
                             placeholder="Password"

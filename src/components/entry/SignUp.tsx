@@ -122,6 +122,7 @@ export const SignUp = (props: PropTypes) => {
                 }}>
                     <Input
                         key="firstName"
+                        spellCheck={false}
                         status={firstName.length > 0 ? 'valid' : 'default'}
                         placeholder="First name"
                         autoComplete="none"
@@ -131,6 +132,7 @@ export const SignUp = (props: PropTypes) => {
                     <div style={{fontSize: 12, textAlign: "left", marginLeft: 25, marginBottom: -25}}>Format: +12345678901 (include country code)</div>
                     <Input
                         key="phoneNumber"
+                        spellCheck={false}
                         status={phoneNumberStatus}
                         placeholder="Phone Number"
                         autoComplete="phoneNumber"
@@ -173,6 +175,7 @@ export const SignUp = (props: PropTypes) => {
                 }}>
                     <Input
                         key="password"
+                        spellCheck={false}
                         status={passwordStatus}
                         type="password"
                         placeholder="Password"
@@ -182,6 +185,7 @@ export const SignUp = (props: PropTypes) => {
                     />
                     <Input
                         key="confirmPassword"
+                        spellCheck={false}
                         status={confirmPasswordStatus}
                         type="password"
                         placeholder="Confirm password"
