@@ -2,13 +2,10 @@ import {useAppDispatch} from "../../app/hooks";
 import {useEditUserMutation, useGetUserQuery} from "../../services/api";
 import {useNavigate} from "react-router-dom";
 import {LookingFor} from "./LookingFor";
-import {Loading} from "@minchat/react-chat-ui";
 import {AgeRange} from "./AgeRange";
 import {useEffect, useState} from "react";
 import {ImageUploadPanel} from "./ImageUploadPanel";
-import {ProfileInteractions} from "../interacting/ProfileInteractions";
 import {ProfileInformation} from "../interacting/ProfileInformation";
-import {ProfileTopBar} from "../interacting/ProfileTopBar";
 import {ShortTerm} from "./ShortTerm";
 
 const POLLING_DELAY_SECONDS = 1

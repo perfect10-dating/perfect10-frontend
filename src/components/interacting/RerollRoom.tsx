@@ -71,8 +71,16 @@ export function RerollRoom() {
                     <div style={{marginTop: 10}}>or...</div>
                     <div style={{marginTop: 10, cursor: "pointer"}}
                          onClick={() => {
-                             switchRoomsDelayed()
-                             navigate("/")
+                             const confirmed = window.confirm(`Are you sure you want to switch rooms? This operation ${
+                                 penalty ?
+                                     "(locks your account for three days)" :
+                                     "(occurs immediately)"
+                             }`)
+
+                             if (confirmed) {
+                                 switchRoomsDelayed()
+                                 navigate("/")
+                             }
                          }}
                     >{`Switch rooms${
                         penalty ?
