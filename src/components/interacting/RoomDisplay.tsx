@@ -5,6 +5,7 @@ interface PropTypes {
     potentialPartners: UserMini[]
     competitors: UserMini[]
     dates: Date[]
+    conversations: Conversation[]
 }
 
 export function RoomDisplay(props: PropTypes) {
@@ -22,6 +23,7 @@ export function RoomDisplay(props: PropTypes) {
                                 information={person}
                                 potentialMatchedUsers={props.isDisplayingCompetitors ?
                                                         props.potentialPartners : props.competitors}
+                                conversations={props.conversations}
                                 dates={props.dates}
                             />
                         )

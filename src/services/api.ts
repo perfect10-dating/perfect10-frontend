@@ -17,7 +17,7 @@ export const api = createApi({
       return headers
     },
   }),
-  tagTypes: ['USER', 'ROOM', 'DATE', 'MESSAGE'],
+  tagTypes: ['USER', 'ROOM', 'DATE', 'MESSAGE', 'CONVERSATION'],
   endpoints: (builder) => ({
 
     /* ============= BEGIN USER ROUTES ============== */
@@ -79,12 +79,12 @@ export const api = createApi({
     /* ============= END USER ROUTES ============== */
 
     /* ============= BEGIN ROOM ROUTES ============== */
-    getRoom: builder.query<{room: Room, dates: Date[]}, void>({
+    getRoom: builder.query<{room: Room, dates: Date[], conversations: Conversation[]}, void>({
       query: ()=> ({
         url: `display-room`,
         method: 'GET',
       }),
-      providesTags: ['ROOM', 'DATE']
+      providesTags: ['ROOM', 'DATE', 'CONVERSATION']
     }),
 
     formRoom: builder.mutation<any, void>({

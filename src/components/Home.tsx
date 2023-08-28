@@ -120,7 +120,7 @@ export function Home(props: PropTypes) {
 
             // otherwise, we're in the right spot (and we can display the room)
             // tell TypeScript that roomRetrievalObj is not undefined
-            const {room, dates} = roomRetrievalObj
+            const {room, dates, conversations} = roomRetrievalObj
             dispatch(setRoom({currentRoom: room}))
             dispatch(setDates({dates}))
 
@@ -175,6 +175,7 @@ export function Home(props: PropTypes) {
                         potentialPartners={potentialPartners || []}
                         competitors={competitors || []}
                         dates={dates || []}
+                        conversations={conversations || []}
                     />
                 </div>
             )

@@ -99,4 +99,6 @@ declare interface Message {
 
 declare interface Conversation {
   users: [string]
+  user0Read: boolean
+  user1Read: boolean
 }

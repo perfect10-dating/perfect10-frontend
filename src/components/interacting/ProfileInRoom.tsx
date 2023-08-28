@@ -9,6 +9,7 @@ interface PropTypes {
     isCompetitor: boolean
     potentialMatchedUsers: UserMini[]
     information: UserMini
+    conversations: Conversation[]
     dates: Date[]
 }
 
@@ -78,6 +79,7 @@ export function ProfileInRoom(props: PropTypes) {
             screenComponent = <div />
     }
 
+    // ======================== BEGIN: Date interactions =======================
     // does a competitor have a date set up with this profile?
     let competitorHasDateWithProfile = false
     let competitorDateIsSetup = false
@@ -120,11 +122,29 @@ export function ProfileInRoom(props: PropTypes) {
         }
     }
 
+    // there is a competing user that already planned a date with this profile
     if (competitorId) {
         for (let tempCompetitor of props.potentialMatchedUsers){
             if (tempCompetitor._id === competitorId) {
                 competitor = tempCompetitor
                 break
+            }
+        }
+    }
+
+    // ===================== BEGIN: Conversation Information ====================
+    let messagesUnread = false
+    // loop over all conversations; find the one that references this profile
+    for (let conversation of props.conversations) {
+        for (let i = 0; i < conversation.users.length; i++) {
+            if (conversation.users[i] === props.information._id) {
+                // NOTE -- our user (ownUser) is the user at the OTHER index
+                if (i === 0 && !conversation.user1Read) {
+                    messagesUnread = true
+                }
+                if (i === 1 && !conversation.user0Read) {
+                    messagesUnread = true
+                }
             }
         }
     }
@@ -146,7 +166,7 @@ export function ProfileInRoom(props: PropTypes) {
                 <ProfileTopBar
                     screenSetting={screenSetting}
                     setScreenSetting={setScreenSetting}
-                    markMessagesUnread={true}
+                    markMessagesUnread={messagesUnread}
                     markInteractionsUnread={!!date}
                 />}
             {screenComponent}
