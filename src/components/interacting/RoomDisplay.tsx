@@ -67,6 +67,7 @@ export function RoomDisplay(props: PropTypes) {
 							margin: 10,
 							marginBottom: 25,
 							position: "relative",
+							cursor: "pointer",
 						}}
 						onClick={() => {
 							setProfileOpen(true);
