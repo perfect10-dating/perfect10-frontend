@@ -53,6 +53,7 @@ export function Login() {
                     }}>
                         <Input
                             key="email"
+                            spellCheck={false}
                             status={phoneNumberStatus}
                             placeholder="Phone Number"
                             autoComplete="phoneNumber"
@@ -61,6 +62,7 @@ export function Login() {
                         />
                         <Input
                             key="password"
+                            spellCheck={false}
                             status={passwordStatus}
                             type="password"
                             placeholder="Password"
