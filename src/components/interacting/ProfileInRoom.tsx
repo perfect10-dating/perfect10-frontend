@@ -3,6 +3,7 @@ import {ProfileInformation} from "./ProfileInformation";
 import {ProfileMessages} from "./ProfileMessages";
 import {ProfileInteractions} from "./ProfileInteractions";
 import {ProfileTopBar} from "./ProfileTopBar";
+import {store} from "../../app/store";
 
 interface PropTypes {
     isCompetitor: boolean
@@ -41,6 +42,9 @@ export function getOtherUserInDate(date: Date, userId: string) {
 export function ProfileInRoom(props: PropTypes) {
     // can be "information", "messages", "interactions"
     const [screenSetting, setScreenSetting] = useState("information")
+    const {"user": ownUserState} = store.getState()
+    let ownUser = ownUserState.user
+
     // if important props change (rendering a new user) display their pics
     useEffect(() => {
         setScreenSetting("information")
@@ -48,18 +52,11 @@ export function ProfileInRoom(props: PropTypes) {
 
     let date = undefined
     for (let possibleDate of props.dates) {
-        // first, check to see if this profile is one described by the date
-        if (userInDate(possibleDate, props.information._id)) {
+        // check to see if both the logged in user and the user for this profile are in this date
+        if (ownUser && userInDate(possibleDate, props.information._id) && userInDate(possibleDate, ownUser._id)) {
             // if date is undefined, define it
             if (!date) {
                 date = possibleDate
-            }
-            // otherwise, override it if the new date is accepted (i.e., someone else got in ahead of you)
-            else {
-                if (possibleDate.isAccepted) {
-                    date = possibleDate
-                    break
-                }
             }
         }
     }
@@ -88,7 +85,7 @@ export function ProfileInRoom(props: PropTypes) {
     let competitorId: string | undefined = undefined
     let competitor: UserMini | undefined = undefined
 
-    // loops over dates and sees if any completed dates with this user
+    // loops over dates and sees if any accepted dates with this user
     for (let date of props.dates) {
         if (!date || !date.isAccepted) {
             continue
@@ -146,7 +143,12 @@ export function ProfileInRoom(props: PropTypes) {
                 </div>
             }
             {!props.isCompetitor &&
-                <ProfileTopBar screenSetting={screenSetting} setScreenSetting={setScreenSetting}/>}
+                <ProfileTopBar
+                    screenSetting={screenSetting}
+                    setScreenSetting={setScreenSetting}
+                    markMessagesUnread={true}
+                    markInteractionsUnread={!!date}
+                />}
             {screenComponent}
         </div>
     )
