@@ -14,11 +14,10 @@ export function RoomDisplay(props: PropTypes) {
 		<div
 			style={{
 				maxWidth: "100vw",
-				display: "inline-grid",
-				gridTemplateColumns:
-					"repeat(auto-fit, minmax(min(100%, max(250px, 100%/5)), auto))",
+				display: "flex",
+				flexWrap: "wrap",
 				position: "relative",
-				justifyItems: "center",
+				justifyContent: "center",
 				paddingLeft: "4vw",
 				paddingRight: "4vw",
 			}}
@@ -33,6 +32,8 @@ export function RoomDisplay(props: PropTypes) {
 							height: 300,
 							width: 225,
 							minWidth: 225,
+							maxWidth: 225,
+							margin: 10,
 							marginBottom: 25,
 							position: "relative",
 						}}
