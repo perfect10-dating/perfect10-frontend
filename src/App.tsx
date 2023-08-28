@@ -14,6 +14,7 @@ import {RerollRoom} from "./components/interacting/RerollRoom";
 import {setHasCollectedLocation} from "./services/userSlice";
 import {useEditUserMutation} from "./services/api";
 import {LoadingWrapper} from "./components/misc/LoadingWrapper";
+import {ContactUs} from "./components/misc/ContactUs";
 
 const getReferringUser = () => {
     const hrefArray = window.location.href.split('/')
@@ -79,6 +80,7 @@ export default function App() {
                         <Route path={"/account"} element={<AccountWrapper />} />
                         <Route path={"/priority"} element={<PriorityModePage />} />
                         <Route path={"/switch-room"} element={<RerollRoom />} />
+                        <Route path={"/contact-us"} element={<ContactUs />} />
                         {/*<Route path={"/test"} element={<Test />} />*/}
                         // TODO -- edit profile
                     </Routes>

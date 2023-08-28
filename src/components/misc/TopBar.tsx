@@ -28,6 +28,9 @@ const renderHamburgerDropdown = (navigate: (path: string) => void,
                 <div style={{cursor: "pointer", fontWeight: 500}} onClick={() => navigate("/priority")}>
                     Priority Mode
                 </div>
+                <div style={{cursor: "pointer", fontWeight: 500}} onClick={() => navigate("/contact-us")}>
+                    Contact Us
+                </div>
             </div>
             <div style={{position: "absolute", width: "100vw", height: "100vh", top: 0, left: 0, zIndex: 9999}}
                 onClick={onBackgroundClick}
