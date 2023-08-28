@@ -102,8 +102,8 @@ export function Account(props: PropTypes) {
 						<ProfileInformation
 							information={user}
 							isPreview={true}
-							isInCardDeck={true}
-							scaleFontSize={1}
+							// isInCardDeck={true}
+							// scaleFontSize={1}
 							distance={0}
 						/>
 					</div>
