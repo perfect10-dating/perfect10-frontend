@@ -138,7 +138,7 @@ export function Account(props: PropTypes) {
 							onChange={(newAgeRange) => {
 								if (
 									ageRange.min !== newAgeRange.min ||
-									ageRange.max != newAgeRange.max
+									ageRange.max !== newAgeRange.max
 								) {
 									editUser({ ageRange: newAgeRange });
 									setAgeRange(newAgeRange);
