@@ -114,7 +114,7 @@ export const ImageUploader = ({
 				handleClick={() => uploadFromLocal()}
 				iconUrl={
 					imageUrl === ""
-						? "/img/standard_icons/upload-image.png"
+						? "/img/standard_icons/upload-theory-v1.png"
 						: "/img/standard_icons/change-image.png"
 				}
 				alt={"Upload an Image"}
