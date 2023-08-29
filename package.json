@@ -3,7 +3,10 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
     "@minchat/react-chat-ui": "^0.4.3",
+    "@mui/material": "^5.14.7",
     "@reduxjs/toolkit": "^1.6.2",
     "@types/uuid": "^9.0.2",
     "amazon-cognito-identity-js": "^6.3.2",
