@@ -7,10 +7,11 @@ import { store } from "../../app/store";
 
 interface PropTypes {
 	isCompetitor: boolean;
-	potentialMatchedUsers: UserMini[];
+	competitor?: UserMini;
+	competitorDateIsSetup: boolean;
 	information: UserMini;
-	conversations: Conversation[];
-	dates: Date[];
+	messagesUnread: boolean;
+	date?: Date;
 }
 
 export function userInDate(date: Date, userId: string) {
@@ -51,21 +52,6 @@ export function ProfileInRoom(props: PropTypes) {
 		setScreenSetting("information");
 	}, [props.isCompetitor, props.information._id]);
 
-	let date = undefined;
-	for (let possibleDate of props.dates) {
-		// check to see if both the logged in user and the user for this profile are in this date
-		if (
-			ownUser &&
-			userInDate(possibleDate, props.information._id) &&
-			userInDate(possibleDate, ownUser._id)
-		) {
-			// if date is undefined, define it
-			if (!date) {
-				date = possibleDate;
-			}
-		}
-	}
-
 	let screenComponent;
 	switch (screenSetting) {
 		case "information":
@@ -85,80 +71,11 @@ export function ProfileInRoom(props: PropTypes) {
 			break;
 		case "interactions":
 			screenComponent = (
-				<ProfileInteractions otherUser={props.information} date={date} />
+				<ProfileInteractions otherUser={props.information} date={props.date} />
 			);
 			break;
 		default:
 			screenComponent = <div />;
-	}
-
-	// ======================== BEGIN: Date interactions =======================
-	// does a competitor have a date set up with this profile?
-	let competitorHasDateWithProfile = false;
-	let competitorDateIsSetup = false;
-	let competitorDate: Date;
-	let competitorId: string | undefined = undefined;
-	let competitor: UserMini | undefined = undefined;
-
-	// loops over dates and sees if any accepted dates with this user
-	for (let date of props.dates) {
-		if (!date || !date.isAccepted) {
-			continue;
-		}
-		for (let i = 0; i < date.users.length; i++) {
-			if (date.users[i] === props.information._id) {
-				competitorHasDateWithProfile = true;
-				competitorDate = date;
-
-				// the date is a setup, and the competitor set it up
-				if (date.users.length === 1) {
-					competitorDateIsSetup = true;
-					competitorId = date.setupResponsibleUser;
-				} else {
-					// the competitor is the other user
-					competitorId = date.users[i === 0 ? 1 : 0] as string;
-				}
-
-				break;
-			}
-		}
-		// if this user set up the date
-		if (date.setupResponsibleUser === props.information._id) {
-			competitorHasDateWithProfile = true;
-			competitorDate = date;
-			competitorDateIsSetup = true;
-			competitorId = date.users[0];
-		}
-		if (competitorHasDateWithProfile) {
-			break;
-		}
-	}
-
-	// there is a competing user that already planned a date with this profile
-	if (competitorId) {
-		for (let tempCompetitor of props.potentialMatchedUsers) {
-			if (tempCompetitor._id === competitorId) {
-				competitor = tempCompetitor;
-				break;
-			}
-		}
-	}
-
-	// ===================== BEGIN: Conversation Information ====================
-	let messagesUnread = false;
-	// loop over all conversations; find the one that references this profile
-	for (let conversation of props.conversations) {
-		for (let i = 0; i < conversation.users.length; i++) {
-			if (conversation.users[i] === props.information._id) {
-				// NOTE -- our user (ownUser) is the user at the OTHER index
-				if (i === 0 && !conversation.user1Read) {
-					messagesUnread = true;
-				}
-				if (i === 1 && !conversation.user0Read) {
-					messagesUnread = true;
-				}
-			}
-		}
 	}
 
 	const scale = window.innerHeight / 400;
@@ -178,7 +95,7 @@ export function ProfileInRoom(props: PropTypes) {
 					scale: `${scale * 70}%`,
 				}}
 			>
-				{competitor && (
+				{props.competitor && (
 					<div
 						style={{
 							height: "100%",
@@ -192,17 +109,17 @@ export function ProfileInRoom(props: PropTypes) {
 						}}
 					>
 						{props.information.firstName} agreed to a{" "}
-						{competitorDateIsSetup ? "setup" : "date"} with{" "}
-						{competitor.firstName}
-						{competitorDateIsSetup && `'s friend`}
+						{props.competitorDateIsSetup ? "setup" : "date"} with{" "}
+						{props.competitor.firstName}
+						{props.competitorDateIsSetup && `'s friend`}
 					</div>
 				)}
 				{!props.isCompetitor && (
 					<ProfileTopBar
 						screenSetting={screenSetting}
 						setScreenSetting={setScreenSetting}
-						markMessagesUnread={messagesUnread}
-						markInteractionsUnread={!!date}
+						markMessagesUnread={props.messagesUnread}
+						markInteractionsUnread={!!props.date}
 					/>
 				)}
 				{screenComponent}
