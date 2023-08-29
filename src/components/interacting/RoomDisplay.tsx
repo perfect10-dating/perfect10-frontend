@@ -27,6 +27,8 @@ export function RoomDisplay(props: PropTypes) {
 	const { user: ownUserState } = store.getState();
 	let ownUser = ownUserState.user;
 
+	const isMobile = window.innerWidth < 500
+
 	return (
 		<div
 			style={{
@@ -171,10 +173,10 @@ export function RoomDisplay(props: PropTypes) {
 					<div
 						key={key}
 						style={{
-							height: 300,
-							width: 225,
-							minWidth: 225,
-							maxWidth: 225,
+							height: isMobile ? "53.3vw" : 300,
+							width: isMobile ? "40vw" : 225,
+							minWidth: isMobile ? "40vw" : 225,
+							maxWidth: isMobile ? "40vw" : 225,
 							margin: 10,
 							marginBottom: 25,
 							position: "relative",
@@ -191,7 +193,7 @@ export function RoomDisplay(props: PropTypes) {
 						<ProfileInformation
 							border={borderInformation}
 							isInCardDeck={true}
-							scaleFontSize={3 / 4}
+							scaleFontSize={isMobile ? (.4 * window.innerWidth / 300) : (3 / 4)}
 							information={person}
 							distance={person.distance || 0}
 						></ProfileInformation>

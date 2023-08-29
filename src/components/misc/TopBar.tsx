@@ -157,30 +157,34 @@ export function TopBar(props: PropTypes) {
 				width: "100vw",
 			}}
 		>
-			{renderHamburger(() => setIsDropdownOpen(!isDropdownOpen))}
+			<div style={{display: "flex", flexDirection: "column", justifyContent: "center"}}>
+				{renderHamburger(() => setIsDropdownOpen(!isDropdownOpen))}
+			</div>
 
 			{isDropdownOpen &&
 				renderHamburgerDropdown(navigate, () => setIsDropdownOpen(false))}
 
 			{middleContent && middleContent}
 
-			<div
-				style={{ fontSize: 20, cursor: "pointer" }}
-				onClick={async () => {
-					await dispatch(asyncSignOut());
-					// wait for the timeout so that auth state propagates before we get new user object
-					await new Promise((resolve) => {
-						setTimeout(resolve, 500);
-					});
-					dispatch({
-						// format -- reducerPath/invalidateTags
-						// see: https://github.com/reduxjs/redux-toolkit/issues/1862
-						type: `api/invalidateTags`,
-						payload: ["USER"],
-					});
-				}}
-			>
-				Log Out
+			<div style={{display: "flex", flexDirection: "column", justifyContent: "center"}}>
+				<div
+					style={{ fontSize: 20, cursor: "pointer" }}
+					onClick={async () => {
+						await dispatch(asyncSignOut());
+						// wait for the timeout so that auth state propagates before we get new user object
+						await new Promise((resolve) => {
+							setTimeout(resolve, 500);
+						});
+						dispatch({
+							// format -- reducerPath/invalidateTags
+							// see: https://github.com/reduxjs/redux-toolkit/issues/1862
+							type: `api/invalidateTags`,
+							payload: ["USER"],
+						});
+					}}
+				>
+					Log Out
+				</div>
 			</div>
 		</div>
 	);

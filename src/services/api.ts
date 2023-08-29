@@ -105,7 +105,7 @@ export const api = createApi({
       }),
       providesTags: (result, error, arg) => [
         {type: "MESSAGE", id: arg.otherUserId}
-      ]
+      ],
     }),
 
     postMessage: builder.mutation<any, { conversationId?: string, otherUserId: string, text?: string, isImage: boolean, imageUrl?: string }>({

@@ -148,8 +148,8 @@ export function Home(props: PropTypes) {
 
             dispatch(setMiddleContent({
                 middleContent:
-                    <div>
-                        <div style={{fontSize: 24, textAlign: "center", marginTop: !isOneSided ? -5 : 0}}>
+                    <div style={{maxWidth: "calc(100vw - 140px)"}}>
+                        <div style={{fontSize: 24, textAlign: "center", lineHeight: 1, marginTop: !isOneSided ? 0 : 5}}>
                             {
                                 (!isOneSided && isDisplayingCompetitors) ? "Your Competitors" : "Your Potential Matches"
                             }
