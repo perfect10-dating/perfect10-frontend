@@ -151,7 +151,7 @@ export function ProfileInformation(props: PropTypes) {
 
 			<div
 				style={{
-					height: "50%",
+					height: "30%",
 					width: "100%",
 					borderRadius: 15,
 					position: "absolute",
