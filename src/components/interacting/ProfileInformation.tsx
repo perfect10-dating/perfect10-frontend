@@ -2,6 +2,7 @@ import { useState } from "react";
 import { fixIdentity } from "../../utils/fixIdentity";
 
 interface PropTypes {
+	border?: any,
 	information: UserMini;
 	isPreview?: boolean;
 	isInCardDeck?: boolean; // if isInCardDeck, don't display top grey / white bars, or nav features
@@ -166,7 +167,7 @@ export function ProfileInformation(props: PropTypes) {
 					height: "100%",
 					width: "100%",
 					borderRadius: 15,
-					border: "1px solid lightgray",
+					border: props.border || "1px solid lightgray",
 				}}
 				alt=""
 				src={props.information.photoLinks[photoLinkIndex] || ""}

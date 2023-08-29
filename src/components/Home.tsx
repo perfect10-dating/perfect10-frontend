@@ -15,9 +15,10 @@ import {JoinNewRoom} from "./recording_date/JoinNewRoom";
 import {Loading} from "@minchat/react-chat-ui";
 import {RerollRoom} from "./interacting/RerollRoom";
 import {LoadingWrapper} from "./misc/LoadingWrapper";
+import {setMiddleContent} from "../services/topBarSlice";
 
 interface PropTypes {
-    referringUser?: string
+    referringUser?: string;
 }
 
 export function Home(props: PropTypes) {
@@ -145,31 +146,30 @@ export function Home(props: PropTypes) {
                 competitors = room.sideTwo
             }
 
-            // don't display text at the top of the page if the window is too short
-            // (this fits the carousel better to mobile viewers)
-            const displayTopDivs = window.innerHeight > 600
-
-            return (
-                <div style={{paddingTop: 50, overflow: 'scroll', maxHeight: "100vh"}}>
-                    {
-                        displayTopDivs &&
-                        <div style={{fontSize: 30, textAlign: "center", marginTop: 30}}>
+            dispatch(setMiddleContent({
+                middleContent:
+                    <div>
+                        <div style={{fontSize: 24, textAlign: "center"}}>
                             {
                                 (!isOneSided && isDisplayingCompetitors) ? "Your Competitors" : "Your Potential Matches"
                             }
                         </div>
-                    }
-                    {
-                        // only display the toggle if this is not a one-sided room
-                        // (if it is one-sided, only display partners)
-                        (!isOneSided && displayTopDivs) &&
-                        <div style={{fontSize: 16, textAlign: "center", cursor: "pointer"}}
-                             onClick={() => setIsDisplayingCompetitors(!isDisplayingCompetitors)}
-                        >
-                            {isDisplayingCompetitors ? "View Potential Matches >>" : "View Competitors >>"}
-                        </div>
-                    }
 
+                        {
+                            // only display the toggle if this is not a one-sided room
+                            // (if it is one-sided, only display partners)
+                            (!isOneSided) &&
+                            <div style={{fontSize: 16, textAlign: "center", cursor: "pointer"}}
+                                 onClick={() => setIsDisplayingCompetitors(!isDisplayingCompetitors)}
+                            >
+                                {isDisplayingCompetitors ? "View Potential Matches >>" : "View Competitors >>"}
+                            </div>
+                        }
+                    </div>
+            }))
+
+            return (
+                <div style={{paddingTop: 50, overflow: 'scroll', maxHeight: "100vh"}}>
                     <RoomDisplay
                         isDisplayingCompetitors={isDisplayingCompetitors}
                         potentialPartners={potentialPartners || []}

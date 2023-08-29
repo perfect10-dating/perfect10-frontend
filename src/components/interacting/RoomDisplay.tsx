@@ -159,8 +159,17 @@ export function RoomDisplay(props: PropTypes) {
 					}
 				}
 
+				let borderInformation = undefined
+				if (messagesUnread) {
+					borderInformation = "5px solid lightgreen"
+				}
+				if (date) {
+					borderInformation = "5px solid #ba55d3"
+				}
+
 				return (
 					<div
+						key={key}
 						style={{
 							height: 300,
 							width: 225,
@@ -180,6 +189,7 @@ export function RoomDisplay(props: PropTypes) {
 						}}
 					>
 						<ProfileInformation
+							border={borderInformation}
 							isInCardDeck={true}
 							scaleFontSize={3 / 4}
 							information={person}

@@ -1,10 +1,11 @@
 import {useNavigate} from "react-router-dom";
 import {asyncSignOut} from "../../services/authSlice";
-import {useAppDispatch} from "../../app/hooks";
+import {useAppDispatch, useAppSelector} from "../../app/hooks";
 import {useState} from "react";
 
 interface PropTypes {
-    user: User
+    user: User;
+    middleContent?: any;
 }
 
 const renderHamburgerDropdown = (navigate: (path: string) => void,
@@ -39,10 +40,25 @@ const renderHamburgerDropdown = (navigate: (path: string) => void,
     )
 }
 
+const renderHamburger = (onClick: () => void) => {
+    return (
+        <div style={{backgroundColor: "lightgrey", borderRadius: 5, border: "1px solid grey", cursor: "pointer"}}
+             onClick={onClick}
+        >
+            <div style={{backgroundColor: "darkgrey", width: 25, height: 4, margin: 5, borderRadius: 2}} />
+            <div style={{backgroundColor: "darkgrey", width: 25, height: 4, margin: 5, borderRadius: 2}} />
+            <div style={{backgroundColor: "darkgrey", width: 25, height: 4, margin: 5, borderRadius: 2}} />
+        </div>
+    )
+}
+
 export function TopBar(props: PropTypes) {
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
     const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+
+    const middleContent = useAppSelector(state => state.topBar.middleContent)
+    console.log(middleContent)
 
     // TODO -- images for each of these
     return (
@@ -50,37 +66,35 @@ export function TopBar(props: PropTypes) {
             display: "flex", justifyContent: "space-between", flexWrap: "wrap",
             padding: 5, width: "100vw"
         }}>
-            <div style={{backgroundColor: "lightgrey", borderRadius: 5, border: "1px solid grey", cursor: "pointer"}}
-                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-            >
-                <div style={{backgroundColor: "darkgrey", width: 25, height: 4, margin: 5, borderRadius: 2}} />
-                <div style={{backgroundColor: "darkgrey", width: 25, height: 4, margin: 5, borderRadius: 2}} />
-                <div style={{backgroundColor: "darkgrey", width: 25, height: 4, margin: 5, borderRadius: 2}} />
-            </div>
+            {
+                renderHamburger(() => setIsDropdownOpen(!isDropdownOpen))
+            }
 
             {
                 isDropdownOpen && renderHamburgerDropdown(navigate, () => setIsDropdownOpen(false))
             }
 
-            <div style={{position: "absolute", right: 20 , zIndex: 10000}}>
-                <div
-                    style={{fontSize: 20, cursor: "pointer"}}
-                    onClick={async () => {
-                        await dispatch(asyncSignOut())
-                        // wait for the timeout so that auth state propagates before we get new user object
-                        await new Promise(resolve => {
-                            setTimeout(resolve, 500)
-                        })
-                        dispatch({
-                            // format -- reducerPath/invalidateTags
-                            // see: https://github.com/reduxjs/redux-toolkit/issues/1862
-                            type: `api/invalidateTags`,
-                            payload: ['USER'],
-                        });
-                    }}
-                >
-                    Log Out
-                </div>
+            {
+                middleContent && middleContent
+            }
+
+            <div
+                style={{fontSize: 20, cursor: "pointer"}}
+                onClick={async () => {
+                    await dispatch(asyncSignOut())
+                    // wait for the timeout so that auth state propagates before we get new user object
+                    await new Promise(resolve => {
+                        setTimeout(resolve, 500)
+                    })
+                    dispatch({
+                        // format -- reducerPath/invalidateTags
+                        // see: https://github.com/reduxjs/redux-toolkit/issues/1862
+                        type: `api/invalidateTags`,
+                        payload: ['USER'],
+                    });
+                }}
+            >
+                Log Out
             </div>
         </div>
     )

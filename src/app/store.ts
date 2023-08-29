@@ -1,11 +1,13 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
 import userReducer from '../services/userSlice'
+import topBarReducer from '../services/topBarSlice'
 import { api } from '../services/api'
 import {authSlice} from "../services/authSlice";
 
 export const store = configureStore({
   reducer: {
     user: userReducer,
+    topBar: topBarReducer,
     auth: authSlice.reducer,
     [api.reducerPath]: api.reducer
   },

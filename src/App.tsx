@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { Home } from './components/Home'
 // import {Test} from "./components/Test";
 import {Account} from "./components/account/Account";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import {asyncGetUser} from "./services/authSlice";
 import {useAppDispatch, useAppSelector} from "./app/hooks";
 import {Loading} from "@minchat/react-chat-ui";
