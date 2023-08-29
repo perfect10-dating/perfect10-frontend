@@ -149,7 +149,7 @@ export function Home(props: PropTypes) {
             dispatch(setMiddleContent({
                 middleContent:
                     <div>
-                        <div style={{fontSize: 24, textAlign: "center"}}>
+                        <div style={{fontSize: 24, textAlign: "center", marginTop: !isOneSided ? -5 : 0}}>
                             {
                                 (!isOneSided && isDisplayingCompetitors) ? "Your Competitors" : "Your Potential Matches"
                             }
@@ -159,7 +159,7 @@ export function Home(props: PropTypes) {
                             // only display the toggle if this is not a one-sided room
                             // (if it is one-sided, only display partners)
                             (!isOneSided) &&
-                            <div style={{fontSize: 16, textAlign: "center", cursor: "pointer"}}
+                            <div style={{fontSize: 16, textAlign: "center", cursor: "pointer", marginTop: -8, marginBottom: -3}}
                                  onClick={() => setIsDisplayingCompetitors(!isDisplayingCompetitors)}
                             >
                                 {isDisplayingCompetitors ? "View Potential Matches >>" : "View Competitors >>"}

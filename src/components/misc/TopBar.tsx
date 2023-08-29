@@ -42,7 +42,7 @@ const renderHamburgerDropdown = (navigate: (path: string) => void,
 
 const renderHamburger = (onClick: () => void) => {
     return (
-        <div style={{backgroundColor: "lightgrey", borderRadius: 5, border: "1px solid grey", cursor: "pointer"}}
+        <div style={{backgroundColor: "lightgrey", borderRadius: 5, border: "1px solid grey", cursor: "pointer", height: 35}}
              onClick={onClick}
         >
             <div style={{backgroundColor: "darkgrey", width: 25, height: 4, margin: 5, borderRadius: 2}} />
