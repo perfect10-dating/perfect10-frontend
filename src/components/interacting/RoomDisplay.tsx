@@ -1,5 +1,7 @@
+import { Popup } from "components/misc/Popup";
 import { getOtherUserInDate, ProfileInRoom, userInDate } from "./ProfileInRoom";
 import { ProfileInformation } from "./ProfileInformation";
+import { useState } from "react";
 
 interface PropTypes {
 	isDisplayingCompetitors: boolean;
@@ -10,6 +12,11 @@ interface PropTypes {
 }
 
 export function RoomDisplay(props: PropTypes) {
+	const [profileOpen, setProfileOpen] = useState(false);
+	const [personDisplayed, setPersonDisplayed] = useState<UserMini | undefined>(
+		undefined
+	);
+
 	return (
 		<div
 			style={{
@@ -22,6 +29,30 @@ export function RoomDisplay(props: PropTypes) {
 				paddingRight: "4vw",
 			}}
 		>
+			{profileOpen && !!personDisplayed && (
+				<Popup
+					handleBackgroundClick={() => setProfileOpen(false)}
+					style={{
+						display: "flex",
+						justifyContent: "center",
+						alignItems: "center",
+						backgroundColor: "rgba(0, 0, 0, 0.85)",
+					}}
+				>
+					<ProfileInRoom
+						isCompetitor={props.isDisplayingCompetitors}
+						information={personDisplayed}
+						potentialMatchedUsers={
+							props.isDisplayingCompetitors
+								? props.potentialPartners
+								: props.competitors
+						}
+						conversations={props.conversations}
+						dates={props.dates}
+					/>
+				</Popup>
+			)}
+
 			{(props.isDisplayingCompetitors
 				? props.competitors
 				: props.potentialPartners
@@ -36,6 +67,11 @@ export function RoomDisplay(props: PropTypes) {
 							margin: 10,
 							marginBottom: 25,
 							position: "relative",
+							cursor: "pointer",
+						}}
+						onClick={() => {
+							setProfileOpen(true);
+							setPersonDisplayed(person);
 						}}
 					>
 						<ProfileInformation
@@ -45,18 +81,6 @@ export function RoomDisplay(props: PropTypes) {
 							distance={person.distance || 0}
 						></ProfileInformation>
 					</div>
-					// <ProfileInRoom
-					// 	key={key}
-					// 	isCompetitor={props.isDisplayingCompetitors}
-					// 	information={person}
-					// 	potentialMatchedUsers={
-					// 		props.isDisplayingCompetitors
-					// 			? props.potentialPartners
-					// 			: props.competitors
-					// 	}
-					// 	conversations={props.conversations}
-					// 	dates={props.dates}
-					// />
 				);
 			})}
 		</div>

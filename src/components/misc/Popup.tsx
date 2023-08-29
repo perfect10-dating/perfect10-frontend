@@ -8,23 +8,15 @@ interface Props {
 }
 
 export const Popup = ({ children, handleBackgroundClick, style }: Props) => {
-	const VerticalPadder = ({ height }: { height: number }) => (
-		<div
-			style={{ minHeight: height, width: "100%" }}
-			onClick={handleBackgroundClick}
-		></div>
-	);
 	return (
 		<Background style={style} onMouseDown={handleBackgroundClick}>
 			<div style={{ height: "100%" }}>
-				<VerticalPadder height={100} />
 				<Foreground
 					id="foreground"
 					onMouseDown={(event) => event.stopPropagation()}
 				>
 					{children}
 				</Foreground>
-				<VerticalPadder height={100} />
 			</div>
 		</Background>
 	);
