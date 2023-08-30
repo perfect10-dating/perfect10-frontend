@@ -67,7 +67,7 @@ export function RoomDisplay(props: PropTypes) {
 				 */
 				let competitorHasDateWithProfile = false;
 				let competitorDateIsSetup = false;
-				let competitorDate: Date;
+				let competitorDate: Date | undefined = undefined;
 				let competitorId: string | undefined = undefined;
 				let competitor: UserMini | undefined = undefined;
 
@@ -157,8 +157,6 @@ export function RoomDisplay(props: PropTypes) {
 								<ProfileInRoom
 									isCompetitor={props.isDisplayingCompetitors}
 									information={person}
-									competitor={competitor}
-									competitorDateIsSetup={competitorDateIsSetup}
 									messagesUnread={messagesUnread}
 									date={date}
 								/>
@@ -175,21 +173,46 @@ export function RoomDisplay(props: PropTypes) {
 								margin: 10,
 								marginBottom: 25,
 								position: "relative",
-								cursor: "pointer",
-							}}
-							onClick={() => {
-								setProfileOpen(true);
-								setPersonDisplayed(person);
+								cursor: competitor ? "not-allowed" : "pointer",
 							}}
 						>
+							{competitor && (
+								<div
+									style={{
+										height: "100%",
+										width: "100%",
+										borderRadius: 15,
+										position: "absolute",
+										bottom: 0,
+										zIndex: 50,
+										backgroundColor: "rgba(139, 0, 0, 0.6)",
+										color: "white",
+										display: "flex",
+										flexDirection: "column",
+										justifyContent: "center"
+									}}
+								>
+									<div style={{margin: "10%", fontSize: 16}}>
+										{person.firstName} agreed to a{" "}
+										{competitorDateIsSetup ? "setup" : "date"} with{" "}
+										{competitor.firstName}
+										{competitorDateIsSetup && `'s friend`}
+									</div>
+								</div>
+							)}
 
-							<ProfileInformation
-								border={borderInformation}
-								isInCardDeck={true}
-								scaleFontSize={isMobile ? (.4 * window.innerWidth / 300) : (3 / 4)}
-								information={person}
-								distance={person.distance || 0}
-							></ProfileInformation>
+							<div onClick={() => {
+								setProfileOpen(true);
+								setPersonDisplayed(person);
+							}}>
+								<ProfileInformation
+									border={borderInformation}
+									isInCardDeck={true}
+									scaleFontSize={isMobile ? (.4 * window.innerWidth / 300) : (3 / 4)}
+									information={person}
+									distance={person.distance || 0}
+								></ProfileInformation>
+							</div>
 						</div>
 					</div>
 				);

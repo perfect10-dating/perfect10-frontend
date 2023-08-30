@@ -7,8 +7,6 @@ import { store } from "../../app/store";
 
 interface PropTypes {
 	isCompetitor: boolean;
-	competitor?: UserMini;
-	competitorDateIsSetup: boolean;
 	information: UserMini;
 	messagesUnread: boolean;
 	date?: Date;
@@ -95,25 +93,7 @@ export function ProfileInRoom(props: PropTypes) {
 					scale: `${scale * 70}%`,
 				}}
 			>
-				{props.competitor && (
-					<div
-						style={{
-							height: "100%",
-							width: "100%",
-							borderRadius: 15,
-							position: "absolute",
-							bottom: 0,
-							zIndex: 50,
-							backgroundColor: "red",
-							color: "white",
-						}}
-					>
-						{props.information.firstName} agreed to a{" "}
-						{props.competitorDateIsSetup ? "setup" : "date"} with{" "}
-						{props.competitor.firstName}
-						{props.competitorDateIsSetup && `'s friend`}
-					</div>
-				)}
+
 				{!props.isCompetitor && (
 					<ProfileTopBar
 						screenSetting={screenSetting}
