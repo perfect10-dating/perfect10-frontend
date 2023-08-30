@@ -17,12 +17,6 @@ export function RoomDisplay(props: PropTypes) {
 	const [personDisplayed, setPersonDisplayed] = useState<UserMini | undefined>(
 		undefined
 	);
-	const [personDisplayedProps, setPersonDisplayedProps] = useState<{
-		competitor: UserMini | undefined;
-		competitorDateIsSetup: boolean;
-		messagesUnread: boolean;
-		date: Date | undefined;
-	}>({competitor: undefined, competitorDateIsSetup: false, messagesUnread: false, date: undefined})
 
 	const { user: ownUserState } = store.getState();
 	let ownUser = ownUserState.user;
@@ -41,27 +35,6 @@ export function RoomDisplay(props: PropTypes) {
 				paddingRight: "4vw",
 			}}
 		>
-			{profileOpen && !!personDisplayed && (
-				<Popup
-					handleBackgroundClick={() => setProfileOpen(false)}
-					style={{
-						display: "flex",
-						justifyContent: "center",
-						alignItems: "center",
-						backgroundColor: "rgba(0, 0, 0, 0.85)",
-					}}
-				>
-					<ProfileInRoom
-						isCompetitor={props.isDisplayingCompetitors}
-						information={personDisplayed}
-						competitor={personDisplayedProps.competitor}
-						competitorDateIsSetup={personDisplayedProps.competitorDateIsSetup}
-						messagesUnread={personDisplayedProps.messagesUnread}
-						date={personDisplayedProps.date}
-					/>
-				</Popup>
-			)}
-
 			{(props.isDisplayingCompetitors
 				? props.competitors
 				: props.potentialPartners
@@ -170,36 +143,58 @@ export function RoomDisplay(props: PropTypes) {
 				}
 
 				return (
-					<div
-						key={key}
-						style={{
-							height: isMobile ? "53.3vw" : 300,
-							width: isMobile ? "40vw" : 225,
-							minWidth: isMobile ? "40vw" : 225,
-							maxWidth: isMobile ? "40vw" : 225,
-							margin: 10,
-							marginBottom: 25,
-							position: "relative",
-							cursor: "pointer",
-						}}
-						onClick={() => {
-							setProfileOpen(true);
-							setPersonDisplayed(person);
-							setPersonDisplayedProps({
-								competitor, competitorDateIsSetup, messagesUnread, date
-							})
-						}}
-					>
-						<ProfileInformation
-							border={borderInformation}
-							isInCardDeck={true}
-							scaleFontSize={isMobile ? (.4 * window.innerWidth / 300) : (3 / 4)}
-							information={person}
-							distance={person.distance || 0}
-						></ProfileInformation>
+					<div>
+						{(profileOpen && !!personDisplayed && personDisplayed._id === person._id) && (
+							<Popup
+								handleBackgroundClick={() => setProfileOpen(false)}
+								style={{
+									display: "flex",
+									justifyContent: "center",
+									alignItems: "center",
+									backgroundColor: "rgba(0, 0, 0, 0.85)",
+								}}
+							>
+								<ProfileInRoom
+									isCompetitor={props.isDisplayingCompetitors}
+									information={person}
+									competitor={competitor}
+									competitorDateIsSetup={competitorDateIsSetup}
+									messagesUnread={messagesUnread}
+									date={date}
+								/>
+							</Popup>
+						)}
+
+						<div
+							key={key}
+							style={{
+								height: isMobile ? "53.3vw" : 300,
+								width: isMobile ? "40vw" : 225,
+								minWidth: isMobile ? "40vw" : 225,
+								maxWidth: isMobile ? "40vw" : 225,
+								margin: 10,
+								marginBottom: 25,
+								position: "relative",
+								cursor: "pointer",
+							}}
+							onClick={() => {
+								setProfileOpen(true);
+								setPersonDisplayed(person);
+							}}
+						>
+
+							<ProfileInformation
+								border={borderInformation}
+								isInCardDeck={true}
+								scaleFontSize={isMobile ? (.4 * window.innerWidth / 300) : (3 / 4)}
+								information={person}
+								distance={person.distance || 0}
+							></ProfileInformation>
+						</div>
 					</div>
 				);
-			})}
+			})
+			}
 		</div>
 	);
 }
