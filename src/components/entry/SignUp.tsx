@@ -8,6 +8,7 @@ import {setHasCollectedLocation} from "../../services/userSlice";
 import {getBirthDateString} from "../../utils/getBirthDateString";
 import {LoadingWrapper} from "../misc/LoadingWrapper";
 import appConfiguration from "../../appConfiguration";
+import Toggle from "rsuite/Toggle";
 
 const inputFormStyle = {width: "calc(100% - 40px)", padding: 10, marginLeft: 20, marginRight: 20, height: 40,
     borderRadius: 10, border: 0, backgroundColor: "rgb(194, 213, 242)"}
@@ -139,6 +140,14 @@ export const SignUp = (props: PropTypes) => {
                         value={phoneNumber}
                         onChange={(e) => setPhoneNumber(e.target.value.trim().toLowerCase())}
                     />
+                    {/*<div style={{marginLeft: 25, marginRight: 25, marginTop: -25, display: "flex"}}>*/}
+                    {/*    <div style={{display: "flex", flexDirection: "column", justifyContent: "center"}}>*/}
+                    {/*        <Toggle />*/}
+                    {/*    </div>*/}
+                    {/*    <div style={{marginLeft: 10, fontSize: 12}}>*/}
+                    {/*        Send me notifications to this phone number.*/}
+                    {/*    </div>*/}
+                    {/*</div>*/}
                 </div>
                 <div style={{textAlign: "center"}}>
                     <div style={{fontSize: 12, textAlign: "left", marginLeft: 25}}>What group do you most identify as?</div>
