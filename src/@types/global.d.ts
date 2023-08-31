@@ -30,6 +30,7 @@ declare interface User {
   unlockTime?: string
   mustReviewDate: boolean
   lockingDate?: PopulatedDate
+  freeSwaps?: number
 }
 
 declare interface UserMini {

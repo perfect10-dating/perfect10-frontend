@@ -20,22 +20,15 @@ export function RerollRoom() {
         error: userReqError,
         // isUninitialized
     } = useGetUserQuery()
-    const {
-        data: roomRetrievalObj,
-        isLoading: roomIsLoading,
-        isSuccess: roomReqSuccessful,
-        isError: roomReqFailed,
-        error: roomReqError
-    } = useGetRoomQuery()
 
     // if no user, we'll pop back to the "/" route, which will handle login
-    if (userReqFailed || roomReqFailed) {
+    if (userReqFailed) {
         console.log("ACCOUNT-WRAPPER: Failed getting user object, navigating to '/'")
         dispatch(setUser({user: undefined}))
         navigate("/")
     }
 
-    if (!user || !roomRetrievalObj) {
+    if (!user) {
         return <LoadingWrapper />
     }
     else {
@@ -43,24 +36,8 @@ export function RerollRoom() {
         console.log("setting user...")
         dispatch(setUser({user}))
 
-        let isOneSided = false
-        let potentialPartners, competitors
-        // if this is a one-identity room, your partners and competitors are the same
-        // prevent you from seeing yourself
-        if (roomRetrievalObj.room.sideTwo.length === 0) {
-            isOneSided = true
-            potentialPartners = roomRetrievalObj.room.sideOne
-            competitors = potentialPartners
-        }
-        else if (roomRetrievalObj.room.sideOneIdentity === user?.identity) {
-            potentialPartners = roomRetrievalObj.room.sideTwo
-            competitors = roomRetrievalObj.room.sideOne
-        } else {
-            potentialPartners = roomRetrievalObj.room.sideOne
-            competitors = roomRetrievalObj.room.sideTwo
-        }
-
-        const penalty = ((competitors.length-potentialPartners.length)/(potentialPartners.length||1) < MAX_UNBALANCE)
+        // penalty in days
+        const penalty = -1 * ((user.freeSwaps || 0) -1)
 
         return (
             <div style={{display: "flex", justifyContent: "center", flexDirection: "column", height: "100vh"}}>
@@ -72,9 +49,9 @@ export function RerollRoom() {
                     <div style={{marginTop: 10, cursor: "pointer", fontWeight: 600}}
                          onClick={() => {
                              const confirmed = window.confirm(`Are you sure you want to switch rooms? This operation ${
-                                 penalty ?
-                                     "(locks your account for three days)" :
-                                     "(occurs immediately)"
+                                 (penalty>0) ?
+                                     `locks your account for ${penalty} day(s)` :
+                                     "occurs immediately"
                              }`)
 
                              if (confirmed) {
@@ -82,17 +59,11 @@ export function RerollRoom() {
                                  navigate("/")
                              }
                          }}
-                    >{`Switch rooms${
+                    >{`Switch rooms ${
                         penalty ?
-                        " (locks your account for three days)" :
-                            " (occurs immediately)"
+                            `(locks your account for ${penalty} day(s))` :
+                            "(occurs immediately)"
                     } >>`}
-                        {
-                            penalty &&
-                            <div style={{fontSize: "10px"}}>
-                                Switches are free when your room is deeply unbalanced. Yours is not.
-                            </div>
-                        }
                     </div>
 
                 </div>
