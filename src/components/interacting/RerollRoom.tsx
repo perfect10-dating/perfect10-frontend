@@ -46,7 +46,7 @@ export function RerollRoom() {
                     <div style={{marginTop: 10}}>Either set up one of your potential dates with a friend</div>
                     <div>(you will immediately switch rooms, but your friend's behavior will affect your Rizz)</div>
                     <div style={{marginTop: 10}}>or...</div>
-                    <div style={{marginTop: 10, cursor: "pointer", fontWeight: 600}}
+                    <div style={{margin: "0 auto", marginTop: 10, cursor: "pointer", fontWeight: 600, width: "fit-content"}}
                          onClick={() => {
                              const confirmed = window.confirm(`Are you sure you want to switch rooms? This operation ${
                                  (penalty>0) ?
@@ -60,7 +60,7 @@ export function RerollRoom() {
                              }
                          }}
                     >{`Switch rooms ${
-                        penalty ?
+                        penalty>0 ?
                             `(locks your account for ${penalty} day(s))` :
                             "(occurs immediately)"
                     } >>`}
