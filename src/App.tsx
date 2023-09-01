@@ -23,6 +23,11 @@ const getReferringUser = () => {
     return hrefArray[hrefArray.length-1]
 }
 
+const getQrCode = () => {
+    const hrefArray = window.location.href.split('/')
+    return hrefArray[hrefArray.length-1]
+}
+
 export default function App() {
     const dispatch = useAppDispatch()
     const hold = 0
@@ -78,6 +83,9 @@ export default function App() {
                         <Route path="/" element={<Home />} />
                         <Route path="/referral/*" element={
                             <Home referringUser={getReferringUser()} />
+                        } />
+                        <Route path={"/qr-code/*"} element={
+                            <Home qrCode={getQrCode()} />
                         } />
                         <Route path={"/account"} element={<AccountWrapper />} />
                         <Route path={"/priority"} element={<PriorityModePage />} />

@@ -8,6 +8,7 @@ import {ResetPassword} from "./ResetPassword";
 
 interface PropTypes {
     referringUser?: string
+    qrCode?: string
 }
 
 export function LandingPage(props: PropTypes) {
@@ -15,7 +16,7 @@ export function LandingPage(props: PropTypes) {
 
     switch(loginPage) {
         case "signUp":
-            return <SignUp referringUser={props.referringUser} />
+            return <SignUp referringUser={props.referringUser} qrCode={props.qrCode} />
         case "forgotPassword":
             return <ForgotPassword />
         case "resetPassword":

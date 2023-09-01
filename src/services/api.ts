@@ -185,6 +185,16 @@ export const api = createApi({
     }),
     /* ============= END IMAGE ROUTES ============== */
 
+    /* ============= BEGIN LOGGING ROUTES ========== */
+    logQrCode: builder.mutation<any, {qrCode: string}>({
+      query: (body) => ({
+        url: 'log-qr-code',
+        method: 'POST',
+        body: body.qrCode
+      }),
+      invalidatesTags: []
+    }),
+    /* ============= END LOGGING ROUTES ============ */
 
   }),
 
@@ -217,4 +227,7 @@ export const {
 
     // image information
     useGetS3SignedUrlMutation,
+
+    // logging
+    useLogQrCodeMutation,
 } = api

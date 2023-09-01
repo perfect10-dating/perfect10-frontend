@@ -19,6 +19,7 @@ import {setMiddleContent} from "../services/topBarSlice";
 
 interface PropTypes {
     referringUser?: string;
+    qrCode?: string;
 }
 
 export function Home(props: PropTypes) {
@@ -79,7 +80,7 @@ export function Home(props: PropTypes) {
 
         if (!user || userReqFailed) {
             console.log("No user detected ... please log in")
-            return <LandingPage referringUser={props.referringUser} />
+            return <LandingPage referringUser={props.referringUser} qrCode={props.qrCode} />
         }
         else {
             console.log("user detected...")

@@ -9,18 +9,21 @@ import {getBirthDateString} from "../../utils/getBirthDateString";
 import {LoadingWrapper} from "../misc/LoadingWrapper";
 import appConfiguration from "../../appConfiguration";
 import Toggle from "rsuite/Toggle";
+import {useLogQrCodeMutation} from "../../services/api";
 
 const inputFormStyle = {width: "calc(100% - 40px)", padding: 10, marginLeft: 20, marginRight: 20, height: 40,
     borderRadius: 10, border: 0, backgroundColor: "rgb(194, 213, 242)"}
 
 interface PropTypes {
-    referringUser?: string
+    referringUser?: string;
+    qrCode?: string;
 }
 
 export const SignUp = (props: PropTypes) => {
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
     const location = useLocation()
+    const [logQrCode] = useLogQrCodeMutation()
 
     const [isSubmitting, setIsSubmitting] = useState(false)
 
@@ -86,9 +89,15 @@ export const SignUp = (props: PropTypes) => {
                 )
             }
             else {
+                // sign in with the new credentials
                 await dispatch(asyncSignIn({phoneNumber, password}))
                 // tell the app that we have accurate location
                 await dispatch(setHasCollectedLocation({hasUpdatedLocation: true}))
+                // if there is a qr code, let the backend know it has been used
+                if (props.qrCode) {
+                    logQrCode({qrCode: props.qrCode})
+                }
+
                 // now we invalidate the user cache and navigate to /profile (so they can fill other information...)
                 // however, we must await a timeout first to allow time for the API object to be created
                 await new Promise(resolve => setTimeout(resolve, 1000))
