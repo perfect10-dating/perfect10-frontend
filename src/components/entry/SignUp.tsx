@@ -34,6 +34,7 @@ export const SignUp = (props: PropTypes) => {
     const [confirmPassword, setConfirmPassword] = useState<string>('')
     const [confirmPasswordStatus, setConfirmPasswordStatus] = useState<'default' | 'entering' | 'valid'>('default')
     const [lookingFor, setLookingFor] = useState([] as string[])
+    const [acceptedDocuments, setAcceptedDocuments] = useState(false)
 
     useEffect(() => {
         const newStatus = phoneNumber.length === 0 ? 'default' : /^\+[1-9]\d{3,14}$/.test(phoneNumber) ? 'valid' : 'entering'
@@ -55,6 +56,7 @@ export const SignUp = (props: PropTypes) => {
         if (passwordStatus !== 'valid') return alert('Please make sure your password is at least 8 characters long.')
         if (password !== confirmPassword) return alert('Please make sure your passwords match.')
         if (((Date.now() - birthDate) / (1000 * 60 * 60 * 24 * 365)) < 18) return alert("Minors are not allowed")
+        if (!acceptedDocuments) return alert("Please review and accept our Terms and Conditions and Privacy Policy")
 
         try {
             console.log("here...")
@@ -180,7 +182,7 @@ export const SignUp = (props: PropTypes) => {
                 </div>
 
                 <div style={{ backgroundColor: "rgb(243,244,246)", borderRadius: 15, paddingTop: 2, paddingBottom: 2,
-                    margin: "0 auto", marginBottom: 20, marginTop: 30, width: 300, maxWidth: "calc(100vw - 20px)",
+                    margin: "0 auto", marginBottom: 10, marginTop: 30, width: 300, maxWidth: "calc(100vw - 20px)",
                 }}>
                     <Input
                         key="password"
@@ -202,8 +204,20 @@ export const SignUp = (props: PropTypes) => {
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
                     />
-
                 </div>
+
+                <div style={{display: "flex", marginBottom: 30}}>
+                    <div style={{display: "flex", flexDirection: "column", justifyContent: "center", marginRight: 10}}>
+                        <Toggle onChange={setAcceptedDocuments} />
+                    </div>
+                    <div>
+                        I accept Rizzly's <a href={"/terms-conditions"} target="_blank">
+                        Terms and Conditions
+                        </a> and <a href={"/privacy-policy"} target="_blank">
+                        Privacy Policy</a>
+                    </div>
+                </div>
+
                 <div style={{margin: "0 auto", paddingBottom: 100, textAlign: "center"}}>
                     <div style={{cursor: "pointer"}} onClick={handleSubmit} >{"Sign Up >>"}</div>
                     <p>or</p>

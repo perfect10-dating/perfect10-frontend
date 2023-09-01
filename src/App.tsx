@@ -15,6 +15,8 @@ import {setHasCollectedLocation} from "./services/userSlice";
 import {useEditUserMutation} from "./services/api";
 import {LoadingWrapper} from "./components/misc/LoadingWrapper";
 import {ContactUs} from "./components/misc/ContactUs";
+import {TermsAndConditions} from "./components/documents/TermsAndConditions";
+import {PrivacyPolicy} from "./components/documents/PrivacyPolicy";
 
 const getReferringUser = () => {
     const hrefArray = window.location.href.split('/')
@@ -81,6 +83,8 @@ export default function App() {
                         <Route path={"/priority"} element={<PriorityModePage />} />
                         <Route path={"/switch-room"} element={<RerollRoom />} />
                         <Route path={"/contact-us"} element={<ContactUs />} />
+                        <Route path={"/terms-conditions"} element={<TermsAndConditions />} />
+                        <Route path={"/privacy-policy"} element={<PrivacyPolicy />} />
                         {/*<Route path={"/test"} element={<Test />} />*/}
                         // TODO -- edit profile
                     </Routes>
