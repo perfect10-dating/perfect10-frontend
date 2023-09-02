@@ -10,6 +10,7 @@ import {LoadingWrapper} from "../misc/LoadingWrapper";
 import appConfiguration from "../../appConfiguration";
 import Toggle from "rsuite/Toggle";
 import {useLogQrCodeMutation} from "../../services/api";
+import axios from "axios";
 
 const inputFormStyle = {width: "calc(100% - 40px)", padding: 10, marginLeft: 20, marginRight: 20, height: 40,
     borderRadius: 10, border: 0, backgroundColor: "rgb(194, 213, 242)"}
@@ -65,17 +66,29 @@ export const SignUp = (props: PropTypes) => {
 
         try {
             console.log("here...")
-            let position: GeolocationPosition = await new Promise((resolve, reject) => {
-                navigator.geolocation.getCurrentPosition((position) => resolve(position),
-                    (err) => reject(err),
+            let {lat, long} = await new Promise((resolve, reject) => {
+                navigator.geolocation.getCurrentPosition((position) => {
+                        resolve({lat: position.coords.latitude, long: position.coords.longitude})
+                    },
+                    async(err) => {
+                    // if we don't get a GeolocationPosition for any reason,
+                        console.error(err)
+                        try {
+                            console.log("Failed to get a geolocation position, using IP positioning instead...")
+                            let result = await axios.get("https://api.ipgeolocation.io/ipgeo?apiKey=8096ee38555f4290ad6e0b17caf6d393")
+                            return resolve({lat: result.data.latitude, long: result.data.longitude})
+                        }
+                        catch (err) {
+                            console.error(err)
+                            return reject(err)
+                        }
+                    },
                     {timeout: 30000} // timeout in ms
                     )
             })
 
+            // console.log(lat, long)
             setIsSubmitting(true)
-
-            let lat = position.coords.latitude;
-            let long = position.coords.longitude;
 
             let result: any = await dispatch(asyncSignUp(
                 { phoneNumber, password, firstName, birthDate, identity,
@@ -117,7 +130,7 @@ export const SignUp = (props: PropTypes) => {
         catch (err) {
             setIsSubmitting(false)
             console.error(err)
-            alert("You must enable your location to create an account")
+            alert(`An error occurred when creating your account. Error info: ${err.message}}`)
         }
     }
 
