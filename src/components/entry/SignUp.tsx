@@ -45,7 +45,9 @@ export const SignUp = (props: PropTypes) => {
     }, [phoneNumber])
 
     useEffect(() => {
-        const newStatus = password.length === 0 ? 'default' : password.length < 8 ? 'entering' : 'valid'
+        const newStatus = password.length === 0 ? 'default' : (password.length >= 8 &&
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\^$*.\[\]{}()?\-"!@#%&/\\,><':;|_~`+=])[A-Za-z\d^$*.\[\]{}()?\-"!@#%&/\\,><':;|_~`+=]{8,}$/.test(password))
+            ? 'valid' : 'entering'
         setPasswordStatus(newStatus)
     }, [password])
 
@@ -203,6 +205,9 @@ export const SignUp = (props: PropTypes) => {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
+                    <div style={{fontSize: 12, marginTop: -25, marginBottom: -10, marginLeft: 12, marginRight: 12}}>
+                        Requirements: 1 uppercase letter, 1 lowercase letter, 1 number, 1 special character
+                    </div>
                     <Input
                         key="confirmPassword"
                         spellCheck={false}
