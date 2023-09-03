@@ -190,7 +190,7 @@ export const api = createApi({
       query: (body) => ({
         url: 'log-qr-code',
         method: 'POST',
-        body: body.qrCode
+        body: {qrCode: body.qrCode}
       }),
       invalidatesTags: []
     }),
