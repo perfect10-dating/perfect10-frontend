@@ -130,7 +130,7 @@ export const ImageUploader = ({
 								width: 28,
 								height: 28,
 								borderColor: "#000000",
-								backgroundColor: "#00000030",
+								backgroundColor: "#FFFFFF70",
 							}}
 						>
 							<EditIcon
