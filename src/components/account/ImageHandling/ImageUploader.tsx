@@ -122,6 +122,7 @@ export const ImageUploader = ({
 				iconComponent={
 					// use the iconComponent instead of the iconUrl when we already have a valid image
 					imageUrl !== "" ? (
+						// div to add background circle
 						<div
 							style={{
 								marginTop: 2,
@@ -130,7 +131,7 @@ export const ImageUploader = ({
 								width: 28,
 								height: 28,
 								borderColor: "#000000",
-								backgroundColor: "#FFFFFF70",
+								backgroundColor: "#FFFFFF70", // last two digits are opacity
 							}}
 						>
 							<EditIcon
