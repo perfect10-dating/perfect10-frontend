@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import styled from "styled-components/macro";
 import { v4 as uuid } from "uuid";
+import EditIcon from "@mui/icons-material/Edit";
 // import { ImageScroller } from 'components/ImageHandling/ImageScroller' // todo: revisit
 
 import { useGetS3SignedUrlMutation } from "services/api";
@@ -113,9 +114,34 @@ export const ImageUploader = ({
 				}}
 				handleClick={() => uploadFromLocal()}
 				iconUrl={
+					// use iconUrl only when we're uploading an image for the first time
 					imageUrl === ""
 						? "/img/standard_icons/upload-theory-v1.png"
-						: "/img/standard_icons/change-image.png"
+						: undefined
+				}
+				iconComponent={
+					// use the iconComponent instead of the iconUrl when we already have a valid image
+					imageUrl !== "" ? (
+						<div
+							style={{
+								marginTop: 2,
+								borderWidth: 3,
+								borderRadius: 14,
+								width: 28,
+								height: 28,
+								borderColor: "#000000",
+								backgroundColor: "#00000030",
+							}}
+						>
+							<EditIcon
+								style={{
+									opacity: "100%",
+									paddingTop: "3px",
+									paddingLeft: "3px",
+								}}
+							></EditIcon>
+						</div>
+					) : undefined
 				}
 				alt={"Upload an Image"}
 				highlighted={imageUrl !== ""}
