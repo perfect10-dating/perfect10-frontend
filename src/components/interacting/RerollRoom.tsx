@@ -52,7 +52,7 @@ export function RerollRoom() {
                                  (penalty>0) ?
                                      `locks your account for ${penalty} day(s)` :
                                      "occurs immediately"
-                             }`)
+                             } and you will no longer be able to message people in this room.`)
 
                              if (confirmed) {
                                  switchRoomsDelayed()
