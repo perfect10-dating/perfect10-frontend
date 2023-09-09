@@ -8,6 +8,7 @@ import { ImageUploadPanel } from "./ImageUploadPanel";
 import { ProfileInformation } from "../interacting/ProfileInformation";
 import { ShortTerm } from "./ShortTerm";
 import usePageTitle from "utils/usePageTitle";
+import { setMiddleContent } from "services/topBarSlice";
 
 const POLLING_DELAY_SECONDS = 1;
 const USER_AVAILABLE_AGE_GAP = 15;
@@ -25,18 +26,38 @@ export function Account(props: PropTypes) {
 	// const cognitoId = "foo"     // 19
 	const [editUser] = useEditUserMutation();
 	const navigate = useNavigate();
+	const dispatch = useAppDispatch();
 
 	const { user } = props;
 
 	const [photoLinks, setPhotoLinks] = useState(user?.photoLinks || []);
 	const [shortTerm, setShortTerm] = useState(user.shortTerm);
 	const [ageRange, setAgeRange] = useState(
-		user?.ageRange || { min: 25, max: 35 }
+		user.ageRange || { min: 25, max: 35 }
 	);
 
 	const [isDisplayingPreview, setIsDisplayingPreview] = useState(false);
 
 	usePageTitle("Rizzly | Account");
+
+	dispatch(
+		setMiddleContent({
+			middleContent: (
+				<div style={{ maxWidth: "calc(100vw - 140px)" }}>
+					<div
+						style={{
+							marginTop: "5px",
+							fontSize: 24,
+							textAlign: "center",
+							lineHeight: 1,
+						}}
+					>
+						Welcome, {user.firstName}
+					</div>
+				</div>
+			),
+		})
+	);
 
 	return (
 		<div style={{ height: "100vh", overflow: "scroll", paddingTop: 50 }}>
