@@ -193,6 +193,7 @@ export function TopBar(props: PropTypes) {
 							type: `api/invalidateTags`,
 							payload: ["USER"],
 						});
+						navigate("/");
 					}}
 				>
 					Log Out
