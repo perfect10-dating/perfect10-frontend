@@ -157,7 +157,13 @@ export function TopBar(props: PropTypes) {
 				width: "100vw",
 			}}
 		>
-			<div style={{display: "flex", flexDirection: "column", justifyContent: "center"}}>
+			<div
+				style={{
+					display: "flex",
+					flexDirection: "column",
+					justifyContent: "center",
+				}}
+			>
 				{renderHamburger(() => setIsDropdownOpen(!isDropdownOpen))}
 			</div>
 
@@ -166,9 +172,15 @@ export function TopBar(props: PropTypes) {
 
 			{middleContent && middleContent}
 
-			<div style={{display: "flex", flexDirection: "column", justifyContent: "center"}}>
+			<div
+				style={{
+					display: "flex",
+					flexDirection: "column",
+					justifyContent: "center",
+				}}
+			>
 				<div
-					style={{ fontSize: 20, cursor: "pointer" }}
+					style={{ fontSize: 20, cursor: "pointer", marginRight: "5px" }}
 					onClick={async () => {
 						await dispatch(asyncSignOut());
 						// wait for the timeout so that auth state propagates before we get new user object
