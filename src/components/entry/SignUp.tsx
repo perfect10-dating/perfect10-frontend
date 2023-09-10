@@ -11,6 +11,8 @@ import appConfiguration from "../../appConfiguration";
 import Toggle from "rsuite/Toggle";
 import {useLogQrCodeMutation} from "../../services/api";
 import axios from "axios";
+import PhoneInput from 'react-phone-input-2'
+import 'react-phone-input-2/lib/style.css'
 
 const inputFormStyle = {width: "calc(100% - 40px)", padding: 10, marginLeft: 20, marginRight: 20, height: 40,
     borderRadius: 10, border: 0, backgroundColor: "rgb(194, 213, 242)"}
@@ -30,6 +32,7 @@ export const SignUp = (props: PropTypes) => {
 
     const [firstName, setFirstName] = useState<string>('')
     const [phoneNumber, setPhoneNumber] = useState<string>('')
+    const [countryCode, setCountryCode] = useState('+1')
     const [phoneNumberStatus, setPhoneNumberStatus] = useState<'default' | 'entering' | 'valid'>('default')
     const [identity, setIdentity] = useState("woman")
     const [birthDate, setBirthDate] = useState(0)
@@ -47,7 +50,8 @@ export const SignUp = (props: PropTypes) => {
     const [specialCharacterInPassword, setSpecialCharacterInPassword] = useState(false)
 
     useEffect(() => {
-        const newStatus = phoneNumber.length === 0 ? 'default' : /^\+[1-9]\d{3,14}$/.test(phoneNumber) ? 'valid' : 'entering'
+        const newStatus = phoneNumber.length === 0 ? 'default' :
+            /^\+[1-9]\d{3,14}$/.test(countryCode+phoneNumber) ? 'valid' : 'entering'
         setPhoneNumberStatus(newStatus)
     }, [phoneNumber])
 
@@ -108,7 +112,7 @@ export const SignUp = (props: PropTypes) => {
             setIsSubmitting(true)
 
             let result: any = await dispatch(asyncSignUp(
-                { phoneNumber, password, firstName, birthDate, identity,
+                { phoneNumber: countryCode+phoneNumber, password, firstName, birthDate, identity,
                     latitude: lat, longitude: long, lookingFor: Array.from(lookingFor) }
             ))
             if (result.error) {
@@ -122,7 +126,7 @@ export const SignUp = (props: PropTypes) => {
             }
             else {
                 // sign in with the new credentials
-                await dispatch(asyncSignIn({phoneNumber, password}))
+                await dispatch(asyncSignIn({phoneNumber: countryCode+phoneNumber, password}))
                 // tell the app that we have accurate location
                 await dispatch(setHasCollectedLocation({hasUpdatedLocation: true}))
                 // if there is a qr code, let the backend know it has been used
@@ -174,16 +178,30 @@ export const SignUp = (props: PropTypes) => {
                         value={firstName}
                         onChange={(e) => setFirstName(e.target.value.trim())}
                     />
-                    <div style={{fontSize: 12, textAlign: "left", marginLeft: 25, marginBottom: -25}}>Format: +12345678901 (include country code)</div>
-                    <Input
-                        key="phoneNumber"
-                        spellCheck={false}
-                        status={phoneNumberStatus}
-                        placeholder="Phone Number"
-                        autoComplete="phoneNumber"
-                        value={phoneNumber}
-                        onChange={(e) => setPhoneNumber(e.target.value.trim().toLowerCase())}
-                    />
+                    {/*<div style={{fontSize: 12, textAlign: "left", marginLeft: 25, marginBottom: -25}}>Format: +12345678901 (include country code)</div>*/}
+                    <div style={{display: "flex", maxWidth: "100%"}}>
+                        <PhoneInput
+                            buttonStyle={{width: 40}}
+                            inputStyle={{width: 80}}
+                            containerStyle={{width: 80, height: 35, marginTop: -3, marginLeft: 15}}
+                            country={'us'}
+                            value={countryCode}
+                            onChange={code => {
+                                setCountryCode(`+${code}`)
+                            }}
+                        />
+                        <Input
+                            style={{marginTop: 0, width: "calc(100% - 120px)", marginLeft: 5, marginRight: 20, marginBottom: 25}}
+                            key="phoneNumber"
+                            spellCheck={false}
+                            status={phoneNumberStatus}
+                            placeholder="Phone Number"
+                            autoComplete="phoneNumber"
+                            value={phoneNumber}
+                            onChange={(e) => setPhoneNumber(e.target.value.trim().toLowerCase())}
+                        />
+                    </div>
+
                     {/*<div style={{marginLeft: 25, marginRight: 25, marginTop: -25, display: "flex"}}>*/}
                     {/*    <div style={{display: "flex", flexDirection: "column", justifyContent: "center"}}>*/}
                     {/*        <Toggle />*/}
