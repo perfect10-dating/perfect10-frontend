@@ -76,6 +76,13 @@ export const api = createApi({
       }),
       invalidatesTags: ['USER', 'ROOM']
     }),
+
+    doesPhoneNumberExist: builder.query<boolean, string>({
+      query: (phoneNumber: string) => ({
+        url: `does-phone-number-exist/${phoneNumber}`,
+        method: 'GET'
+      }),
+    }),
     /* ============= END USER ROUTES ============== */
 
     /* ============= BEGIN ROOM ROUTES ============== */
@@ -208,6 +215,7 @@ export const {
     useUnlockUserMutation,
     useReadyJoinRoomMutation,
     useSwitchRoomsDelayedMutation,
+    useDoesPhoneNumberExistQuery,
 
     // room information
     useGetRoomQuery,
