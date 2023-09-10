@@ -142,7 +142,10 @@ export const SignUp = (props: PropTypes) => {
     return (
         <div style={{height: "100vh", overflow: "scroll"}}>
             <form spellCheck="false" style={{width: 300, maxWidth: "100vw", margin: "0 auto"}}>
-                <p style={{fontSize: 30, textAlign: "center", marginTop: 30, marginBottom: 20}}>Create Account</p>
+                <p style={{fontSize: 30, textAlign: "center", marginTop: 30, marginBottom: 10}}>Create Account</p>
+                <div style={{cursor: "pointer", marginBottom: 10, textAlign: "center"}} onClick={() => dispatch(signUpFlowCanceled())}>
+                    {"Sign in with existing account >>"}
+                </div>
 
                 <div style={{ backgroundColor: "rgb(243,244,246)", borderRadius: 15, paddingTop: 2, paddingBottom: 2,
                     margin: "20 auto", marginBottom: 30, width: 300, maxWidth: "calc(100vw - 20px)",
@@ -245,12 +248,8 @@ export const SignUp = (props: PropTypes) => {
                     </div>
                 </div>
 
-                <div style={{margin: "0 auto", paddingBottom: 100, textAlign: "center"}}>
+                <div style={{margin: "0 auto", paddingBottom: 100, textAlign: "center", fontSize: 20}}>
                     <div style={{cursor: "pointer"}} onClick={handleSubmit} >{"Sign Up >>"}</div>
-                    <p>or</p>
-                    <div style={{cursor: "pointer"}} onClick={() => dispatch(signUpFlowCanceled())}>
-                        {"Sign in with Existing Account >>"}
-                    </div>
                 </div>
 
             </form>
