@@ -10,7 +10,7 @@ export interface AuthState {
     existingUserError: boolean
     forgotPassword: boolean
     jwtToken: string
-    loginPage: 'signUp' | 'signIn' | 'forgotPassword' | 'resetPassword'
+    loginPage: 'landing' | 'signUp' | 'signIn' | 'forgotPassword' | 'resetPassword'
     status: 'idle' | 'loading' | 'failed'
     recoveryNumber?: string
     phoneNumber?: string
@@ -22,7 +22,7 @@ const initialState: AuthState = {
     existingUserError: false,
     forgotPassword: false,
     jwtToken: '',
-    loginPage: 'signIn',
+    loginPage: 'landing',
     status: 'loading',
 }
 
@@ -30,6 +30,9 @@ export const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
+        signInFlowStarted: (state) => {
+            state.loginPage = 'signIn'
+        },
         forgotPasswordFlowStarted: (state) => {
             state.loginPage = 'forgotPassword'
         },
@@ -366,6 +369,7 @@ const confirmCodeUpdatePassword = (phoneNumber: string, code: string, newPasswor
 }
 
 export const {
+    signInFlowStarted,
     forgotPasswordFlowStarted,
     forgotPasswordEmailSent,
     forgotPasswordFlowEnded,

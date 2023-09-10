@@ -4,9 +4,12 @@ import {useSelector} from "react-redux";
 import {asyncSignIn, forgotPasswordFlowStarted, signUpFlowStarted} from "../../services/authSlice";
 import {BottomActionText, Input, InputSubAction, Seperation} from "./LoginComponents";
 import {LoadingWrapper} from "../misc/LoadingWrapper";
+import {useLazyDoesPhoneNumberExistQuery} from "../../services/api";
 
 export function Login() {
     const dispatch = useAppDispatch()
+    const [doesNumberExist] = useLazyDoesPhoneNumberExistQuery()
+
     const { status } = useAppSelector(state => state.auth)
     const [phoneNumber, setPhoneNumber] = useState<string>('')
     const [phoneNumberStatus, setPhoneNumberStatus] = useState<string>('default')
@@ -37,21 +40,34 @@ export function Login() {
         setLoading(true)
         
         try {
-            await dispatch(asyncSignIn({ phoneNumber: phoneNumber, password }))
-            // timeout to allow login even when asyncSignIn is slow to propagate
-            setTimeout(() => {
-                dispatch({
-                    // format -- reducerPath/invalidateTags
-                    // see: https://github.com/reduxjs/redux-toolkit/issues/1862
-                    type: `api/invalidateTags`,
-                    payload: ['USER'],
-                });
-            }, 1000)
+            const result = await dispatch(asyncSignIn({ phoneNumber: phoneNumber, password }))
+
+            if ((result as any).error) {
+                const doesPhoneNumberExist = await doesNumberExist(phoneNumber).unwrap()
+                if (doesPhoneNumberExist) {
+                    alert("Login failed. Please check to make sure your PASSWORD is correct")
+                }
+                else {
+                    alert("Login failed. Please check to make sure your PHONE NUMBER is correct")
+                }
+            }
+
+            else {
+                console.log("signin successful; invalidating tags")
+                // timeout to allow login even when asyncSignIn is slow to propagate
+                setTimeout(() => {
+                    dispatch({
+                        // format -- reducerPath/invalidateTags
+                        // see: https://github.com/reduxjs/redux-toolkit/issues/1862
+                        type: `api/invalidateTags`,
+                        payload: ['USER'],
+                    });
+                }, 1000)
+            }
         }
         catch (err) {
             console.error(err)
-            // TODO -- check to see if the phone number exists
-            alert("Login failed. Please make sure your phone number is correct")
+            alert("Login failed. Please check to make sure your phone number and password are accurate")
         }
     }
 

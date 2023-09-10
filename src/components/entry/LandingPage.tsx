@@ -2,10 +2,11 @@ import { useState } from "react";
 import { Login } from "./Login";
 import { SignUp } from "./SignUp";
 import { authSlice } from "../../services/authSlice";
-import { useAppSelector } from "../../app/hooks";
+import {useAppDispatch, useAppSelector} from "../../app/hooks";
 import { ForgotPassword } from "./ForgotPassword";
 import { ResetPassword } from "./ResetPassword";
 import styled from "styled-components";
+import {signInFlowStarted} from 'services/authSlice'
 
 interface PropTypes {
 	referringUser?: string;
@@ -14,9 +15,13 @@ interface PropTypes {
 
 export function LandingPage(props: PropTypes) {
 	const { loginPage } = useAppSelector((state) => state.auth);
-	const [showingLoginPage, setShowingLoginPage] = useState(false);
+	const dispatch = useAppDispatch()
+
+	console.log(loginPage)
 
 	switch (loginPage) {
+		case "signIn":
+			return <Login />;
 		case "signUp":
 			return (
 				<SignUp referringUser={props.referringUser} qrCode={props.qrCode} />
@@ -25,10 +30,6 @@ export function LandingPage(props: PropTypes) {
 			return <ForgotPassword />;
 		case "resetPassword":
 			return <ResetPassword />;
-	}
-
-	if (showingLoginPage) {
-		return <Login />;
 	}
 
 	// otherwise, return the landing page
@@ -84,7 +85,7 @@ export function LandingPage(props: PropTypes) {
 
 			<LandingPageLogin>
 				<div
-					onClick={() => setShowingLoginPage(true)}
+					onClick={() => dispatch(signInFlowStarted())}
 					style={{ cursor: "pointer" }}
 				>
 					Log In or Sign Up {">>"}
