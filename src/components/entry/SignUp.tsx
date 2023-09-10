@@ -40,15 +40,32 @@ export const SignUp = (props: PropTypes) => {
     const [lookingFor, setLookingFor] = useState([] as string[])
     const [acceptedDocuments, setAcceptedDocuments] = useState(false)
 
+    const [eightCharactersInPassword, setEightCharactersInPassword] = useState(false)
+    const [upperCaseInPassword, setUpperCaseInPassword] = useState(false)
+    const [lowerCaseInPassword, setLowerCaseInPassword] = useState(false)
+    const [numberInPassword, setNumberInPassword] = useState(false)
+    const [specialCharacterInPassword, setSpecialCharacterInPassword] = useState(false)
+
     useEffect(() => {
         const newStatus = phoneNumber.length === 0 ? 'default' : /^\+[1-9]\d{3,14}$/.test(phoneNumber) ? 'valid' : 'entering'
         setPhoneNumberStatus(newStatus)
     }, [phoneNumber])
 
     useEffect(() => {
-        const newStatus = password.length === 0 ? 'default' : (password.length >= 8 &&
+        const eightCharactersInPasswordLocal = password.length >= 8
+        const lowerCaseInPasswordLocal = /^(?=.*[a-z])/.test(password)
+        const upperCaseInPasswordLocal = /^(?=.*[A-Z])/.test(password)
+        const numberInPasswordLocal = /^(?=.*\d)/.test(password)
+        const specialCharacterInPasswordLocal = /^(?=.*[\^$*.\[\]{}()?\-"!@#%&/\\,><':;|_~`+=])/.test(password)
+        const newStatus = password.length === 0 ? 'default' : (eightCharactersInPasswordLocal &&
             /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\^$*.\[\]{}()?\-"!@#%&/\\,><':;|_~`+=])[A-Za-z\d^$*.\[\]{}()?\-"!@#%&/\\,><':;|_~`+=]{8,}$/.test(password))
             ? 'valid' : 'entering'
+
+        setEightCharactersInPassword(eightCharactersInPasswordLocal)
+        setLowerCaseInPassword(lowerCaseInPasswordLocal)
+        setUpperCaseInPassword(upperCaseInPasswordLocal)
+        setNumberInPassword(numberInPasswordLocal)
+        setSpecialCharacterInPassword(specialCharacterInPasswordLocal)
         setPasswordStatus(newStatus)
     }, [password])
 
@@ -220,7 +237,15 @@ export const SignUp = (props: PropTypes) => {
                         onChange={(e) => setPassword(e.target.value)}
                     />
                     <div style={{fontSize: 12, marginTop: -25, marginBottom: -10, marginLeft: 12, marginRight: 12}}>
-                        Requirements: 1 uppercase letter, 1 lowercase letter, 1 number, 1 special character
+                        Requirements: {
+                            [
+                                {show: !eightCharactersInPassword, text: "8+ characters"},
+                                {show: !upperCaseInPassword, text: "1 uppercase letter"},
+                                {show: !lowerCaseInPassword, text: "1 lowercase letter"},
+                                {show: !numberInPassword, text: "1 number"},
+                                {show: !specialCharacterInPassword, text: "1 special character"},
+                            ].filter(object => object.show).map(object => object.text).join(", ")
+                        }
                     </div>
                     <Input
                         key="confirmPassword"
