@@ -1,7 +1,7 @@
 import { useAppDispatch } from 'app/hooks'
 import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import {asyncGetUser, asyncSignIn, asyncSignUp, signUpFlowCanceled} from 'services/authSlice'
+import {asyncGetUser, asyncSignIn, asyncSignUp, signInFlowStarted, signUpFlowCanceled} from 'services/authSlice'
 import { BottomActionText, Input, LoginBox, Name, Seperation, Subheader, Submit } from './LoginComponents'
 import {LookingFor} from "../account/LookingFor";
 import {setHasCollectedLocation} from "../../services/userSlice";
@@ -162,7 +162,7 @@ export const SignUp = (props: PropTypes) => {
         <div style={{height: "100vh", overflow: "scroll"}}>
             <form spellCheck="false" style={{width: 300, maxWidth: "100vw", margin: "0 auto"}}>
                 <p style={{fontSize: 30, textAlign: "center", marginTop: 30, marginBottom: 10}}>Create Account</p>
-                <div style={{cursor: "pointer", marginBottom: 10, textAlign: "center"}} onClick={() => dispatch(signUpFlowCanceled())}>
+                <div style={{cursor: "pointer", marginBottom: 10, textAlign: "center"}} onClick={() => dispatch(signInFlowStarted())}>
                     {"Sign in with existing account >>"}
                 </div>
 
