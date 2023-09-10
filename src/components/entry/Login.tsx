@@ -1,10 +1,11 @@
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
 import {useSelector} from "react-redux";
 import {asyncSignIn, forgotPasswordFlowStarted, signUpFlowStarted} from "../../services/authSlice";
 import {BottomActionText, Input, InputSubAction, Seperation} from "./LoginComponents";
 import {LoadingWrapper} from "../misc/LoadingWrapper";
 import {useLazyDoesPhoneNumberExistQuery} from "../../services/api";
+import PhoneInput from "react-phone-input-2";
 
 export function Login() {
     const dispatch = useAppDispatch()
@@ -13,6 +14,7 @@ export function Login() {
     const { status } = useAppSelector(state => state.auth)
     const [phoneNumber, setPhoneNumber] = useState<string>('')
     const [phoneNumberStatus, setPhoneNumberStatus] = useState<string>('default')
+    const [countryCode, setCountryCode] = useState('+1')
     const [password, setPassword] = useState<string>('')
     const [passwordStatus, setPasswordStatus] = useState<'default' | 'entering' | 'valid'>('default')
 
@@ -20,9 +22,10 @@ export function Login() {
 
     useEffect(() => {
         // regex from here: https://stackoverflow.com/questions/16699007/regular-expression-to-match-standard-10-digit-phone-number
-        const newPhoneNumberStatus = phoneNumber.length === 0 ? 'default' : /^\+?[1-9]\d{1,14}$/.test(phoneNumber) ? 'valid' : 'entering'
+        const newPhoneNumberStatus = phoneNumber.length === 0 ? 'default' :
+            /^\+?[1-9]\d{1,14}$/.test(countryCode+phoneNumber) ? 'valid' : 'entering'
         setPhoneNumberStatus(newPhoneNumberStatus)
-    }, [phoneNumber])
+    }, [countryCode, phoneNumber])
 
     useEffect(() => {
         const newPasswordStatus = password.length === 0 ? 'default' : password.length < 8 ? 'entering' : 'valid'
@@ -40,10 +43,10 @@ export function Login() {
         setLoading(true)
         
         try {
-            const result = await dispatch(asyncSignIn({ phoneNumber: phoneNumber, password }))
+            const result = await dispatch(asyncSignIn({ phoneNumber: countryCode+phoneNumber, password }))
 
             if ((result as any).error) {
-                const doesPhoneNumberExist = await doesNumberExist(phoneNumber).unwrap()
+                const doesPhoneNumberExist = await doesNumberExist(countryCode+phoneNumber).unwrap()
                 if (doesPhoneNumberExist) {
                     alert("Login failed. Please check to make sure your PASSWORD is correct")
                 }
@@ -85,16 +88,30 @@ export function Login() {
                     <div style={{ backgroundColor: "rgb(243,244,246)", borderRadius: 15, paddingTop: 2, paddingBottom: 2,
                         margin: "0 auto", width: 300, maxWidth: "calc(100vw - 20px)",
                     }}>
+                        <div style={{display: "flex", maxWidth: "100%"}}>
+                            <PhoneInput
+                                buttonStyle={{width: 40}}
+                                inputStyle={{width: 80}}
+                                containerStyle={{width: 80, height: 35, marginTop: 28, marginLeft: 25}}
+                                country={'us'}
+                                value={countryCode}
+                                onChange={code => {
+                                    setCountryCode(`+${code}`)
+                                }}
+                            />
+                            <Input
+                                style={{width: "calc(100% - 130px)", marginLeft: 5, marginRight: 25}}
+                                key="phoneNumber"
+                                spellCheck={false}
+                                status={phoneNumberStatus}
+                                placeholder="Phone Number"
+                                autoComplete="phoneNumber"
+                                value={phoneNumber}
+                                onChange={(e) => setPhoneNumber(e.target.value.trim().toLowerCase())}
+                            />
+                        </div>
                         <Input
-                            key="email"
-                            spellCheck={false}
-                            status={phoneNumberStatus}
-                            placeholder="Phone Number"
-                            autoComplete="phoneNumber"
-                            value={phoneNumber}
-                            onChange={(e) => setPhoneNumber(e.target.value.trim().toLowerCase())}
-                        />
-                        <Input
+                            style={{marginTop: 0}}
                             key="password"
                             spellCheck={false}
                             status={passwordStatus}

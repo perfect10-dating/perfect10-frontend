@@ -53,7 +53,7 @@ export const SignUp = (props: PropTypes) => {
         const newStatus = phoneNumber.length === 0 ? 'default' :
             /^\+[1-9]\d{3,14}$/.test(countryCode+phoneNumber) ? 'valid' : 'entering'
         setPhoneNumberStatus(newStatus)
-    }, [phoneNumber])
+    }, [ countryCode, phoneNumber])
 
     useEffect(() => {
         const eightCharactersInPasswordLocal = password.length >= 8
@@ -183,7 +183,7 @@ export const SignUp = (props: PropTypes) => {
                         <PhoneInput
                             buttonStyle={{width: 40}}
                             inputStyle={{width: 80}}
-                            containerStyle={{width: 80, height: 35, marginTop: -3, marginLeft: 15}}
+                            containerStyle={{width: 80, height: 35, marginTop: -3, marginLeft: 25}}
                             country={'us'}
                             value={countryCode}
                             onChange={code => {
@@ -191,7 +191,7 @@ export const SignUp = (props: PropTypes) => {
                             }}
                         />
                         <Input
-                            style={{marginTop: 0, width: "calc(100% - 120px)", marginLeft: 5, marginRight: 20, marginBottom: 25}}
+                            style={{marginTop: 0, width: "calc(100% - 130px)", marginLeft: 5, marginRight: 25, marginBottom: 25}}
                             key="phoneNumber"
                             spellCheck={false}
                             status={phoneNumberStatus}
