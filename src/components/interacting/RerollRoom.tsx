@@ -4,6 +4,7 @@ import {useAppDispatch} from "../../app/hooks";
 import {useNavigate} from "react-router-dom";
 import {setUser} from "../../services/userSlice";
 import {LoadingWrapper} from "../misc/LoadingWrapper";
+import {setMiddleContent} from "../../services/topBarSlice";
 const MAX_UNBALANCE = .30    // 3:4 person ratio (1/3) causes penalties, but 4:6 (2/4) does not
 
 export function RerollRoom() {
@@ -35,6 +36,14 @@ export function RerollRoom() {
         // set the user that we retrieved
         console.log("setting user...")
         dispatch(setUser({user}))
+    
+        dispatch(
+          setMiddleContent({
+              middleContent: (
+                <div></div>
+              )
+          })
+        )
 
         // penalty in days
         const penalty = -1 * ((user.freeSwaps || 0) -1)

@@ -5,6 +5,7 @@ import { setUser } from "../../services/userSlice";
 import { useAppDispatch } from "../../app/hooks";
 import { LoadingWrapper } from "../misc/LoadingWrapper";
 import usePageTitle from "utils/usePageTitle";
+import {setMiddleContent} from "../../services/topBarSlice";
 
 export function PriorityModePage() {
 	const dispatch = useAppDispatch();
@@ -32,6 +33,15 @@ export function PriorityModePage() {
 	}
 
 	dispatch(setUser({ user }));
+	
+	dispatch(
+		setMiddleContent({
+			middleContent: (
+				<div></div>
+			)
+		})
+	)
+	
 	return (
 		<div
 			style={{

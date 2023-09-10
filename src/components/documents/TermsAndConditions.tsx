@@ -6,9 +6,21 @@ import {
         DocumentTextBlock,
         DocumentTitle
 } from "./DocumentComponents";
+import {useAppDispatch} from "../../app/hooks";
+import {setMiddleContent} from "../../services/topBarSlice";
 
 export function TermsAndConditions() {
-    return (
+        const dispatch = useAppDispatch();
+        
+        dispatch(
+          setMiddleContent({
+                  middleContent: (
+                    <div></div>
+                  )
+          })
+        )
+        
+        return (
         <Document>
             <DocumentTitle>
                 Rizzly - Terms and Conditions

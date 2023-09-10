@@ -26,3 +26,5 @@ yarn-error.log*
 
 notes.txt
 src/appConfiguration.tsx
+.idea/vcs.xml
+.idea/workspace.xml

@@ -6,9 +6,22 @@ import {
     DocumentTextBlock,
     DocumentTitle
 } from "./DocumentComponents";
+import {useAppDispatch} from "../../app/hooks";
+import {setMiddleContent} from "../../services/topBarSlice";
 
 export function PrivacyPolicy() {
-    return (
+  const dispatch = useAppDispatch();
+  
+  dispatch(
+    setMiddleContent({
+      middleContent: (
+        <div></div>
+      )
+    })
+  )
+  
+  
+  return (
         <Document>
                 <DocumentTitle>
                         Rizzly - Privacy Policy
