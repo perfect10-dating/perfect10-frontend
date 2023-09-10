@@ -216,6 +216,7 @@ export const {
     useReadyJoinRoomMutation,
     useSwitchRoomsDelayedMutation,
     useDoesPhoneNumberExistQuery,
+    useLazyDoesPhoneNumberExistQuery,
 
     // room information
     useGetRoomQuery,

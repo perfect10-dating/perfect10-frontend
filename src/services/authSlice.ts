@@ -43,7 +43,7 @@ export const authSlice = createSlice({
             state.loginPage = 'signUp'
         },
         signUpFlowCanceled: (state) => {
-            state.loginPage = 'signIn'
+            state.loginPage = 'signUp'
         },
         clearCredentials: (state) => {
             state.password = undefined

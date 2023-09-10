@@ -116,15 +116,13 @@ export const SignUp = (props: PropTypes) => {
                 // now we invalidate the user cache and navigate to /profile (so they can fill other information...)
                 // however, we must await a timeout first to allow time for the API object to be created
                 await new Promise(resolve => setTimeout(resolve, 1000))
-                dispatch({
+                navigate("/account")
+                return dispatch({
                     // format -- reducerPath/invalidateTags
                     // see: https://github.com/reduxjs/redux-toolkit/issues/1862
                     type: `api/invalidateTags`,
                     payload: ['USER'],
                 });
-                navigate("/account")
-
-                // dispatch(asyncGetUser())
             }
         }
         catch (err) {
