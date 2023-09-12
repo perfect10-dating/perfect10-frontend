@@ -277,11 +277,11 @@ export function ProfileInteractions(props: PropTypes) {
                     {`Propose a date with ${props.otherUser.firstName} >>`}
                 </div>
 
-                <div style={{cursor: "pointer", textAlign: "center", marginTop: 10, marginBottom: 30}}
-                    onClick={() => setProposingSetup(true)}
-                >
-                    {`Set ${props.otherUser.firstName} up with a friend >>`}
-                </div>
+                {/*<div style={{cursor: "pointer", textAlign: "center", marginTop: 10, marginBottom: 30}}*/}
+                {/*    onClick={() => setProposingSetup(true)}*/}
+                {/*>*/}
+                {/*    {`Set ${props.otherUser.firstName} up with a friend >>`}*/}
+                {/*</div>*/}
             </div>
         </div>
     )
