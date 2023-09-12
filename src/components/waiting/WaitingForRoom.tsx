@@ -1,5 +1,6 @@
 import {useFormRoomMutation} from "../../services/api";
 import {useEffect} from "react";
+import {useNavigate} from "react-router-dom";
 const POLLING_DELAY_SECONDS = 60 * 10
 
 interface PropTypes {
@@ -7,6 +8,8 @@ interface PropTypes {
 }
 
 export function WaitingForRoom(props: PropTypes) {
+    const navigate = useNavigate();
+    
     const [ formRoom, statusObj ] = useFormRoomMutation()
     // define a polling function
     useEffect(() => {
@@ -28,6 +31,10 @@ export function WaitingForRoom(props: PropTypes) {
                 <p style={{fontSize: 30}}>Building you a Room!</p>
                 <p style={{marginTop: 10}}>We're finding you potential partners. This may take a while.</p>
                 <p style={{marginTop: 10}}>You can safely leave and come back later.</p>
+                <p style={{fontSize: 20}}>Tired of waiting?</p>
+                <p style={{marginTop: 10, textDecoration: "underline", cursor: "pointer"}}
+                    onClick={() => navigate("/priority")}
+                >Skip the line</p>
             </div>
         </div>
     )

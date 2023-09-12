@@ -69,19 +69,19 @@ export function PriorityModePage() {
 				<p style={{ marginTop: 10 }}>
 					Members with Priority Mode have shorter wait times to get into rooms.
 				</p>
-				<p style={{ marginTop: 10 }}>
-					This might be helpful for you if there are many people with your
-					identity and sexual orientation trying to join a room with a few other
-					members.
-				</p>
+				{/*<p style={{ marginTop: 10 }}>*/}
+				{/*	This might be helpful for you if there are many people with your*/}
+				{/*	identity and sexual orientation trying to join a room with a few other*/}
+				{/*	members.*/}
+				{/*</p>*/}
 				<p style={{ marginTop: 10 }}>
 					Priority Mode will be a paid feature in the future, but you can get it
-					right now by referring your friends!
+					right now by referring your friends.
 				</p>
 				<p style={{ marginTop: 10 }}>
-					Each person you refer gives you 30 days of Priority Mode
+					Each person you refer gives you 30 days for free.
 				</p>
-				<p style={{ marginTop: 10 }}>Just use this referral link!</p>
+				<p style={{ marginTop: 10 }}>Just use this referral link:</p>
 				<p
 					style={{ marginTop: 10, textDecoration: "underline", color: "blue" }}
 				>
