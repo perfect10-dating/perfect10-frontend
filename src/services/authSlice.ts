@@ -126,19 +126,19 @@ export const asyncGetUser = createAsyncThunk<{ jwtToken?: string; role?: string 
 })
 
 export const asyncSignUp = createAsyncThunk<
-    { success?: boolean; userId?: string; phoneNumber: string; password: string; firstName: string; identity: string;
+    { success?: boolean; userId?: string; phoneNumber: string; emailAddress: string; password: string; firstName: string; identity: string;
         birthDate: number; longitude: number; latitude: number; lookingFor: string[]; referringUser?: string },
-    { phoneNumber: string; password: string; firstName: string; identity: string; birthDate: number;
+    { phoneNumber: string; emailAddress: string; password: string; firstName: string; identity: string; birthDate: number;
         longitude: number; latitude: number; lookingFor: string[]; referringUser?: string }
 >('auth/signUp', async (credentials) => {
     const {
-        phoneNumber, password, firstName, identity, birthDate,
+        phoneNumber, emailAddress, password, firstName, identity, birthDate,
         longitude, latitude, lookingFor, referringUser,
     } = credentials
-    const { success } = await signUp(phoneNumber, password, firstName, identity, birthDate,
+    const { success } = await signUp(phoneNumber, emailAddress, password, firstName, identity, birthDate,
         longitude, latitude, lookingFor, referringUser)
     if (!success) throw new Error('sign up flow failed')
-    return { success, phoneNumber, password, firstName, identity, birthDate, latitude, longitude, lookingFor, referringUser }
+    return { success, phoneNumber, emailAddress, password, firstName, identity, birthDate, latitude, longitude, lookingFor, referringUser }
 })
 
 export const asyncConfirmCode = createAsyncThunk<
@@ -250,13 +250,14 @@ const getUser = () => {
     })
 }
 
-const signUp = (phoneNumber: string, password: string, firstName: string, identity: string, birthDate: number,
-                longitude: number, latitude: number, lookingFor: string[], referringUser?: string
+const signUp = (phoneNumber: string, emailAddress: string, password: string, firstName: string, identity: string,
+                birthDate: number, longitude: number, latitude: number, lookingFor: string[], referringUser?: string
                 ) => {
     return new Promise<{ success: boolean }>((resolve) => {
         let attributeList = []
         attributeList.push(new CognitoUserAttribute({Name: 'given_name', Value: firstName}))
         attributeList.push(new CognitoUserAttribute({Name: 'phone_number', Value: phoneNumber}))
+        attributeList.push(new CognitoUserAttribute({Name: 'email', Value: emailAddress}))
         attributeList.push(new CognitoUserAttribute({Name: 'gender', Value: identity}))
         attributeList.push(new CognitoUserAttribute({Name: 'custom:longitude', Value: `${longitude}`}))
         attributeList.push(new CognitoUserAttribute({Name: 'custom:latitude', Value: `${latitude}`}))

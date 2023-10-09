@@ -42,6 +42,15 @@ const renderHamburgerDropdown = (
 				<div
 					style={{ cursor: "pointer", fontWeight: 500 }}
 					onClick={() => {
+						navigate("/crushes");
+						onBackgroundClick();
+					}}
+				>
+					Crushes
+				</div>
+				<div
+					style={{ cursor: "pointer", fontWeight: 500 }}
+					onClick={() => {
 						navigate("/account");
 						onBackgroundClick();
 					}}

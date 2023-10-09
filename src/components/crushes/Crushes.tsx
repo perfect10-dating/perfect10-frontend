@@ -75,7 +75,7 @@ export function Crushes() {
   
   return (
     <div style={{paddingTop: 40, textAlign: 'center'}}>
-      <div style={{marginTop: 30}}>
+      <div style={{marginTop: 60}}>
         <div style={{maxWidth: 300, display: "flex", justifyContent: "space-between", margin: "0 auto", fontSize: 16}}>
           <div style={{fontWeight: isAddingCrushes ? 300 : 600, cursor: "pointer"}}
             onClick={() => setIsAddingCrushes(false)}
@@ -90,10 +90,10 @@ export function Crushes() {
           </div>
         </div>
         
-        <div style={{fontSize: 24}}>
+        <div style={{fontSize: 30}}>
           {peopleCrushingOnYouCount} people are crushing on you!
         </div>
-        <div style={{fontSize: 16}}>
+        <div style={{fontSize: 20}}>
           You are crushing on {yourCrushes.length} people.
         </div>
       </div>
@@ -101,7 +101,7 @@ export function Crushes() {
       {
         isAddingCrushes ?
           <div style={{marginTop: 20}}>
-            <div style={{fontSize: 16}}>
+            <div style={{fontSize: 20}}>
               Add the email address of your crush
             </div>
             <input
@@ -112,7 +112,7 @@ export function Crushes() {
               style={{
                 marginTop: 10,
                 cursor: 'pointer',
-                fontSize: 16
+                fontSize: 20
               }}
               onClick={() => {
               userLookup({lookupEmail: emailAddress})
@@ -122,7 +122,7 @@ export function Crushes() {
             </div>
             
             <div style={{marginTop: 20}}>
-              <div style={{fontSize: 16}}>
+              <div style={{fontSize: 20}}>
                 Your Crushes
               </div>
               <div>

@@ -34,6 +34,10 @@ export const SignUp = (props: PropTypes) => {
     const [phoneNumber, setPhoneNumber] = useState<string>('')
     const [countryCode, setCountryCode] = useState('+1')
     const [phoneNumberStatus, setPhoneNumberStatus] = useState<'default' | 'entering' | 'valid'>('default')
+    
+    const [emailAddress, setEmailAddress] = useState<string>('')
+    const [emailAddressStatus, setEmailAddressStatus] = useState<'default' | 'entering' | 'valid'>('default')
+    
     const [identity, setIdentity] = useState("woman")
     const [birthDate, setBirthDate] = useState(0)
     const [password, setPassword] = useState<string>('')
@@ -54,6 +58,11 @@ export const SignUp = (props: PropTypes) => {
             /^\+[1-9]\d{3,14}$/.test(countryCode+phoneNumber) ? 'valid' : 'entering'
         setPhoneNumberStatus(newStatus)
     }, [ countryCode, phoneNumber])
+    
+    useEffect(() => {
+        const newStatus = emailAddress.length === 0 ? 'default' : /\S+@\S+\.\S+/.test(emailAddress) ? 'valid' : 'entering'
+        setEmailAddressStatus(newStatus)
+    }, [emailAddress])
 
     useEffect(() => {
         const eightCharactersInPasswordLocal = password.length >= 8
@@ -80,6 +89,7 @@ export const SignUp = (props: PropTypes) => {
 
     const handleSubmit = async () => {
         if (phoneNumberStatus !== 'valid') return alert('Please enter a valid phone number.')
+        if (emailAddressStatus !== 'valid') return alert('Please enter a valid email address.')
         if (passwordStatus !== 'valid') return alert('Please make sure your password is at least 8 characters long.')
         if (password !== confirmPassword) return alert('Please make sure your passwords match.')
         if (((Date.now() - birthDate) / (1000 * 60 * 60 * 24 * 365)) < 18) return alert("Minors are not allowed")
@@ -112,7 +122,9 @@ export const SignUp = (props: PropTypes) => {
             setIsSubmitting(true)
 
             let result: any = await dispatch(asyncSignUp(
-                { phoneNumber: countryCode+phoneNumber, password, firstName, birthDate, identity,
+                { phoneNumber: countryCode+phoneNumber,
+                    emailAddress,
+                    password, firstName, birthDate, identity,
                     latitude: lat, longitude: long, lookingFor: Array.from(lookingFor) }
             ))
             if (result.error) {
@@ -201,6 +213,16 @@ export const SignUp = (props: PropTypes) => {
                             onChange={(e) => setPhoneNumber(e.target.value.trim().toLowerCase())}
                         />
                     </div>
+    
+                    <Input
+                      key="email"
+                      spellCheck={false}
+                      status={emailAddressStatus}
+                      placeholder="Email Address"
+                      autoComplete="none"
+                      value={firstName}
+                      onChange={(e) => setEmailAddress(e.target.value.trim().toLowerCase())}
+                    />
 
                     {/*<div style={{marginLeft: 25, marginRight: 25, marginTop: -25, display: "flex"}}>*/}
                     {/*    <div style={{display: "flex", flexDirection: "column", justifyContent: "center"}}>*/}
