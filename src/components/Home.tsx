@@ -20,6 +20,7 @@ import { setMiddleContent } from "../services/topBarSlice";
 interface PropTypes {
 	referringUser?: string;
 	qrCode?: string;
+	skip?: boolean;
 }
 
 export function Home(props: PropTypes) {
@@ -82,6 +83,7 @@ export function Home(props: PropTypes) {
 				<LandingPage
 					referringUser={props.referringUser}
 					qrCode={props.qrCode}
+					skip={props.skip}
 				/>
 			);
 		} else {

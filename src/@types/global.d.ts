@@ -103,3 +103,4 @@ declare interface Conversation {
   user0Read: boolean
   user1Read: boolean
 }
+

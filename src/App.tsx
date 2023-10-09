@@ -17,6 +17,7 @@ import {LoadingWrapper} from "./components/misc/LoadingWrapper";
 import {ContactUs} from "./components/misc/ContactUs";
 import {TermsAndConditions} from "./components/documents/TermsAndConditions";
 import {PrivacyPolicy} from "./components/documents/PrivacyPolicy";
+import {Crushes} from "./components/crushes/Crushes";
 
 const getReferringUser = () => {
     const hrefArray = window.location.href.split('/')
@@ -74,29 +75,31 @@ export default function App() {
     if (user && !hasUpdatedLocation) {
         getLocation()
     }
-
+    
     return (
-            <Router>
-                <div style={{position: "relative", height: "100vh"}}>
-                    {user && <TopBar user={user} />}
-                    <Routes>
-                        <Route path="/" element={<Home />} />
-                        <Route path="/referral/*" element={
-                            <Home referringUser={getReferringUser()} />
-                        } />
-                        <Route path={"/qr-code/*"} element={
-                            <Home qrCode={getQrCode()} />
-                        } />
-                        <Route path={"/account"} element={<AccountWrapper />} />
-                        <Route path={"/priority"} element={<PriorityModePage />} />
-                        <Route path={"/switch-room"} element={<RerollRoom />} />
-                        <Route path={"/contact-us"} element={<ContactUs />} />
-                        <Route path={"/terms-conditions"} element={<TermsAndConditions />} />
-                        <Route path={"/privacy-policy"} element={<PrivacyPolicy />} />
-                        {/*<Route path={"/test"} element={<Test />} />*/}
-                        // TODO -- edit profile
-                    </Routes>
-                </div>
-            </Router>
-    )
+      <Router>
+          <div style={{position: "relative", height: "100vh"}}>
+              {user && <TopBar user={user}/>}
+              <Routes>
+                  <Route path="/" element={<Home/>}/>
+                  <Route path="/referral/*" element={
+                      <Home referringUser={getReferringUser()}/>
+                  }/>
+                  <Route path={"/skip"} element={<Home skip={true} />} />
+                  <Route path={"/qr-code/*"} element={
+                      <Home qrCode={getQrCode()}/>
+                  }/>
+                  <Route path={"/crushes"} element={<Crushes/>}/>
+                  <Route path={"/account"} element={<AccountWrapper/>}/>
+                  <Route path={"/priority"} element={<PriorityModePage/>}/>
+                  <Route path={"/switch-room"} element={<RerollRoom/>}/>
+                  <Route path={"/contact-us"} element={<ContactUs/>}/>
+                  <Route path={"/terms-conditions"} element={<TermsAndConditions/>}/>
+                  <Route path={"/privacy-policy"} element={<PrivacyPolicy/>}/>
+                  {/*<Route path={"/test"} element={<Test />} />*/}
+                  // TODO -- edit profile
+              </Routes>
+          </div>
+      </Router>
+    );
 }

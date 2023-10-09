@@ -18,5 +18,4 @@ const liveApp = {
 }
 
 const currentApp = testApp
-
 export default currentApp

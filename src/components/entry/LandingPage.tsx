@@ -11,6 +11,7 @@ import {signInFlowStarted} from 'services/authSlice'
 interface PropTypes {
 	referringUser?: string;
 	qrCode?: string;
+	skip?: boolean;
 }
 
 export function LandingPage(props: PropTypes) {
@@ -18,6 +19,10 @@ export function LandingPage(props: PropTypes) {
 	const dispatch = useAppDispatch()
 
 	console.log(loginPage)
+	
+	if (props.skip && loginPage === 'landing') {
+		dispatch(signInFlowStarted())
+	}
 
 	switch (loginPage) {
 		case "signIn":

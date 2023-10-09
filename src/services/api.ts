@@ -17,7 +17,7 @@ export const api = createApi({
       return headers
     },
   }),
-  tagTypes: ['USER', 'ROOM', 'DATE', 'MESSAGE', 'CONVERSATION'],
+  tagTypes: ['USER', 'ROOM', 'DATE', 'MESSAGE', 'CONVERSATION', 'CRUSH'],
   endpoints: (builder) => ({
 
     /* ============= BEGIN USER ROUTES ============== */
@@ -202,7 +202,31 @@ export const api = createApi({
       invalidatesTags: []
     }),
     /* ============= END LOGGING ROUTES ============ */
-
+  
+    /* ============= BEGIN CRUSH ROUTES ========== */
+    lookup: builder.mutation<any, {lookupEmail: string}>({
+      query: (body) => ({
+        url: 'lookup',
+        method: 'POST',
+        body: {lookupEmail: body.lookupEmail}
+      }),
+      invalidatesTags: ['CRUSH']
+    }),
+  
+    getCrushList: builder.query<{
+      userModels: UserMini[],
+      peopleCrushingOnYouCount: Number,
+      yourCrushes: string[],
+      conversations: Conversation[]
+    }, void>({
+      query: ()=> ({
+        url: `show-crush-list`,
+        method: 'GET',
+      }),
+      providesTags: ['CONVERSATION'],
+    }),
+    /* ============= END CRUSH ROUTES ========== */
+  
   }),
 
 })
