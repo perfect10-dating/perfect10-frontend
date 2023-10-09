@@ -215,7 +215,7 @@ export const api = createApi({
   
     getCrushList: builder.query<{
       userModels: UserMini[],
-      peopleCrushingOnYouCount: Number,
+      peopleCrushingOnYouCount: number,
       yourCrushes: string[],
       conversations: Conversation[]
     }, void>({
@@ -223,7 +223,7 @@ export const api = createApi({
         url: `show-crush-list`,
         method: 'GET',
       }),
-      providesTags: ['CONVERSATION'],
+      providesTags: ['CRUSH', 'CONVERSATION'],
     }),
     /* ============= END CRUSH ROUTES ========== */
   

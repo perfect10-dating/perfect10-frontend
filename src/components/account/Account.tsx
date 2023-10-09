@@ -76,6 +76,17 @@ export function Account(props: PropTypes) {
 				{/*<div style={{textAlign: "center", marginTop: -5}}>*/}
 				{/*    {user.profileComplete ? "Continue editing your profile" : "Complete your profile"}*/}
 				{/*</div>*/}
+				
+				<div style={{textAlign: "center", fontSize: 30}}>
+					Complete Your Profile
+				</div>
+				<div style={{textAlign: "center", marginTop: -5, marginBottom: 16, fontSize: 20, cursor: 'pointer'}}
+						 onClick={() => {
+						 	navigate("/crushes")
+						 }}
+				>
+					Or Check Your Crushes {">>"}
+				</div>
 
 				<div
 					style={{
