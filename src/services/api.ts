@@ -263,4 +263,8 @@ export const {
 
     // logging
     useLogQrCodeMutation,
+
+    // crushes
+    useLookupMutation,
+    useGetCrushListQuery,
 } = api

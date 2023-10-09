@@ -1,6 +1,6 @@
 import {useAppDispatch} from "../../app/hooks";
 import {useNavigate} from "react-router-dom";
-import {useGetUserQuery} from "../../services/api";
+import {useGetCrushListQuery, useGetUserQuery} from "../../services/api";
 import {setUser} from "../../services/userSlice";
 import {LoadingWrapper} from "../misc/LoadingWrapper";
 import {setMiddleContent} from "../../services/topBarSlice";
@@ -18,7 +18,22 @@ export function Crushes() {
     error: userReqError,
     // isUninitialized
   } = useGetUserQuery()
-  
+
+  const {
+      data
+  } = useGetCrushListQuery()
+  let peopleCrushingOnYouCount = 0
+  let userModels = []
+  let yourCrushes = []
+  let conversations = []
+
+    if (data) {
+        peopleCrushingOnYouCount = data.peopleCrushingOnYouCont
+        userModels = data.userModels
+        yourCrushes = data.yourCrushes
+        conversations = data.conversations
+    }
+
   // if no user, we'll pop back to the "/" route, which will handle login
   if (userReqFailed) {
     console.log("ACCOUNT-WRAPPER: Failed getting user object, navigating to '/'")
@@ -49,5 +64,14 @@ export function Crushes() {
     })
   );
   
-  return <div></div>
+  return (
+      <div>
+          <div>
+              <div>
+                  Mutual Crushes
+              </div>
+
+          </div>
+      </div>
+  )
 }
