@@ -191,7 +191,7 @@ export const SignUp = (props: PropTypes) => {
                         onChange={(e) => setFirstName(e.target.value.trim())}
                     />
                     {/*<div style={{fontSize: 12, textAlign: "left", marginLeft: 25, marginBottom: -25}}>Format: +12345678901 (include country code)</div>*/}
-                    <div style={{display: "flex", maxWidth: "100%"}}>
+                    <div style={{display: "flex", maxWidth: "100%", marginBottom: -25}}>
                         <PhoneInput
                             buttonStyle={{width: 40}}
                             inputStyle={{width: 80}}
@@ -220,7 +220,7 @@ export const SignUp = (props: PropTypes) => {
                       status={emailAddressStatus}
                       placeholder="Email Address"
                       autoComplete="none"
-                      value={firstName}
+                      value={emailAddress}
                       onChange={(e) => setEmailAddress(e.target.value.trim().toLowerCase())}
                     />
 
