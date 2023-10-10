@@ -116,9 +116,12 @@ export function Crushes() {
               Add the email address of your crush
             </div>
             <Input
-              style={{marginTop: 5, width: "80%"}}
+              style={{marginTop: 5, marginBottom: 5, width: "80%"}}
               status={emailAddressStatus}
               onChange={(e) => setEmailAddress(e.target.value)} />
+            <div>
+                Don't worry, your identity is safe unless they like you back :)
+            </div>
             <div
               style={{
                 marginTop: 10,
