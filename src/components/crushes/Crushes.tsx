@@ -159,8 +159,6 @@ export function Crushes() {
             <div>No mutual crushes yet!</div>
           }
         </div>
-          // :
-            
       </div>
     </div>
   )

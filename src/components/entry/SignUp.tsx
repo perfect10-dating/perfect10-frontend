@@ -20,6 +20,7 @@ const inputFormStyle = {width: "calc(100% - 40px)", padding: 10, marginLeft: 20,
 interface PropTypes {
     referringUser?: string;
     qrCode?: string;
+    skip?: boolean;
 }
 
 export const SignUp = (props: PropTypes) => {
@@ -149,7 +150,7 @@ export const SignUp = (props: PropTypes) => {
                 // now we invalidate the user cache and navigate to /profile (so they can fill other information...)
                 // however, we must await a timeout first to allow time for the API object to be created
                 await new Promise(resolve => setTimeout(resolve, 1000))
-                navigate("/account")
+                navigate(props.skip ? "/crushes" : "/account")
                 return dispatch({
                     // format -- reducerPath/invalidateTags
                     // see: https://github.com/reduxjs/redux-toolkit/issues/1862

@@ -29,7 +29,7 @@ export function LandingPage(props: PropTypes) {
 			return <Login />;
 		case "signUp":
 			return (
-				<SignUp referringUser={props.referringUser} qrCode={props.qrCode} />
+				<SignUp referringUser={props.referringUser} qrCode={props.qrCode} skip={props.skip} />
 			);
 		case "forgotPassword":
 			return <ForgotPassword />;
