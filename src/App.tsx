@@ -85,7 +85,7 @@ export default function App() {
                   <Route path="/referral/*" element={
                       <Home referringUser={getReferringUser()}/>
                   }/>
-                  <Route path={"/skip"} element={<Home skip={true} />} />
+                  <Route path={"/crush"} element={<Home skip={true} />} />
                   <Route path={"/qr-code/*"} element={
                       <Home qrCode={getQrCode()}/>
                   }/>
