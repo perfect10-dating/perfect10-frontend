@@ -144,8 +144,25 @@ export function Crushes() {
           </div>
   
         <div style={{marginTop: 20}}>
-          <div style={{fontSize: 20}}>
+          <div style={{fontSize: 24,
+              backgroundColor: "rgb(243,244,246)",
+              borderRadius: 10,
+              cursor: "pointer",
+              display: "flex",
+              justifyContent: "space-between",
+              padding: "2px 10px"
+          }}
+
+               onClick={() => setYourCrushesOpen(!yourCrushesOpen)}
+          >
             Your Crushes
+              <div>
+                  {
+                      yourCrushesOpen ?
+                          "▲" :
+                          "▼"
+                  }
+              </div>
           </div>
           <div>
             {
@@ -160,8 +177,26 @@ export function Crushes() {
         </div>
 
         <div style={{marginTop: 20}}>
-          <div style={{fontSize: 24}}>
+          <div style={{fontSize: 24,
+              backgroundColor: "rgb(243,244,246)",
+              borderRadius: 10,
+              cursor: "pointer",
+              display: "flex",
+              justifyContent: "space-between",
+              padding: "2px 10px"
+          }}
+
+               onClick={() => setMutualCrushesOpen(!mutualCrushesOpen)}
+          >
           Mutual Crushes
+              <div>
+                  {
+                      mutualCrushesOpen ?
+                          "▲" :
+                          "▼"
+                  }
+              </div>
+
           </div>
           {
               mutualCrushesOpen &&
