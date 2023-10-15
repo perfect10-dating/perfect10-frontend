@@ -17,7 +17,10 @@ export function Crushes() {
   const [isAddingCrushes, setIsAddingCrushes] = useState(false)
   const [emailAddress, setEmailAddress] = useState('')
   const [emailAddressStatus, setEmailAddressStatus] = useState<'default' | 'entering' | 'valid'>('default')
-  
+
+  const [yourCrushesOpen, setYourCrushesOpen] = useState(false)
+  const [mutualCrushesOpen, setMutualCrushesOpen] = useState(false)
+
   useEffect(() => {
     const newStatus = emailAddress.length === 0 ? 'default' : /\S+@\S+\.\S+/.test(emailAddress) ? 'valid' : 'entering'
     setEmailAddressStatus(newStatus)
@@ -105,35 +108,39 @@ export function Crushes() {
           <div style={{fontSize: 30}}>
             {peopleCrushingOnYouCount} {peopleCrushingOnYouCount === 1 ? "person is" : "people are"} crushing on you!
           </div>
-          <div style={{fontSize: 20}}>
-            You are crushing on {yourCrushes.length + userModels.length} {
-            (yourCrushes.length + userModels.length)===1 ? "person" : "people"}
-          </div>
         </div>
     
         <div style={{marginTop: 20, backgroundColor: "rgb(243,244,246)", borderRadius: 10, padding: 10}}>
             <div style={{fontSize: 16}}>
               Add the email address of your crush
             </div>
-            <Input
-              style={{marginTop: 5, marginBottom: 5, width: "80%"}}
-              status={emailAddressStatus}
-              onChange={(e) => setEmailAddress(e.target.value)} />
+            <div style={{display: "flex"}}>
+                <Input
+                    style={{marginTop: 5, marginBottom: 5, width: "80%"}}
+                    status={emailAddressStatus}
+                    onChange={(e) => setEmailAddress(e.target.value)} />
+                <div
+                    style={{
+                        marginTop: 5,
+                        height: 33,
+                        cursor: 'pointer',
+                        fontSize: 20,
+                        border: "2px solid lightblue",
+                        borderRadius: 7,
+                        padding: "0px 4px",
+                    }}
+                    onClick={() => {
+                        userLookup({lookupEmail: emailAddress})
+                        setEmailAddress('')
+                    }}>
+                    Add
+                </div>
+            </div>
+
             <div>
-                Don't worry, your identity is safe unless they like you back :)
+                You'll only be visible if they're crushing on you too
             </div>
-            <div
-              style={{
-                marginTop: 10,
-                cursor: 'pointer',
-                fontSize: 20
-              }}
-              onClick={() => {
-              userLookup({lookupEmail: emailAddress})
-              setEmailAddress('')
-            }}>
-              Add {">>"}
-            </div>
+
           </div>
   
         <div style={{marginTop: 20}}>
@@ -142,11 +149,12 @@ export function Crushes() {
           </div>
           <div>
             {
-              yourCrushes.length > 0 ?
+                yourCrushesOpen &&
+              (yourCrushes.length > 0 ?
                 yourCrushes.map(crush => {
                   return <div>{crush}</div>
                 }) :
-                <div>No crushes yet!</div>
+                <div>No crushes yet!</div>)
             }
           </div>
         </div>
@@ -156,10 +164,11 @@ export function Crushes() {
           Mutual Crushes
           </div>
           {
-            (userModels.length > 0) ?
+              mutualCrushesOpen &&
+            ((userModels.length > 0) ?
             <RoomDisplay isDisplayingCompetitors={false} potentialPartners={userModels} competitors={[]} dates={[]}
             conversations={conversations} /> :
-            <div>No mutual crushes yet!</div>
+            <div>No mutual crushes yet!</div>)
           }
         </div>
       </div>
