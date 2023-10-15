@@ -110,14 +110,22 @@ export function Crushes() {
           </div>
         </div>
     
-        <div style={{marginTop: 20, backgroundColor: "rgb(243,244,246)", borderRadius: 10, padding: 10}}>
+        <div style={{marginTop: 20, backgroundColor: "rgb(243,244,246)", borderRadius: 10, padding: "10px 20px",
+        }}>
             <div style={{fontSize: 16}}>
               Add the email address of your crush
             </div>
-            <div style={{display: "flex"}}>
+            <div style={{display: "flex", justifyContent: "space-between"}}>
                 <Input
-                    style={{marginTop: 5, marginBottom: 5, width: "80%"}}
+                    style={{
+                        marginTop: 5, 
+                        marginBottom: 5, 
+                        width: "100%",
+                        marginRight: 10,
+                        backgroundColor: "rgba(194, 213, 242, 0.5)",
+                }}
                     status={emailAddressStatus}
+                    defaultValue={"Email"}
                     onChange={(e) => setEmailAddress(e.target.value)} />
                 <div
                     style={{
@@ -125,9 +133,9 @@ export function Crushes() {
                         height: 33,
                         cursor: 'pointer',
                         fontSize: 20,
-                        border: "2px solid lightblue",
-                        borderRadius: 7,
-                        padding: "0px 4px",
+                        backgroundColor: "rgb(194, 213, 242)",
+                        borderRadius: 10,
+                        padding: "2px 8px",
                     }}
                     onClick={() => {
                         userLookup({lookupEmail: emailAddress})
@@ -188,7 +196,7 @@ export function Crushes() {
 
                onClick={() => setMutualCrushesOpen(!mutualCrushesOpen)}
           >
-          Mutual Crushes
+          Mutual Crushes ({userModels.length})
               <div>
                   {
                       mutualCrushesOpen ?
