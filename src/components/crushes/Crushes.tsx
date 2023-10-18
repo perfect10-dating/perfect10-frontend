@@ -363,6 +363,12 @@ export function Crushes() {
             <div>No mutual crushes yet!</div>)
           }
         </div>
+        
+        <div>
+          <div onClick={() => navigate("/")} style={{cursor: "pointer", fontSize: 24, marginTop: 40, marginBottom: 80}}>
+            {user.profileComplete ? "F" : "Finish profile and f"}ind more matches {">>"}
+          </div>
+        </div>
       </div>
     </div>
   )
