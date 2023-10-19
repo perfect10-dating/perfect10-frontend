@@ -111,7 +111,7 @@ export function Login() {
                             />
                         </div>
                         <Input
-                            style={{marginTop: 0}}
+                            style={{marginTop: 0, marginBottom: 0}}
                             key="password"
                             spellCheck={false}
                             status={passwordStatus}
@@ -121,6 +121,11 @@ export function Login() {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                         />
+                        <div style={{marginBottom: 20, textAlign: "right", marginRight: 25}}>
+                            <a href={"https://rizzly.auth.us-east-1.amazoncognito.com/forgotPassword?client_id=1hm0bcej0ok1rimjt93ehuuft3&response_type=code&scope=email+openid+phone&redirect_uri=https%3A%2F%2Fwww.rizz.ly"}>
+                                Forgot your password?
+                            </a>
+                        </div>
                         {/*<InputSubAction onClick={() => dispatch(forgotPasswordFlowStarted())}>Forgot password?</InputSubAction>*/}
                     </div>
 
